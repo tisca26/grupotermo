@@ -55,6 +55,8 @@
                                     <td>
                                         <a href="<?php echo base_url_lang() . 'users/form_edit/' . $usr->ID ?>"
                                            class="badge badge-primary badge-roundless"> <?php echo trans_line('editar_tabla'); ?> </a>
+                                        <a href="<?php echo base_url_lang() . 'acl/form_acl/' . $usr->ID . '/2'; ?>"
+                                           class="badge badge-info badge-roundless"> <?php echo trans_line('permisos_tabla'); ?> </a>
                                         <a class="badge badge-danger badge-roundless delete_confirmation"
                                            data-toggle="confirmation" data-placement="top"
                                            data-original-title="<?php echo trans_line('confirmacion_borrado_titulo'); ?>"

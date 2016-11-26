@@ -25,6 +25,7 @@ $lang['grupo_tabla'] = 'Grupo';
 $lang['estatus_tabla'] = 'Estatus';
 $lang['acciones_tabla'] = 'Acciones';
 $lang['editar_tabla'] = 'Editar';
+$lang['permisos_tabla'] = 'Permisos';
 $lang['borrar_tabla'] = 'Borrar';
 //FIN TABLA
 $lang['confirmacion_borrado_titulo'] = '¿Desea borrarlo?';
