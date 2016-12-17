@@ -124,6 +124,6 @@
 </div>
 <script type="application/javascript">
     $(document).ready(function () {
-
+        $('#spinner_gt').hide(600);
     });// FIN DOCUMENT READY
 </script>

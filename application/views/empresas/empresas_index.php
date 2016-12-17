@@ -77,6 +77,7 @@
 </div>
 <script type="application/javascript">
     $(document).ready(function () {
+        $('#spinner_gt').hide(600);
         var table = $('#users_table');
         table.dataTable({
 

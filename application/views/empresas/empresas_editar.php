@@ -114,7 +114,7 @@
                         <div class="form-actions">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <button type="submit" class="btn green">Guardar</button>
+                                    <button type="submit" class="btn green" id="btn_submit">Guardar</button>
                                     <a class="btn default"
                                        href="<?php echo base_url_lang() . 'empresas' ?>">Regresar</a>
                                 </div>
@@ -132,7 +132,7 @@
 </div>
 <script type="application/javascript">
     $(document).ready(function () {
-
+        $('#spinner_gt').hide(600);
         var form1 = $('#current_form');
         var error1 = $('.alert-danger', form1);
         var success1 = $('.alert-success', form1);
@@ -229,6 +229,9 @@
             },
 
             submitHandler: function (form) {
+                $('#btn_submit').html("Loading...");
+                $('#btn_submit').prop('disabled', true);
+                $('#spinner_gt').show(300);
                 success1.show();
                 error1.hide();
                 form.submit();

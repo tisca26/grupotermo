@@ -84,7 +84,7 @@ class Empresas extends Acl_controller
                 set_bootstrap_alert(trans_line('alerta_exito'), BOOTSTRAP_ALERT_SUCCESS);
                 return redirect('empresas');
             } else {
-                $error = $this->resources_model->error_consulta();
+                $error = $this->empresas_model->error_consulta();
                 $mensajes_error = array(trans_line('alerta_error'), trans_line('alerta_error_codigo') . base64_encode($error['message']));
                 set_bootstrap_alert($mensajes_error, BOOTSTRAP_ALERT_DANGER);
                 return $this->form_edit($id);
@@ -99,7 +99,7 @@ class Empresas extends Acl_controller
             set_bootstrap_alert(trans_line('alerta_borrado'), BOOTSTRAP_ALERT_SUCCESS);
             return redirect('empresas');
         }else{
-            $error = $this->resources_model->error_consulta();
+            $error = $this->empresas_model->error_consulta();
             $mensajes_error = array(trans_line('alerta_borrado_fail'), trans_line('alerta_error_codigo') . base64_encode($error['message']));
             set_bootstrap_alert($mensajes_error, BOOTSTRAP_ALERT_DANGER);
         }

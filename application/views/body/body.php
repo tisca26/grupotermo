@@ -48,3 +48,8 @@
     <!-- END PAGE CONTENT BODY -->
     <!-- END CONTENT BODY -->
 </div>
+<script type="application/javascript" >
+    $(document).ready(function () {
+        $('#spinner_gt').hide(600);
+    });
+</script>

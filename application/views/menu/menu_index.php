@@ -130,6 +130,7 @@ if (!function_exists('generateRowsByLevel')) {
 </div>
 <script type="application/javascript">
     $(document).ready(function () {
+        $('#spinner_gt').hide(600);
         $('.delete_confirmation').on('confirmed.bs.confirmation', function () {
             var id = $(this).attr('data-id');
             window.location.href = "<?php echo base_url_lang() . '/menu/delete_menu/' ?>" + id;

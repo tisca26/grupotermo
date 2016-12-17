@@ -83,7 +83,7 @@
 </div>
 <script type="application/javascript">
     $(document).ready(function () {
-
+        $('#spinner_gt').hide(600);
         var form1 = $('#current_form');
         var error1 = $('.alert-danger', form1);
         var success1 = $('.alert-success', form1);

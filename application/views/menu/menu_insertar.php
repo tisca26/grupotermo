@@ -197,6 +197,7 @@
         }
     };
     $(document).ready(function () {
+        $('#spinner_gt').hide(600);
         valida_radio_enlace();
         $("input[name=radiourl]:radio").change(function () {
             valida_radio_enlace();

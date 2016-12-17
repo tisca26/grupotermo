@@ -37,6 +37,7 @@
                         <table class="table table-striped table-bordered table-hover table-checkable order-column" id="sample_1">
                             <thead>
                             <tr>
+                                <th> <?php echo trans_line('id_tabla'); ?></th>
                                 <th> <?php echo trans_line('nombre_tabla'); ?></th>
                                 <th> <?php echo trans_line('acciones_tabla'); ?></th>
                             </tr>
@@ -44,6 +45,7 @@
                             <tbody>
                             <?php foreach ($rows as $rec): ?>
                                 <tr class="odd gradeX">
+                                    <td> <?php echo $rec->ID; ?></td>
                                     <td> <?php echo $rec->RESOURCE; ?></td>
                                     <td>
                                         <a href="<?php echo base_url_lang() . 'resources/form_edit/' . $rec->ID ?>" class="badge badge-primary badge-roundless"> <?php echo trans_line('editar_tabla'); ?> </a>
@@ -69,6 +71,7 @@
 </div>
 <script type="application/javascript">
     $(document).ready(function () {
+        $('#spinner_gt').hide(600);
         var table = $('#sample_1');
         table.dataTable({
 
@@ -104,7 +107,7 @@
             "columnDefs": [
                 {
                    "sortable": false,
-                    "targets": [1]
+                    "targets": [2]
                 },
                 {
                     "className": "text-center",

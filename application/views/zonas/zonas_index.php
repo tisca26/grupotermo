@@ -21,7 +21,7 @@
                     <i class="fa fa-circle"></i>
                 </li>
                 <li>
-                    <span><?php echo trans_line('breadcrumb_proveedores'); ?></span>
+                    <span><?php echo trans_line('breadcrumb_pagina'); ?></span>
                 </li>
             </ul>
             <!-- END PAGE BREADCRUMBS -->
@@ -31,25 +31,25 @@
                     <div class="portlet-body">
                         <?php echo validation_errors('<div class="alert alert-danger alert-dismissable">', '</div>'); ?>
                         <?php echo get_bootstrap_alert(); ?>
-                        <a href="<?php echo base_url_lang() . 'proveedores/form_insert' ?>" class="btn btn-success">
-                            <i class="fa fa-plus"></i> <?php echo trans_line('agregar_proveedor'); ?></a>
+                        <a href="<?php echo base_url_lang() . 'zonas/form_insert' ?>" class="btn btn-success">
+                            <i class="fa fa-plus"></i> <?php echo trans_line('agregar_btn'); ?></a>
                         <hr>
                         <table class="table table-striped table-bordered table-hover table-checkable order-column"
                                id="users_table">
                             <thead>
                             <tr>
-                                <th> <?php echo trans_line('proveedor_tabla'); ?></th>
-                                <th> <?php echo trans_line('contacto_tabla'); ?></th>
+                                <th> <?php echo trans_line('zona_tabla'); ?></th>
+                                <th> <?php echo trans_line('obra_tabla'); ?></th>
                                 <th> <?php echo trans_line('acciones_tabla'); ?></th>
                             </tr>
                             </thead>
                             <tbody>
-                            <?php foreach ($rows as $prov): ?>
+                            <?php foreach ($rows as $zona): ?>
                                 <tr class="odd gradeX">
-                                    <td> <?php echo $prov->razon_social; ?></td>
-                                    <td> <?php echo $prov->email; ?></td>
+                                    <td> <?php echo $zona->nombre; ?></td>
+                                    <td> <?php echo $zona->obra_nombre; ?></td>
                                     <td>
-                                        <a href="<?php echo base_url_lang() . 'proveedores/form_edit/' . $prov->proveedores_id ?>"
+                                        <a href="<?php echo base_url_lang() . 'zonas/form_edit/' . $zona->zonas_id ?>"
                                            class="badge badge-primary badge-roundless"> <?php echo trans_line('editar_tabla'); ?> </a>
                                         <a class="badge badge-danger badge-roundless delete_confirmation"
                                            data-toggle="confirmation" data-placement="top"
@@ -58,7 +58,7 @@
                                            data-btn-ok-icon="icon-like" data-btn-ok-class="btn-success"
                                            data-btn-cancel-label="<?php echo trans_line('confirmacion_borrado_cancel'); ?>"
                                            data-btn-cancel-icon="icon-close" data-btn-cancel-class="btn-danger"
-                                           data-id="<?php echo $prov->proveedores_id ?>">
+                                           data-id="<?php echo $zona->zonas_id ?>">
                                             <?php echo trans_line('borrar_tabla'); ?>
                                         </a>
                                     </td>
@@ -80,7 +80,6 @@
         $('#spinner_gt').hide(600);
         var table = $('#users_table');
         table.dataTable({
-
             // Internationalisation. For more info refer to http://datatables.net/manual/i18n
             "language": {
                 "aria": {
@@ -113,11 +112,11 @@
             "columnDefs": [
                 {
                     "sortable": false,
-                    "targets": [1, 2]
+                    "targets": [2]
                 },
                 {
                     "className": "text-center",
-                    "targets": [1, 2]
+                    "targets": [0,1]
                 }
             ],
             "order": [
@@ -127,7 +126,7 @@
 
         $('.delete_confirmation').on('confirmed.bs.confirmation', function () {
             var id = $(this).attr('data-id');
-            window.location.href = "<?php echo base_url_lang() . 'proveedores/borrar_proveedor/' ?>" + id;
+            window.location.href = "<?php echo base_url_lang() . 'zonas/borrar_zona/' ?>" + id;
         });
     });// FIN DOCUMENT READY
 </script>

@@ -21,11 +21,11 @@
                     <i class="fa fa-circle"></i>
                 </li>
                 <li>
-                    <a href="<?php echo base_url_lang() . 'empresas'; ?>"><?php echo trans_line('breadcrumb_empresas'); ?></a>
+                    <a href="<?php echo base_url_lang() . 'obras'; ?>"><?php echo trans_line('breadcrumb_pagina'); ?></a>
                     <i class="fa fa-circle"></i>
                 </li>
                 <li>
-                    <span><?php echo trans_line('breadcrumb_empresas_agregar'); ?></span>
+                    <span><?php echo trans_line('breadcrumb_agregar_pagina'); ?></span>
                 </li>
             </ul>
             <!-- END PAGE BREADCRUMBS -->
@@ -40,7 +40,7 @@
                     </div>
                     <div class="portlet-body">
                         <?php echo validation_errors('<div class="alert alert-danger alert-dismissable">', '</div>'); ?>
-                        <?php echo form_open('empresas/insertar_empresa', array('id' => 'current_form')); ?>
+                        <?php echo form_open('obras/insertar_obra', array('id' => 'current_form')); ?>
                         <div class="form-body">
                             <div class="alert alert-danger display-hide">
                                 <button class="close" data-close="alert"></button>
@@ -51,71 +51,69 @@
                                 <?php echo trans_line('jquery_valid'); ?>
                             </div>
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-12">
                                     <div class="form-group form-md-line-input">
-                                        <?php echo form_input('razon_social', set_value('razon_social'), 'id="razon_social" placeholder="' . trans_line('razon_social_placeholder') . '" class="form-control"'); ?>
-                                        <label for="razon_social"><?php echo trans_line('razon_social'); ?>
+                                        <?php echo form_input('nombre', set_value('nombre'), 'id="nombre" placeholder="' . trans_line('nombre_placeholder') . '" class="form-control"'); ?>
+                                        <label for="nombre"><?php echo trans_line('nombre'); ?>
                                             <span class="required">*</span>
                                         </label>
                                         <span
-                                            class="help-block"><?php echo trans_line('razon_social_ayuda'); ?></span>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group form-md-line-input">
-                                        <?php echo form_input('rfc', set_value('rfc'), 'id="rfc" placeholder="' . trans_line('rfc_placeholder') . '" class="form-control"'); ?>
-                                        <label for="rfc"><?php echo trans_line('rfc'); ?>
-                                            <span class="required">*</span>
-                                        </label>
-                                        <span
-                                            class="help-block"><?php echo trans_line('rfc_ayuda'); ?></span>
+                                                class="help-block"><?php echo trans_line('nombre_ayuda'); ?></span>
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group form-md-line-input">
-                                        <?php echo form_input('telefono', set_value('telefono'), 'id="telefono" placeholder="' . trans_line('telefono_placeholder') . '" class="form-control"'); ?>
-                                        <label for="telefono"><?php echo trans_line('telefono'); ?>
+                                        <?php echo form_input('fecha_inicio', set_value('fecha_inicio'), 'id="fecha_inicio" placeholder="' . trans_line('fecha_inicio_placeholder') . '" class="form-control date-picker"'); ?>
+                                        <label for="fecha_inicio"><?php echo trans_line('fecha_inicio'); ?>
                                             <span class="required">*</span>
                                         </label>
                                         <span
-                                            class="help-block"><?php echo trans_line('telefono_ayuda'); ?></span>
+                                                class="help-block"><?php echo trans_line('fecha_inicio_ayuda'); ?></span>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group form-md-line-input">
-                                        <?php echo form_input('email', set_value('email'), 'id="email" placeholder="' . trans_line('email_placeholder') . '" class="form-control"'); ?>
-                                        <label for="email"><?php echo trans_line('email'); ?>
+                                        <?php echo form_input('fecha_fin', set_value('fecha_fin'), 'id="fecha_fin" placeholder="' . trans_line('fecha_fin_placeholder') . '" class="form-control date-picker"'); ?>
+                                        <label for="fecha_fin"><?php echo trans_line('fecha_fin'); ?>
                                             <span class="required">*</span>
                                         </label>
                                         <span
-                                            class="help-block"><?php echo trans_line('email_ayuda'); ?></span>
+                                                class="help-block"><?php echo trans_line('fecha_fin_ayuda'); ?></span>
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group form-md-line-input">
-                                        <?php echo form_input('direccion', set_value('direccion'), 'id="direccion" placeholder="' . trans_line('direccion_placeholder') . '" class="form-control"'); ?>
-                                        <label for="direccion"><?php echo trans_line('direccion'); ?>
-                                            <span class="required">*</span>
-                                        </label>
-                                        <span
-                                            class="help-block"><?php echo trans_line('direccion_ayuda'); ?></span>
+                                        <div class="form-control form-control-static">
+                                            $<?php echo number_format(0, 2); ?></div>
+                                        <label for="total_real"><?php echo trans_line('total_real'); ?></label>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
+                                    <div class="form-group form-md-line-input">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="fa fa-dollar"></i>
+                                            </span>
+                                            <?php echo form_input('total_autorizado', set_value('total_autorizado'), 'id="total_autorizado" placeholder="' . trans_line('total_autorizado_placeholder') . '" class="form-control"'); ?>
+                                            <label for="total_autorizado"><?php echo trans_line('total_autorizado'); ?></label>
+                                            <span class="help-block"><?php echo trans_line('total_autorizado_ayuda'); ?></span>
+                                        </div>
 
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         <div class="form-actions">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <button type="submit" class="btn green" id="btn_submit">Guardar</button>
+                                    <button type="submit" class="btn green"
+                                            id="btn_submit"><?php echo trans_line('btn_submit'); ?></button>
                                     <a class="btn default"
-                                       href="<?php echo base_url_lang() . 'empresas' ?>">Regresar</a>
+                                       href="<?php echo base_url_lang() . 'obras' ?>"><?php echo trans_line('btn_cancel'); ?></a>
                                 </div>
                             </div>
                         </div>
@@ -132,6 +130,14 @@
 <script type="application/javascript">
     $(document).ready(function () {
         $('#spinner_gt').hide(600);
+
+        $('.date-picker').datepicker({
+            language: '<?php echo lang_segment(); ?>',
+            orientation: "left",
+            autoclose: true,
+            format: 'yyyy-mm-dd'
+        });
+
         var form1 = $('#current_form');
         var error1 = $('.alert-danger', form1);
         var success1 = $('.alert-success', form1);
@@ -142,57 +148,45 @@
             focusInvalid: false, // do not focus the last invalid input
             ignore: "", // validate all fields including form hidden input
             messages: {
-                razon_social: {
+                nombre: {
                     required: "<?php echo trans_line('required'); ?>",
                     minlength: jQuery.validator.format("<?php echo trans_line('minlength'); ?>")
                 },
-                rfc: {
+                fecha_inicio: {
                     minlength: jQuery.validator.format("<?php echo trans_line('minlength'); ?>"),
-                    required: "<?php echo trans_line('required'); ?>",
-                    maxlength: jQuery.validator.format("<?php echo trans_line('maxlength'); ?>")
-                },
-                telefono: {
-                    minlength: jQuery.validator.format("<?php echo trans_line('minlength'); ?>"),
-                    required: "<?php echo trans_line('required'); ?>",
                     maxlength: jQuery.validator.format("<?php echo trans_line('maxlength'); ?>"),
-                    digits: "<?php echo trans_line('digits'); ?>"
-                },
-                email: {
-                    minlength: jQuery.validator.format("<?php echo trans_line('minlength'); ?>"),
                     required: "<?php echo trans_line('required'); ?>",
-                    email: "<?php echo trans_line('correo'); ?>"
+                    mexicanDate: "<?php echo trans_line('mexicanDate'); ?>"
                 },
-                direccion: {
+                fecha_fin: {
                     minlength: jQuery.validator.format("<?php echo trans_line('minlength'); ?>"),
+                    maxlength: jQuery.validator.format("<?php echo trans_line('maxlength'); ?>"),
                     required: "<?php echo trans_line('required'); ?>",
-                    maxlength: jQuery.validator.format("<?php echo trans_line('maxlength'); ?>")
+                    mexicanDate: "<?php echo trans_line('mexicanDate'); ?>"
+                },
+                total_autorizado: {
+                    number: "<?php echo trans_line('number'); ?>"
                 }
             },
             rules: {
-                razon_social: {
+                nombre: {
                     minlength: 3,
                     required: true
                 },
-                rfc: {
-                    minlength: 12,
-                    required: true,
-                    maxlength: 14
-                },
-                telefono: {
+                fecha_inicio: {
                     minlength: 10,
+                    maxlength: 10,
                     required: true,
-                    maxlength: 14,
-                    digits: true
+                    mexicanDate: true
                 },
-                email: {
-                    minlength: 4,
+                fecha_fin: {
+                    minlength: 10,
+                    maxlength: 10,
                     required: true,
-                    email: true
+                    mexicanDate: true
                 },
-                direccion: {
-                    minlength: 3,
-                    required: true,
-                    maxlength: 490
+                total_autorizado: {
+                    number: true
                 }
             },
 
@@ -228,9 +222,10 @@
             },
 
             submitHandler: function (form) {
-                $('#btn_submit').html("Loading...");
-                $('#btn_submit').prop('disabled', true);
+                $('#disablingPage').css( "display", "block")
                 $('#spinner_gt').show(300);
+                $('#btn_submit').html("<?php echo trans_line('btn_submit_loading'); ?>");
+                $('#btn_submit').prop('disabled', true);
                 success1.show();
                 error1.hide();
                 form.submit();

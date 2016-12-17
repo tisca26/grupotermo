@@ -5,6 +5,14 @@ if (!function_exists('lang_segment')) {
     function lang_segment()
     {
         $CI =& get_instance();
+        return $CI->config->item('language_abbr');
+    }
+}
+
+if (!function_exists('lang_segment_slash')) {
+    function lang_segment_slash()
+    {
+        $CI =& get_instance();
         return $CI->config->item('language_abbr') . '/';
     }
 }

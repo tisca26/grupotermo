@@ -1,5 +1,5 @@
 <?php
-//  TABLA
+//  TABLA JS
 $lang['sortAscending'] = ': activar para ordenar la columna ascendentemente';
 $lang['sortDescending'] = ': activar para ordenar la columna descendentemente';
 $lang['emptyTable'] = 'No hay datos para mostrar';
@@ -13,19 +13,23 @@ $lang['previous'] = 'Prev';
 $lang['next'] = 'Sig';
 $lang['last'] = 'Último';
 $lang['first'] = 'Primero';
-//  FIN TABLA
-$lang['titulo_pagina'] = 'Recursos del sistema';
+//  FIN TABLA JS
+$lang['titulo_pagina'] = 'Obras';
 $lang['breadcrumb_home'] = 'Inicio';
-$lang['breadcrumb_resources'] = 'Recursos del sistema';
-$lang['agregar_recurso'] = 'Agregar recurso';
-$lang['id_tabla'] = 'ID';
-$lang['nombre_tabla'] = 'Nombre';
+$lang['breadcrumb_pagina'] = 'Obras';
+$lang['agregar_btn'] = 'Agregar obra';
+//TABLA
+$lang['obra_tabla'] = 'Obra';
+$lang['fecha_inicio_tabla'] = 'Fecha Inicio';
+$lang['fecha_fin_tabla'] = 'Fecha Fin';
 $lang['acciones_tabla'] = 'Acciones';
 $lang['editar_tabla'] = 'Editar';
 $lang['borrar_tabla'] = 'Borrar';
-
+//FIN TABLA
 $lang['confirmacion_borrado_titulo'] = '¿Desea borrarlo?';
 $lang['confirmacion_borrado_ok'] = 'Si';
 $lang['confirmacion_borrado_cancel'] = 'No';
 
-$lang['alerta_borrado'] = 'Se eliminó el recurso con éxito';
+$lang['alerta_borrado'] = 'Se eliminó la obra con éxito';
+$lang['alerta_borrado_fail'] = 'Error al eliminar la obra, intente más tarde';
+$lang['alerta_error_codigo'] = 'Código';
