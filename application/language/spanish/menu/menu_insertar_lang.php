@@ -42,6 +42,6 @@ $lang['icono'] = 'Ícono';
 $lang['icono_placeholder'] = 'Ingrese el ícono del menú';
 $lang['icono_ayuda'] = 'Ingrese el ícono del menú a dar de alta';
 
-$lang['alerta_exito'] = 'Se guardó el menú con éxito, inserta otro o <a class="alert-link" href="' . base_url_lang() . 'menu"> regresa al menú inicial</a>';
+$lang['alerta_exito'] = 'Se guardó el menú con éxito, inserta otro o <a class="alert-link btn_loading_page" href="' . base_url_lang() . 'menu"> regresa al menú inicial</a>';
 $lang['alerta_error'] = 'Hubo un error al guardar el menú, intente más tarde.';
 $lang['alerta_error_codigo'] = 'Código:';

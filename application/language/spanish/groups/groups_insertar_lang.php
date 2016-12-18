@@ -21,6 +21,6 @@ $lang['estatus'] = 'Estatus';
 $lang['estatus_activo'] = '¿Activo?';
 
 
-$lang['alerta_exito'] = 'Se guardó el grupo con éxito, inserta otro o <a class="alert-link" href="' . base_url_lang() . 'groups"> regresa al menú inicial</a>';
+$lang['alerta_exito'] = 'Se guardó el grupo con éxito, inserta otro o <a class="alert-link btn_loading_page" href="' . base_url_lang() . 'groups"> regresa al menú inicial</a>';
 $lang['alerta_error'] = 'Hubo un error al guardar el grupo, intente más tarde.';
 $lang['alerta_error_codigo'] = 'Código:';

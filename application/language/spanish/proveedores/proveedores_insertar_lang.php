@@ -36,6 +36,6 @@ $lang['direccion'] = 'Dirección';
 $lang['direccion_placeholder'] = 'Ingrese la dirección del proveedor';
 $lang['direccion_ayuda'] = 'Ingrese la dirección a dar de alta';
 
-$lang['alerta_exito'] = 'Se guardó el proveedor con éxito, inserta otro o <a class="alert-link" href="' . base_url_lang() . 'proveedores"> regresa al menú inicial</a>';
+$lang['alerta_exito'] = 'Se guardó el proveedor con éxito, inserta otro o <a class="alert-link btn_loading_page" href="' . base_url_lang() . 'proveedores"> regresa al menú inicial</a>';
 $lang['alerta_error'] = 'Hubo un error al guardar el proveedor, intente más tarde.';
 $lang['alerta_error_codigo'] = 'Código:';

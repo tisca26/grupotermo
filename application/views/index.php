@@ -79,6 +79,7 @@ $_F = (isset($_F) ? $_F : '');
 <script src="<?php echo base_url(); ?>assets/global/plugins/datatables/datatables.min.js" type="text/javascript"></script>
 <script src="<?php echo base_url(); ?>assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js" type="text/javascript"></script>
 <script src="<?php echo base_url(); ?>assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js" type="text/javascript"></script>
+<!--<script src="--><?php //echo base_url(); ?><!--assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.js" type="text/javascript"></script>-->
 <script src="<?php echo base_url(); ?>assets/global/plugins/jquery-validation/js/jquery.validate.min.js" type="text/javascript"></script>
 <script src="<?php echo base_url(); ?>assets/global/plugins/jquery-validation/js/additional-methods.min.js" type="text/javascript"></script>
 <script src="<?php echo base_url(); ?>assets/global/plugins/moment.min.js" type="text/javascript"></script>
@@ -105,7 +106,7 @@ $_F = (isset($_F) ? $_F : '');
 <!-- /Div para deshabilitar pagina -->
 <!-- spinner -->
 <div class="sk-spinner sk-spinner-wave"
-     style="z-index: 1000; position: fixed; top: 30%; left: 50%; transform: translate(-50%, 0);" id="spinner_gt">
+     style="z-index: 2000; position: fixed; top: 30%; left: 50%; transform: translate(-50%, 0);" id="spinner_gt">
     <div class="sk-rect1"></div>
     <div class="sk-rect2"></div>
     <div class="sk-rect3"></div>
@@ -144,5 +145,6 @@ $_F = (isset($_F) ? $_F : '');
     </div>
 
 </div>
+<script src="<?php echo base_url(); ?>assets/global/scripts/custom.js" type="text/javascript"></script>
 </body>
 </html>

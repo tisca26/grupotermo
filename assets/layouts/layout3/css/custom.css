@@ -7,7 +7,7 @@
     /* Display it on the layer with index 1001.
        Make sure this is the highest z-index value
        used by layers on that page */
-    z-index:1001;
+    z-index:2001;
 
     /* make it cover the whole screen */
     position: fixed;

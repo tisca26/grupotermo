@@ -223,7 +223,7 @@
             },
 
             submitHandler: function (form) {
-                $('#disablingPage').css( "display", "block")
+                $('#disablingPage').css( "display", "block");
                 $('#spinner_gt').show(300);
                 $('#btn_submit').html("<?php echo trans_line('btn_submit_loading'); ?>");
                 $('#btn_submit').prop('disabled', true);

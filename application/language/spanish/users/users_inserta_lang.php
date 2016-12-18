@@ -44,6 +44,6 @@ $lang['email_ayuda'] = 'Ingrese el email del usuario a dar de alta';
 
 $lang['grupo'] = 'Grupo (Rol)';
 
-$lang['alerta_exito'] = 'Se guardó el usuario con éxito, inserta otro o <a class="alert-link" href="' . base_url_lang() . 'users"> regresa al menú inicial</a>';
+$lang['alerta_exito'] = 'Se guardó el usuario con éxito, inserta otro o <a class="alert-link btn_loading_page" href="' . base_url_lang() . 'users"> regresa al menú inicial</a>';
 $lang['alerta_error'] = 'Hubo un error al guardar el usuario, intente más tarde.';
 $lang['alerta_error_codigo'] = 'Código:';

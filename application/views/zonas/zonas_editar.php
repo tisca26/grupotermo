@@ -21,7 +21,7 @@
                     <i class="fa fa-circle"></i>
                 </li>
                 <li>
-                    <a href="<?php echo base_url_lang() . 'obras'; ?>"><?php echo trans_line('breadcrumb_pagina'); ?></a>
+                    <a href="<?php echo base_url_lang() . 'zonas'; ?>"><?php echo trans_line('breadcrumb_pagina'); ?></a>
                     <i class="fa fa-circle"></i>
                 </li>
                 <li>
@@ -40,8 +40,8 @@
                     </div>
                     <div class="portlet-body">
                         <?php echo validation_errors('<div class="alert alert-danger alert-dismissable">', '</div>'); ?>
-                        <?php echo form_open('obras/editar_obra', array('id' => 'current_form')); ?>
-                        <input type="hidden" name="obras_id" value="<?php echo $obra->obras_id ?>">
+                        <?php echo form_open('zonas/editar_zona', array('id' => 'current_form')); ?>
+                        <input type="hidden" name="zonas_id" value="<?php echo $zona->zonas_id; ?>">
                         <div class="form-body">
                             <div class="alert alert-danger display-hide">
                                 <button class="close" data-close="alert"></button>
@@ -52,58 +52,22 @@
                                 <?php echo trans_line('jquery_valid'); ?>
                             </div>
                             <div class="row">
-                                <div class="col-md-12">
+                                <div class="col-md-6">
                                     <div class="form-group form-md-line-input">
-                                        <?php echo form_input('nombre', set_value('nombre', $obra->nombre), 'id="nombre" placeholder="' . trans_line('nombre_placeholder') . '" class="form-control"'); ?>
+                                        <?php echo form_input('nombre', set_value('nombre', $zona->nombre), 'id="nombre" placeholder="' . trans_line('nombre_placeholder') . '" class="form-control"'); ?>
                                         <label for="nombre"><?php echo trans_line('nombre'); ?>
                                             <span class="required">*</span>
                                         </label>
-                                        <span
-                                                class="help-block"><?php echo trans_line('nombre_ayuda'); ?></span>
+                                        <span class="help-block"><?php echo trans_line('nombre_ayuda'); ?></span>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group form-md-line-input">
-                                        <?php echo form_input('fecha_inicio', set_value('fecha_inicio', $obra->fecha_inicio), 'id="fecha_inicio" placeholder="' . trans_line('fecha_inicio_placeholder') . '" class="form-control date-picker"'); ?>
-                                        <label for="fecha_inicio"><?php echo trans_line('fecha_inicio'); ?>
+                                        <?php echo form_dropdown('obras_id', $obras, $zona->obras_id, 'id="obras_id" class="form-control bs-select" data-live-search="true" title="'.trans_line('obra_placeholder').'"'); ?>
+                                        <label for="obras_id"><?php echo trans_line('obra'); ?>
                                             <span class="required">*</span>
                                         </label>
-                                        <span
-                                                class="help-block"><?php echo trans_line('fecha_inicio_ayuda'); ?></span>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group form-md-line-input">
-                                        <?php echo form_input('fecha_fin', set_value('fecha_fin', $obra->fecha_fin), 'id="fecha_fin" placeholder="' . trans_line('fecha_fin_placeholder') . '" class="form-control date-picker"'); ?>
-                                        <label for="fecha_fin"><?php echo trans_line('fecha_fin'); ?>
-                                            <span class="required">*</span>
-                                        </label>
-                                        <span
-                                                class="help-block"><?php echo trans_line('fecha_fin_ayuda'); ?></span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group form-md-line-input">
-                                        <div class="form-control form-control-static">
-                                            $<?php echo number_format($obra->total_real, 2); ?></div>
-                                        <label for="total_real"><?php echo trans_line('total_real'); ?></label>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group form-md-line-input">
-                                        <div class="input-group">
-                                            <span class="input-group-addon">
-                                                <i class="fa fa-dollar"></i>
-                                            </span>
-                                            <?php echo form_input('total_autorizado', set_value('total_autorizado', $obra->total_autorizado), 'id="total_autorizado" placeholder="' . trans_line('total_autorizado_placeholder') . '" class="form-control"'); ?>
-                                            <label for="total_autorizado"><?php echo trans_line('total_autorizado'); ?></label>
-                                            <span class="help-block"><?php echo trans_line('total_autorizado_ayuda'); ?></span>
-                                        </div>
-
+                                        <span class="help-block"><?php echo trans_line('obra_ayuda'); ?></span>
                                     </div>
                                 </div>
                             </div>
@@ -114,7 +78,7 @@
                                     <button type="submit" class="btn green"
                                             id="btn_submit"><?php echo trans_line('btn_submit'); ?></button>
                                     <a class="btn default"
-                                       href="<?php echo base_url_lang() . 'obras' ?>"><?php echo trans_line('btn_cancel'); ?></a>
+                                       href="<?php echo base_url_lang() . 'zonas' ?>"><?php echo trans_line('btn_cancel'); ?></a>
                                 </div>
                             </div>
                         </div>
@@ -132,11 +96,21 @@
     $(document).ready(function () {
         $('#spinner_gt').hide(600);
 
-        $('.date-picker').datepicker({
-            language: '<?php echo lang_segment(); ?>',
-            orientation: "left",
-            autoclose: true,
-            format: 'yyyy-mm-dd'
+        $('.bs-select').selectpicker({
+            iconBase: 'fa',
+            tickIcon: 'fa-check'
+        });
+
+        $(".select2, .select2-multiple, .select2-allow-clear, .js-data-example-ajax").on("select2:open", function() {
+            if ($(this).parents("[class*='has-']").length) {
+                var classNames = $(this).parents("[class*='has-']")[0].className.split(/\s+/);
+
+                for (var i = 0; i < classNames.length; ++i) {
+                    if (classNames[i].match("has-")) {
+                        $("body > .select2-container").addClass(classNames[i]);
+                    }
+                }
+            }
         });
 
         var form1 = $('#current_form');
@@ -153,20 +127,8 @@
                     required: "<?php echo trans_line('required'); ?>",
                     minlength: jQuery.validator.format("<?php echo trans_line('minlength'); ?>")
                 },
-                fecha_inicio: {
-                    minlength: jQuery.validator.format("<?php echo trans_line('minlength'); ?>"),
-                    maxlength: jQuery.validator.format("<?php echo trans_line('maxlength'); ?>"),
-                    required: "<?php echo trans_line('required'); ?>",
-                    mexicanDate: "<?php echo trans_line('mexicanDate'); ?>"
-                },
-                fecha_fin: {
-                    minlength: jQuery.validator.format("<?php echo trans_line('minlength'); ?>"),
-                    maxlength: jQuery.validator.format("<?php echo trans_line('maxlength'); ?>"),
-                    required: "<?php echo trans_line('required'); ?>",
-                    mexicanDate: "<?php echo trans_line('mexicanDate'); ?>"
-                },
-                total_autorizado: {
-                    number: "<?php echo trans_line('number'); ?>"
+                obras_id: {
+                    required: "<?php echo trans_line('required'); ?>"
                 }
             },
             rules: {
@@ -174,20 +136,8 @@
                     minlength: 3,
                     required: true
                 },
-                fecha_inicio: {
-                    minlength: 10,
-                    maxlength: 10,
-                    required: true,
-                    mexicanDate: true
-                },
-                fecha_fin: {
-                    minlength: 10,
-                    maxlength: 10,
-                    required: true,
-                    mexicanDate: true
-                },
-                total_autorizado: {
-                    number: true
+                obras_id: {
+                    required: true
                 }
             },
 

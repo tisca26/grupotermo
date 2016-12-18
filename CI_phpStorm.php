@@ -141,6 +141,7 @@ class CI_Model
  * @property cambiocontrasena_model                 $cambiocontrasena_model
  * @property catalogos_model                        $catalogos_model
  * @property clientes_model                         $clientes_model
+ * @property conceptos_model                        $conceptos_model
  * @property empresas_model                         $empresas_model
  * @property groups_model                           $groups_model
  * @property logs_oe_model                          $logs_oe_model

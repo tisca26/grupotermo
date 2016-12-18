@@ -36,6 +36,6 @@ $lang['direccion'] = 'Dirección';
 $lang['direccion_placeholder'] = 'Ingrese la dirección del cliente';
 $lang['direccion_ayuda'] = 'Ingrese la dirección a dar de alta';
 
-$lang['alerta_exito'] = 'Se guardó el cliente con éxito, inserta otro o <a class="alert-link" href="' . base_url_lang() . 'clientes"> regresa al menú inicial</a>';
+$lang['alerta_exito'] = 'Se guardó el cliente con éxito, inserta otro o <a class="alert-link btn_loading_page" href="' . base_url_lang() . 'clientes"> regresa al menú inicial</a>';
 $lang['alerta_error'] = 'Hubo un error al guardar el cliente, intente más tarde.';
 $lang['alerta_error_codigo'] = 'Código:';

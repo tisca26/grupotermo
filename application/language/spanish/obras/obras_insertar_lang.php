@@ -43,6 +43,6 @@ $lang['total_real'] = 'Total real';
 $lang['total_real_placeholder'] = 'Total real';
 $lang['total_real_ayuda'] = 'Costo real de la obra';
 
-$lang['alerta_exito'] = 'Se guardó la obra con éxito, inserta otro o <a class="alert-link" href="' . base_url_lang() . 'obras"> regresa al menú inicial</a>';
+$lang['alerta_exito'] = 'Se guardó la obra con éxito, inserta otro o <a class="alert-link btn_loading_page" href="' . base_url_lang() . 'obras"> regresa al menú inicial</a>';
 $lang['alerta_error'] = 'Hubo un error al guardar la obra, intente más tarde.';
 $lang['alerta_error_codigo'] = 'Código:';

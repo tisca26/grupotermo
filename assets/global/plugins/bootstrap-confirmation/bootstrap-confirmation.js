@@ -141,6 +141,7 @@
     // configure 'ok' button
     $tip.find('[data-apply="confirmation"]')
       .addClass(o.btnOkClass)
+      .addClass(that.$element.attr('data-btn-ok-class'))
       .html(o.btnOkLabel)
       .attr(this.options._attributes)
       .prepend($('<i></i>').addClass(o.btnOkIcon), ' ')

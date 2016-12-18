@@ -54,7 +54,7 @@ class Proveedores extends Acl_controller
                 set_bootstrap_alert(trans_line('alerta_exito'), BOOTSTRAP_ALERT_SUCCESS);
                 return redirect('proveedores/form_insert');
             } else {
-                $error = $this->resources_model->error_consulta();
+                $error = $this->proveedores_model->error_consulta();
                 $mensajes_error = array(trans_line('alerta_error'), trans_line('alerta_error_codigo') . base64_encode($error['message']));
                 set_bootstrap_alert($mensajes_error, BOOTSTRAP_ALERT_DANGER);
                 return $this->form_insert();
@@ -85,7 +85,7 @@ class Proveedores extends Acl_controller
                 set_bootstrap_alert(trans_line('alerta_exito'), BOOTSTRAP_ALERT_SUCCESS);
                 return redirect('proveedores');
             } else {
-                $error = $this->resources_model->error_consulta();
+                $error = $this->proveedores_model->error_consulta();
                 $mensajes_error = array(trans_line('alerta_error'), trans_line('alerta_error_codigo') . base64_encode($error['message']));
                 set_bootstrap_alert($mensajes_error, BOOTSTRAP_ALERT_DANGER);
                 return $this->form_edit($id);
