@@ -12,15 +12,15 @@ class Zonas extends Acl_controller
     {
         parent::__construct();
 
-        $this->set_read_list(array('index'));
+        $this->set_read_list(array('index', 'etapas_por_obra'));
         $this->set_insert_list(array('insertar_zona', 'form_insert'));
         $this->set_update_list(array('editar_zona', 'form_edit'));
         $this->set_delete_list(array('borrar_zona'));
 
         $this->check_access();
 
-        $this->load->model('zonas_model');
         $this->load->model('obras_model');
+        $this->load->model('zonas_model');
         $this->load->library('form_validation');
     }
 
@@ -51,7 +51,11 @@ class Zonas extends Acl_controller
             $this->form_insert();
         } else {
             $zona = $this->input->post();
+            $etapas_id = $zona['etapas_id'];
+            unset($zona['etapas_id']);
             if ($this->zonas_model->insertar_zona($zona) == TRUE) {
+                $this->load->business('zona');
+                $this->zona->inserta_zona_por_etapas_id($this->zonas_model->ultimo_id(), $etapas_id);
                 set_bootstrap_alert(trans_line('alerta_exito'), BOOTSTRAP_ALERT_SUCCESS);
                 return redirect('zonas/form_insert');
             } else {
@@ -107,5 +111,11 @@ class Zonas extends Acl_controller
             set_bootstrap_alert($mensajes_error, BOOTSTRAP_ALERT_DANGER);
         }
         redirect('zonas');
+    }
+
+    public function etapas_por_obra($obras_id = 0)
+    {
+        $this->load->business('etapa');
+        return $this->etapa->etapas_por_obras_id_json($obras_id);
     }
 }

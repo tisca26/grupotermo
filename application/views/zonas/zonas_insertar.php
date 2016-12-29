@@ -51,7 +51,7 @@
                                 <?php echo trans_line('jquery_valid'); ?>
                             </div>
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-12">
                                     <div class="form-group form-md-line-input">
                                         <?php echo form_input('nombre', set_value('nombre'), 'id="nombre" placeholder="' . trans_line('nombre_placeholder') . '" class="form-control"'); ?>
                                         <label for="nombre"><?php echo trans_line('nombre'); ?>
@@ -60,13 +60,39 @@
                                         <span class="help-block"><?php echo trans_line('nombre_ayuda'); ?></span>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group">
+                                    <label class="control-label col-md-2">
+                                        <?php echo trans_line('periodo_fechas'); ?>
+                                        <span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-10">
+                                        <div class="input-group date-picker input-daterange" data-date="<?php echo date('Y-m-d') ?>" data-date-format="yyyy-mm-dd">
+                                            <?php echo form_input('fecha_inicio', set_value('fecha_inicio'), 'id="fecha_inicio" placeholder="' . trans_line('fecha_inicio_placeholder') . '" class="form-control"'); ?>
+                                            <span class="input-group-addon"> <?php echo trans_line('fechas_a'); ?> </span>
+                                            <?php echo form_input('fecha_fin', set_value('fecha_fin'), 'id="fecha_fin" placeholder="' . trans_line('fecha_fin_placeholder') . '" class="form-control"'); ?>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group form-md-line-input">
-                                        <?php echo form_dropdown('obras_id', $obras, '', 'id="obras_id" class="form-control bs-select" data-live-search="true" title="'.trans_line('obra_placeholder').'"'); ?>
+                                        <?php echo form_dropdown('obras_id', $obras, '', 'id="obras_id" class="form-control bs-select" data-live-search="true" data-live-search-normalize="true" title="' . trans_line('obra_placeholder') . '"'); ?>
                                         <label for="obras_id"><?php echo trans_line('obra'); ?>
                                             <span class="required">*</span>
                                         </label>
                                         <span class="help-block"><?php echo trans_line('obra_ayuda'); ?></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group form-md-line-input" id="div_etapas_select">
+                                        <?php echo form_dropdown('etapas_id', '', '', 'id="etapas_id" class="form-control bs-select" data-live-search="true" data-live-search-normalize="true" title="' . trans_line('etapa_placeholder') . '" multiple'); ?>
+                                        <label for="etapas_id"><?php echo trans_line('etapa'); ?>
+                                            <span class="required">*</span>
+                                        </label>
+                                        <span class="help-block"><?php echo trans_line('etapa_ayuda'); ?></span>
                                     </div>
                                 </div>
                             </div>
@@ -92,15 +118,45 @@
     <!-- END CONTENT BODY -->
 </div>
 <script type="application/javascript">
+    var genera_fechas = function () {
+        $('.date-picker').datepicker({
+            language: '<?php echo lang_segment(); ?>',
+            orientation: "left",
+            autoclose: true,
+            format: 'yyyy-mm-dd'
+        });
+    };
+    var genera_select_etapas = function (etapas) {
+        var $select = $('#etapas_id');
+        $select.empty();
+        for (var idx in etapas) {
+            $select.append('<option value=' + etapas[idx].etapas_id + '>' + etapas[idx].nombre + '</option>');
+        }
+        $select.selectpicker('refresh');
+    };
+
+    var obtener_etapas_por_id = function (obras_id) {
+        $.get(
+            "<?php echo base_url_lang() . 'zonas/etapas_por_obra/' ?>" + obras_id,
+            function (data, status, xhr) {
+                genera_select_etapas(data);
+            },
+            "json"
+        ).done(function () {
+            //por si se ocupa
+        }).fail(function () {
+            alert("error");
+        });
+    };
     $(document).ready(function () {
         $('#spinner_gt').hide(600);
-
+        genera_fechas();
         $('.bs-select').selectpicker({
             iconBase: 'fa',
             tickIcon: 'fa-check'
         });
 
-        $(".select2, .select2-multiple, .select2-allow-clear, .js-data-example-ajax").on("select2:open", function() {
+        $(".select2, .select2-multiple, .select2-allow-clear, .js-data-example-ajax").on("select2:open", function () {
             if ($(this).parents("[class*='has-']").length) {
                 var classNames = $(this).parents("[class*='has-']")[0].className.split(/\s+/);
 
@@ -110,6 +166,11 @@
                     }
                 }
             }
+        });
+
+        $('#obras_id').on('changed.bs.select', function (e, clickedIndex, newValue, oldValue) {
+            var obras_id = $(e.currentTarget).val();
+            obtener_etapas_por_id(obras_id);
         });
 
         var form1 = $('#current_form');
@@ -128,6 +189,9 @@
                 },
                 obras_id: {
                     required: "<?php echo trans_line('required'); ?>"
+                },
+                etapas_id:{
+                    required: "<?php echo trans_line('required'); ?>"
                 }
             },
             rules: {
@@ -136,6 +200,9 @@
                     required: true
                 },
                 obras_id: {
+                    required: true
+                },
+                etapas_id:{
                     required: true
                 }
             },
@@ -172,7 +239,7 @@
             },
 
             submitHandler: function (form) {
-                $('#disablingPage').css( "display", "block")
+                $('#disablingPage').css("display", "block")
                 $('#spinner_gt').show(300);
                 $('#btn_submit').html("<?php echo trans_line('btn_submit_loading'); ?>");
                 $('#btn_submit').prop('disabled', true);

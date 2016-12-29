@@ -61,6 +61,7 @@ class Obras_model extends CI_Model
         foreach ($results as $obra){
             $my_array[$obra->obras_id] = $obra->nombre;
         }
+        $my_array[6] = 'Otro';
         return $my_array;
     }
 }

@@ -21,7 +21,7 @@
                     <i class="fa fa-circle"></i>
                 </li>
                 <li>
-                    <a href="<?php echo base_url_lang() . 'users'; ?>"><?php echo trans_line('breadcrumb_menu'); ?></a>
+                    <a href="<?php echo base_url_lang() . 'menu'; ?>"><?php echo trans_line('breadcrumb_menu'); ?></a>
                     <i class="fa fa-circle"></i>
                 </li>
                 <li>

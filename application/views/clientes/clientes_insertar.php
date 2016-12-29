@@ -75,7 +75,7 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group form-md-line-input">
-                                        <?php echo form_input('telefono', set_value('telefono'), 'id="telefono" placeholder="' . trans_line('telefono_placeholder') . '" class="form-control"'); ?>
+                                        <?php echo form_input('tel_fijo', set_value('tel_fijo'), 'id="telefono" placeholder="' . trans_line('telefono_placeholder') . '" class="form-control"'); ?>
                                         <label for="telefono"><?php echo trans_line('telefono'); ?>
                                             <span class="required">*</span>
                                         </label>

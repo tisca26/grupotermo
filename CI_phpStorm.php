@@ -138,17 +138,24 @@ class CI_Model
  * <examples>
  *
  * @property acl_model 					            $acl_model
+ * @property activos_model                          $activos_model
+ * @property activos_categoria_model                $activos_categoria_model
  * @property cambiocontrasena_model                 $cambiocontrasena_model
  * @property catalogos_model                        $catalogos_model
  * @property clientes_model                         $clientes_model
  * @property conceptos_model                        $conceptos_model
+ * @property etapas_zonas_conceptos_model           $etapas_zonas_conceptos_model
  * @property empresas_model                         $empresas_model
+ * @property etapas_model                           $etapas_model
  * @property groups_model                           $groups_model
  * @property logs_oe_model                          $logs_oe_model
+ * @property materiales_categoria_model             $materiales_categoria_model
+ * @property materiales_model                       $materiales_model
  * @property menu_model                             $menu_model
  * @property obras_model                            $obras_model
  * @property proveedores_model                      $proveedores_model
  * @property resources_model                        $resources_model
+ * @property unidades_model                         $unidades_model
  * @property users_model                            $users_model
  * @property zonas_model                            $zonas_model
  *
@@ -168,7 +175,8 @@ class my_models extends my_business
  * ---------------------- Business to Load ----------------------
  * <examples>
  *
- * @property cliente                    $cliente
+ * @property etapa                                  $etapa
+ * @property zona                                   $zona
  */
 class my_business
 {

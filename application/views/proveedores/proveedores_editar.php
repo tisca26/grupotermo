@@ -76,9 +76,8 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group form-md-line-input">
-                                        <?php echo form_input('telefono', set_value('telefono', $prov->telefono), 'id="telefono" placeholder="' . trans_line('telefono_placeholder') . '" class="form-control"'); ?>
-                                        <label for="telefono"><?php echo trans_line('telefono'); ?>
-                                            <span class="required">*</span>
+                                        <?php echo form_input('tel_fijo', set_value('tel_fijo', $prov->tel_fijo), 'id="tel_fijo" placeholder="' . trans_line('tel_fijo_placeholder') . '" class="form-control"'); ?>
+                                        <label for="tel_fijo"><?php echo trans_line('tel_fijo'); ?>
                                         </label>
                                         <span
                                             class="help-block"><?php echo trans_line('telefono_ayuda'); ?></span>
@@ -152,9 +151,8 @@
                     required: "<?php echo trans_line('required'); ?>",
                     maxlength: jQuery.validator.format("<?php echo trans_line('maxlength'); ?>")
                 },
-                telefono: {
+                tel_fijo: {
                     minlength: jQuery.validator.format("<?php echo trans_line('minlength'); ?>"),
-                    required: "<?php echo trans_line('required'); ?>",
                     maxlength: jQuery.validator.format("<?php echo trans_line('maxlength'); ?>"),
                     digits: "<?php echo trans_line('digits'); ?>"
                 },
@@ -179,9 +177,8 @@
                     required: true,
                     maxlength: 14
                 },
-                telefono: {
+                tel_fijo: {
                     minlength: 10,
-                    required: true,
                     maxlength: 14,
                     digits: true
                 },

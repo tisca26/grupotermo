@@ -19,6 +19,19 @@ class Zonas_model extends CI_Model
         return $this->db->error();
     }
 
+    public function zonas_por_ids($zonas_ids = array())
+    {
+        $result = array();
+        $this->db->select('z.*, o.nombre as obra_nombre');
+        $this->db->from('zonas z');
+        $this->db->join('obras o', 'z.obras_id = o.obras_id', 'inner');
+        $query = $this->db->where_in('z.zonas_id', $zonas_ids)->get();
+        if ($query->num_rows() > 0) {
+            $result = $query->result();
+        }
+        return $result;
+    }
+
     public function zonas_todos($order = 'zonas_id')
     {
         $result = array();

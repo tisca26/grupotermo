@@ -19,6 +19,7 @@ class Activos extends Acl_controller
         $this->check_access();
 
         $this->load->model('activos_model');
+        $this->load->model('activos_categoria_model');
         $this->load->library('form_validation');
     }
 
@@ -35,6 +36,7 @@ class Activos extends Acl_controller
     {
         $this->cargar_idioma->carga_lang('activos/activos_insertar');
         $data = array();
+        $data['categorias'] = $this->activos_categoria_model->activos_categoria_todos_array_sel();
         $template['_B'] = 'activos/activos_insertar.php';
         $this->load->template_view($this->template_base, $data, $template);
     }
@@ -48,7 +50,17 @@ class Activos extends Acl_controller
             $this->form_insert();
         } else {
             $activo = $this->input->post();
+            $activo['estatus'] = (int) $activo['estatus'];
+            $categorias = $activo['activos_categoria_id'];
+            unset($activo['activos_categoria_id']);
             if ($this->activos_model->insertar_activo($activo) == TRUE) {
+                $activos_id = $this->activos_model->ultimo_id();
+                foreach ($categorias as $categoria){
+                    $rel = array();
+                    $rel['activos_id'] = $activos_id;
+                    $rel['activos_categoria_id'] = $categoria;
+                    $this->activos_model->insertar_rel_activo_categoria($rel);
+                }
                 set_bootstrap_alert(trans_line('alerta_exito'), BOOTSTRAP_ALERT_SUCCESS);
                 return redirect('activos/form_insert');
             } else {
@@ -65,6 +77,8 @@ class Activos extends Acl_controller
         $this->cargar_idioma->carga_lang('activos/activos_editar');
         $data = array();
         $data['activo'] = $this->activos_model->activo_por_id($activos_id);
+        $data['categorias'] = $this->activos_categoria_model->activos_categoria_todos_array_sel();
+        $data['categorias_sel'] = $this->activos_model->rel_activo_categoria_sel($activos_id);
         $template['_B'] = 'activos/activos_editar.php';
         $this->load->template_view($this->template_base, $data, $template);
     }
@@ -79,7 +93,17 @@ class Activos extends Acl_controller
             $this->form_edit($id);
         } else {
             $activo = $this->input->post();
+            $activo['estatus'] = (int) $activo['estatus'];
+            $categorias = $activo['activos_categoria_id'];
+            unset($activo['activos_categoria_id']);
             if ($this->activos_model->editar_activo($activo) == TRUE) {
+                $this->activos_model->borrar_rel_activo_categoria($id);
+                foreach ($categorias as $categoria){
+                    $rel = array();
+                    $rel['activos_id'] = $id;
+                    $rel['activos_categoria_id'] = $categoria;
+                    $this->activos_model->insertar_rel_activo_categoria($rel);
+                }
                 set_bootstrap_alert(trans_line('alerta_exito'), BOOTSTRAP_ALERT_SUCCESS);
                 return redirect('activos');
             } else {

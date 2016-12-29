@@ -20,6 +20,19 @@ class Proveedores_model extends CI_Model
         return $this->db->error();
     }
 
+    public function proveedores_todos_sel($order = 'proveedores_id'){
+        $result = array();
+        $q_result = array();
+        $query = $this->db->order_by($order)->get('proveedores');
+        if ($query->num_rows() > 0){
+            $q_result = $query->result();
+            foreach ($q_result as $q){
+                $result[$q->proveedores_id] = $q->razon_social;
+            }
+        }
+        return $result;
+    }
+
     public function proveedores_todos($order = 'proveedores_id')
     {
         $result = array();

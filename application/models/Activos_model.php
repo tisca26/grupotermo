@@ -28,7 +28,7 @@ class Activos_model extends CI_Model
         return $result;
     }
 
-    public function insertar_activo($activo)
+    public function insertar_activo($activo = array())
     {
         return $this->db->insert('activos', $activo);
     }
@@ -51,5 +51,27 @@ class Activos_model extends CI_Model
     public function borrar_activo($activos_id = 0)
     {
         return $this->db->delete('activos', array('activos_id' => $activos_id));
+    }
+
+    public function insertar_rel_activo_categoria($rel_activo = array())
+    {
+        return $this->db->insert('activos_cat', $rel_activo);
+    }
+
+    public function rel_activo_categoria_sel($activos_id = 0)
+    {
+        $result = array();
+        $q = $this->db->where('activos_id', $activos_id)->get('activos_cat');
+        if ($q->num_rows() > 0) {
+            foreach ($q->result() as $res) {
+                $result[] = $res->activos_categoria_id;
+            }
+        }
+        return $result;
+    }
+
+    public function borrar_rel_activo_categoria($activos_id = 0)
+    {
+        return $this->db->delete('activos_cat', array('activos_id' => $activos_id));
     }
 }

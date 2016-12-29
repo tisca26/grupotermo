@@ -97,14 +97,14 @@ class Menu_manager
                     } elseif (!empty($row->page_uri)) { //No tiene hijo y si tiene url asignada
                         $icono = '<i class=" ' . $row->icon . '"></i> ';
                         $contenido_name = $row->name;
-                        $output .= '<a href="' . base_url_lang() . $row->page_uri . '" >' . $icono . $contenido_name . '</a>';
+                        $output .= '<a class="btn_loading_page" href="' . base_url_lang() . $row->page_uri . '" >' . $icono . $contenido_name . '</a>';
                         $flag = 1;
                         $level--;
                     }
                 } elseif (!empty($row->page_uri)) { // genera contenido del <li> si es que tiene enlace (recurso), YA LLEGAMOS A LA HOJA
                     $icono = $icono = '<i class=" ' . $row->icon . '"></i> ';
                     $contenido_name = $row->name;
-                    $output .= '<a href="' . base_url_lang() . $row->page_uri . '">' . $icono . $contenido_name . '</a>';
+                    $output .= '<a class="btn_loading_page" href="' . base_url_lang() . $row->page_uri . '">' . $icono . $contenido_name . '</a>';
                     $flag = 1;
                 }
                 $output .= "</li>";

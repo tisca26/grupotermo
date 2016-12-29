@@ -31,6 +31,16 @@ $lang['obra'] = 'Obra';
 $lang['obra_placeholder'] = 'Obra asignada';
 $lang['obra_ayuda'] = 'Nombre de la obra a la que pertenece';
 
+$lang['etapa'] = 'Etapa';
+$lang['etapa_placeholder'] = 'Etapas correspondientes';
+$lang['etapa_ayuda'] = 'Nombre de las etapas a la que pertenece';
+
+$lang['periodo_fechas'] = 'Periodo de la zona';
+$lang['fechas_a'] = 'a';
+$lang['fecha_inicio_placeholder'] = 'Fecha de inicio';
+$lang['fecha_fin_placeholder'] = 'Fecha fin';
+
+
 $lang['alerta_exito'] = 'Se guardó la zona con éxito, inserta otro o <a class="alert-link btn_loading_page" href="' . base_url_lang() . 'zonas"> regresa al menú inicial</a>';
 $lang['alerta_error'] = 'Hubo un error al guardar la zona, intente más tarde.';
 $lang['alerta_error_codigo'] = 'Código:';

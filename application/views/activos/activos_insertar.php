@@ -70,6 +70,32 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group form-md-line-input">
+                                        <?php echo form_dropdown('activos_categoria_id[]', $categorias, set_value('activos_categoria_id'), 'id="activos_categoria_id" title="' . trans_line('categoria_placeholder') . '" class="form-control bs-select" data-live-search="true" data-live-search-normalize="true" multiple'); ?>
+                                        <label for="categoria"><?php echo trans_line('categoria'); ?>
+                                            <span class="required">*</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group form-md-checkboxes">
+                                        <label for=""><?php echo trans_line('estatus'); ?></label>
+                                        <div class="md-checkbox-list">
+                                            <div class="md-checkbox">
+                                                <input type="checkbox" id="estatus" name="estatus" value="1"
+                                                       class="md-check" <?php echo set_checkbox('estatus', '1', TRUE); ?>>
+                                                <label for="estatus">
+                                                    <span></span>
+                                                    <span class="check"></span>
+                                                    <span class="box"></span> <?php echo trans_line('estatus_activo'); ?>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="form-actions">
                             <div class="row">
@@ -129,6 +155,9 @@
                 precio_unitario: {
                     required: "<?php echo trans_line('required'); ?>",
                     number: "<?php echo trans_line('number'); ?>"
+                },
+                'activos_categoria_id[]':{
+                    required: "<?php echo trans_line('required'); ?>"
                 }
             },
             rules: {
@@ -139,6 +168,9 @@
                 precio_unitario: {
                     required: true,
                     number: true
+                },
+                'activos_categoria_id[]':{
+                    required: true
                 }
             },
 

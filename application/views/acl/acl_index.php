@@ -21,10 +21,6 @@
                     <i class="fa fa-circle"></i>
                 </li>
                 <li>
-                    <a href="<?php echo base_url_lang() . 'users'; ?>"><?php echo trans_line('breadcrumb_acl'); ?></a>
-                    <i class="fa fa-circle"></i>
-                </li>
-                <li>
                     <span><?php echo trans_line('breadcrumb_acl_last'); ?></span>
                 </li>
             </ul>

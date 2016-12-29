@@ -31,6 +31,12 @@ $lang['precio_unitario'] = 'Precio unitario';
 $lang['precio_unitario_placeholder'] = 'Ingrese el precio unitario';
 $lang['precio_unitario_ayuda'] = 'Costo del activo en MXN';
 
+$lang['categoria'] = 'Categoría';
+$lang['categoria_placeholder'] = 'Ingrese la categoría del activo';
+
+$lang['estatus'] = 'Estatus';
+$lang['estatus_activo'] = '¿Activo?';
+
 $lang['alerta_exito'] = 'Se guardó el activo con éxito, inserta otro o <a class="alert-link btn_loading_page" href="' . base_url_lang() . 'activos"> regresa al menú inicial</a>';
 $lang['alerta_error'] = 'Hubo un error al guardar la activo, intente más tarde.';
 $lang['alerta_error_codigo'] = 'Código:';
