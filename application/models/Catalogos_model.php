@@ -24,6 +24,47 @@ class Catalogos_model extends CI_Model
         }
         return $data;
     }
+
+    public function sexo_sel()
+    {
+        $data['MASCULINO'] = 'MASCULINO';
+        $data['FEMENINO'] = 'FEMENINO';
+        return $data;
+    }
+
+    public function estado_civil_sel()
+    {
+        $data['SOLTERO'] = 'SOLTERO';
+        $data['CASADO'] = 'CASADO';
+        $data['VIUDO'] = 'VIUDO';
+        $data['DIVORCIADO'] = 'DIVORCIADO';
+        return $data;
+    }
+
+    public function personal_tipo_sel()
+    {
+        $data['SINDICALIZADO'] = 'SINDICALIZADO';
+        $data['CONFIANZA'] = 'CONFIANZA';
+        return $data;
+    }
+
+    public function personal_turno_sel()
+    {
+        $data['MATUTINO'] = 'MATUTINO';
+        $data['DESPERTINO'] = 'DESPERTINO';
+        $data['NOCTURNO'] = 'NOCTURNO';
+        $data['MIXTO'] = 'MIXTO';
+        return $data;
+    }
+    public function tipos_credito_imss_sel()
+    {
+        $data['VECES SALARIO MINIMO'] = 'VECES SALARIO MINIMO';
+        $data['MOVIMIENTO PERMANENTE'] = 'MOVIMIENTO PERMANENTE';
+        $data['PORCENTAJE'] = 'PORCENTAJE';
+        $data['CUOTA FIJA'] = 'CUOTA FIJA';
+        return $data;
+    }
+
 }
 
 ?>

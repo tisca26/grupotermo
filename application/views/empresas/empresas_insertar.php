@@ -75,12 +75,12 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group form-md-line-input">
-                                        <?php echo form_input('telefono', set_value('telefono'), 'id="telefono" placeholder="' . trans_line('telefono_placeholder') . '" class="form-control"'); ?>
-                                        <label for="telefono"><?php echo trans_line('telefono'); ?>
+                                        <?php echo form_input('tel_fijo', set_value('tel_fijo'), 'id="tel_fijo" placeholder="' . trans_line('tel_fijo_placeholder') . '" class="form-control"'); ?>
+                                        <label for="tel_fijo"><?php echo trans_line('tel_fijo'); ?>
                                             <span class="required">*</span>
                                         </label>
                                         <span
-                                            class="help-block"><?php echo trans_line('telefono_ayuda'); ?></span>
+                                            class="help-block"><?php echo trans_line('tel_fijo_ayuda'); ?></span>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -151,7 +151,7 @@
                     required: "<?php echo trans_line('required'); ?>",
                     maxlength: jQuery.validator.format("<?php echo trans_line('maxlength'); ?>")
                 },
-                telefono: {
+                tel_fijo: {
                     minlength: jQuery.validator.format("<?php echo trans_line('minlength'); ?>"),
                     required: "<?php echo trans_line('required'); ?>",
                     maxlength: jQuery.validator.format("<?php echo trans_line('maxlength'); ?>"),
@@ -178,7 +178,7 @@
                     required: true,
                     maxlength: 14
                 },
-                telefono: {
+                tel_fijo: {
                     minlength: 10,
                     required: true,
                     maxlength: 14,

@@ -74,4 +74,28 @@ class Activos_model extends CI_Model
     {
         return $this->db->delete('activos_cat', array('activos_id' => $activos_id));
     }
+
+    public function insertar_rel_activo_precio_proveedor($rel_activo = array())
+    {
+        return $this->db->insert('activos_precios', $rel_activo);
+    }
+
+    public function borrar_rel_activo_precio($activos_id = 0)
+    {
+        return $this->db->delete('activos_precios', array('activos_id' => $activos_id));
+    }
+
+    public function precios_proveedores_por_activos_id($activos_id = 0)
+    {
+        $result = array();
+        $this->db->select('ap.*, p.razon_social');
+        $this->db->from('activos_precios ap');
+        $this->db->join('proveedores p', 'ap.proveedores_id = p.proveedores_id', 'inner');
+        $this->db->where('ap.activos_id', $activos_id);
+        $q = $this->db->get();
+        if ($q->num_rows() > 0){
+            $result = $q->result();
+        }
+        return $result;
+    }
 }

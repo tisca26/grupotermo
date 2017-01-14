@@ -42,6 +42,17 @@ $lang['precios_por_proveedor'] = 'Precios por proveedor';
 $lang['proveedor'] = 'Proveedor';
 $lang['proveedor_placeholder'] = 'Monto del proveedor';
 
+$lang['nombre_ubicacion'] = 'Nombre de la ubicación';
+$lang['nombre_ubicacion_placeholder'] = 'Ingrese el nombre de la ubicación del material';
+$lang['nombre_ubicacion_ayuda'] = 'Nombre de la ubicación del material';
+
+$lang['unidades_id'] = 'Unidades';
+$lang['unidades_id_placeholder'] = 'Tipo de unidad de carga';
+
+$lang['precio_propio'] = 'Precio propio';
+$lang['precio_propio_placeholder'] = 'Ingrese el precio del material';
+$lang['precio_propio_ayuda'] = 'Precio del material si es que su empresa lo tiene';
+
 $lang['agregar_fila_proveedor'] = 'Agregar precio - proveedor';
 $lang['borrar_fila'] = 'Borrar';
 

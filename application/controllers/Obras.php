@@ -12,13 +12,18 @@ class Obras extends Acl_controller
     {
         parent::__construct();
 
-        $this->set_read_list(array('index'));
+        $this->set_read_list(array('index', 'resumen_obra'));
         $this->set_insert_list(array('insertar_obra', 'form_insert'));
         $this->set_update_list(array('editar_obra', 'form_edit'));
         $this->set_delete_list(array('borrar_obra'));
 
         $this->check_access();
 
+        $this->load->model('clientes_model');
+        $this->load->model('empresas_model');
+        $this->load->model('etapas_model');
+        $this->load->model('zonas_model');
+        $this->load->model('etapas_zonas_conceptos_model');
         $this->load->model('obras_model');
         $this->load->library('form_validation');
     }
@@ -36,6 +41,8 @@ class Obras extends Acl_controller
     {
         $this->cargar_idioma->carga_lang('obras/obras_insertar');
         $data = array();
+        $data['empresas'] = $this->empresas_model->empresas_todos_sel();
+        $data['clientes'] = $this->clientes_model->clientes_todos_sel();
         $template['_B'] = 'obras/obras_insertar.php';
         $this->load->template_view($this->template_base, $data, $template);
     }
@@ -108,6 +115,41 @@ class Obras extends Acl_controller
             set_bootstrap_alert($mensajes_error, BOOTSTRAP_ALERT_DANGER);
         }
         redirect('obras');
+    }
+
+    public function resumen_obra($obras_id = 0)
+    {
+        if (intval($obras_id) === 0 ) {
+            return redirect('obras');
+        }
+        $obra = $this->obras_model->obra_por_id($obras_id);
+        $etapas = $this->etapas_model->etapas_por_obras_id($obras_id);
+        $zonas_obra = $this->zonas_model->zonas_por_obras_id($obras_id);
+        if (count($zonas_obra) == 0) {
+            foreach ($etapas as $etapa) {
+                $etapa->conceptos = $this->etapas_zonas_conceptos_model->conceptos_por_etapa($etapa->etapas_id);
+            }
+            $this->cargar_idioma->carga_lang('obras/resumen_obra_por_concepto');
+            $data = array();
+            $data['obra'] = $obra;
+            $data['etapas'] = $etapas;
+            $template['_B'] = 'obras/resumen_obra_por_concepto.php';
+            return $this->load->template_view($this->template_base, $data, $template);
+        }else {
+            foreach ($etapas as $etapa) {
+                $etapa->zonas = $this->etapas_zonas_conceptos_model->zonas_por_etapa($etapa->etapas_id);
+                foreach ($etapa->zonas as $zona) {
+                    $zona->conceptos = $this->etapas_zonas_conceptos_model->conceptos_por_etapa_zona($etapa->etapas_id, $zona->zonas_id);
+                }
+            }
+            $this->cargar_idioma->carga_lang('obras/resumen_obra_por_zona');
+            $data = array();
+            $data['obra'] = $obra;
+            $data['etapas'] = $etapas;
+            $template['_B'] = 'obras/resumen_obra_por_zona.php';
+            return $this->load->template_view($this->template_base, $data, $template);
+        }
+        return redirect('alta_obra');
     }
 
     public function valid_date($date)

@@ -18,8 +18,10 @@ class Materiales extends Acl_controller
 
         $this->check_access();
 
+        $this->load->model('unidades_model');
         $this->load->model('materiales_model');
         $this->load->model('materiales_categoria_model');
+        $this->load->model('materiales_ubicacion_model');
         $this->load->model('proveedores_model');
         $this->load->library('form_validation');
     }
@@ -39,6 +41,7 @@ class Materiales extends Acl_controller
         $data = array();
         $data['categorias'] = $this->materiales_categoria_model->materiales_categoria_todos_array_sel();
         $data['proveedores'] = $this->proveedores_model->proveedores_todos_sel();
+        $data['unidades'] = $this->unidades_model->unidades_todos_array();
         $template['_B'] = 'materiales/materiales_insertar.php';
         $this->load->template_view($this->template_base, $data, $template);
     }
@@ -55,9 +58,11 @@ class Materiales extends Acl_controller
             $categorias = $material['materiales_categoria_id'];
             $precios = $material['precio_unitario'];
             $proveedores = $material['proveedores_id'];
+            $ubicaciones = $material['nombre_ubicacion'];
             unset($material['materiales_categoria_id']);
             unset($material['precio_unitario']);
             unset($material['proveedores_id']);
+            unset($material['nombre_ubicacion']);
             if ($this->materiales_model->insertar_material($material) == TRUE) {
                 $materiales_id = $this->materiales_model->ultimo_id();
                 foreach ($categorias as $categoria) {
@@ -73,6 +78,11 @@ class Materiales extends Acl_controller
                         $mp['materiales_id'] = $materiales_id;
                         $mp['proveedores_id'] = $proveedor;
                         $this->materiales_model->insertar_rel_material_precio_proveedor($mp);
+                        $rel_mp_id = $this->materiales_model->ultimo_id();
+                        $mu = array();
+                        $mu['nombre'] = $ubicaciones[$key];
+                        $mu['materiales_precios_id'] = $rel_mp_id;
+                        $this->materiales_ubicacion_model->insertar_material_ubicacion($mu);
                     }
                 }
                 set_bootstrap_alert(trans_line('alerta_exito'), BOOTSTRAP_ALERT_SUCCESS);
@@ -95,6 +105,7 @@ class Materiales extends Acl_controller
         $data['categorias_sel'] = $this->materiales_model->rel_material_categoria_sel($materiales_id);
         $data['proveedores'] = $this->proveedores_model->proveedores_todos_sel();
         $data['precios'] = $this->materiales_model->precios_proveedores_por_material_id($materiales_id);
+        $data['unidades'] = $this->unidades_model->unidades_todos_array();
         $template['_B'] = 'materiales/materiales_editar.php';
         $this->load->template_view($this->template_base, $data, $template);
     }

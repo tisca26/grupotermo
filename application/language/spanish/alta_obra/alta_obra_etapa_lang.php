@@ -38,6 +38,12 @@ $lang['nombre'] = 'Etapa';
 $lang['nombre_placeholder'] = 'Ingrese el nombre de la etapa';
 $lang['nombre_ayuda'] = 'Nombre con el cual identificará la etapa';
 
+$lang['periodo_fechas'] = 'Periodo de la etapa';
+$lang['fechas_a'] = 'a';
+
+$lang['fecha_inicio_placeholder'] = 'Fecha inicio';
+$lang['fecha_fin_placeholder'] = 'Fecha fin';
+
 $lang['alerta_exito'] = 'Se guardó la obra con éxito, inserta otro o <a class="alert-link btn_loading_page" href="' . base_url_lang() . 'obras"> regresa al menú inicial</a>';
 $lang['alerta_error'] = 'Hubo un error al guardar la obra, intente más tarde.';
 $lang['alerta_error_codigo'] = 'Código:';

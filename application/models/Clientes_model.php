@@ -19,6 +19,18 @@ class Clientes_model extends CI_Model
         return $this->db->error();
     }
 
+    public function clientes_todos_sel($order = 'clientes_id')
+    {
+        $result = array();
+        $query = $this->db->order_by($order)->get('clientes');
+        if ($query->num_rows() > 0) {
+            foreach ($query->result() as $q){
+                $result[$q->clientes_id] = $q->razon_social;
+            }
+        }
+        return $result;
+    }
+
     public function clientes_todos($order = 'clientes_id')
     {
         $result = array();

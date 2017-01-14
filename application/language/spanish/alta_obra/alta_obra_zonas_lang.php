@@ -48,6 +48,12 @@ $lang['zona_fecha_fin_placeholder'] = 'Fecha fin';
 $lang['concepto_nombre'] = 'Concepto';
 $lang['concepto_nombre_placeholder'] = 'Nombre del concepto';
 
+$lang['concepto_desc_corta'] = 'Descripción corta';
+$lang['concepto_desc_corta_placeholder'] = 'Descripción corta del concepto';
+
+$lang['concepto_clave'] = 'Clave del concepto';
+$lang['concepto_clave_placeholder'] = 'Clave del concepto';
+
 $lang['concepto_unidad'] = 'Unidad';
 $lang['concepto_unidad_placeholder'] = 'Tipo unidad del concepto';
 

@@ -53,6 +53,8 @@
                                     <td>
                                         <a href="<?php echo base_url_lang() . 'obras/form_edit/' . $obra->obras_id ?>"
                                            class="badge badge-primary badge-roundless"> <?php echo trans_line('editar_tabla'); ?> </a>
+                                        <a href="<?php echo base_url_lang() . 'obras/resumen_obra/' . $obra->obras_id ?>"
+                                           class="badge badge-success badge-roundless"> <?php echo trans_line('resumen_tabla'); ?> </a>
                                         <a class="badge badge-danger badge-roundless delete_confirmation"
                                            data-toggle="confirmation" data-placement="top"
                                            data-original-title="<?php echo trans_line('confirmacion_borrado_titulo'); ?>"

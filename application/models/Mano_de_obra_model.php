@@ -18,6 +18,19 @@ class Mano_de_obra_model extends CI_Model
         return $this->db->error();
     }
 
+    public function mano_de_obra_todos_sel($order = 'mano_de_obra_id')
+    {
+        $result = array();
+        $query = $this->db->order_by($order)->get('mano_de_obra');
+        if ($query->num_rows() > 0) {
+            $q = $query->result();
+            foreach ($q as $mano){
+                $result[$mano->mano_de_obra_id] = $mano->nombre;
+            }
+        }
+        return $result;
+    }
+
     public function mano_de_obra_todos($order = 'mano_de_obra_id')
     {
         $result = array();

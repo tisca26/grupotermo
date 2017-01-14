@@ -32,5 +32,5 @@ $lang['descripcion_placeholder'] = 'Ingrese la descripción';
 $lang['descripcion_ayuda'] = 'Descripcion de la categoría';
 
 $lang['alerta_exito'] = 'Se editó la categoría con éxito';
-$lang['alerta_error'] = 'Hubo un error al editar la categoría, intente más tarde.';
+$lang['alerta_error'] = 'Hubo un error al editar la categoría, intente más tarde o <a class="alert-link btn_loading_page" href="' . base_url_lang() . 'activos"> genera un activo</a>';
 $lang['alerta_error_codigo'] = 'Código:';

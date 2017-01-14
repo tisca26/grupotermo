@@ -21,6 +21,8 @@ class Alta_obra extends Acl_controller
 
         $this->load->model('catalogos_model');
         $this->load->model('conceptos_model');
+        $this->load->model('clientes_model');
+        $this->load->model('empresas_model');
         $this->load->model('etapas_zonas_conceptos_model');
         $this->load->model('etapas_model');
         $this->load->model('obras_model');
@@ -34,10 +36,13 @@ class Alta_obra extends Acl_controller
         return $this->obra();
     }
 
-    public function obra()
+    public function obra($obras_id = 0)
     {
         $this->cargar_idioma->carga_lang('alta_obra/alta_obra_obra');
         $data = array();
+        $data['empresas'] = $this->empresas_model->empresas_todos_sel();
+        $data['clientes'] = $this->clientes_model->clientes_todos_sel();
+        $data['obras_id'] = $obras_id;
         $template['_B'] = 'alta_obra/alta_obra_obra.php';
         $this->load->template_view($this->template_base, $data, $template);
     }
@@ -53,7 +58,14 @@ class Alta_obra extends Acl_controller
             $this->obra();
         } else {
             $obra = $this->input->post();
-            if ($this->obras_model->insertar_obra($obra) == TRUE) {
+            $accion = false;
+            if ($obra['obras_id'] <= 0){
+                unset($obra['obras_id']);
+                $accion = $this->obras_model->insertar_obra($obra);
+            }else{
+                $accion = $this->obras_model->editar_obra($obra);
+            }
+            if ($accion == TRUE) {
                 return redirect('alta_obra/etapa/' . $this->obras_model->ultimo_id());
             } else {
                 $this->cargar_idioma->carga_lang('alta_obra/alta_obra_obra');

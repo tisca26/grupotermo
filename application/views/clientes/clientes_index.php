@@ -39,7 +39,6 @@
                             <thead>
                             <tr>
                                 <th> <?php echo trans_line('cliente_tabla'); ?></th>
-                                <th> <?php echo trans_line('contacto_tabla'); ?></th>
                                 <th> <?php echo trans_line('acciones_tabla'); ?></th>
                             </tr>
                             </thead>
@@ -47,7 +46,6 @@
                             <?php foreach ($rows as $cli): ?>
                                 <tr class="odd gradeX">
                                     <td> <?php echo $cli->razon_social; ?></td>
-                                    <td> <?php echo $cli->email; ?></td>
                                     <td>
                                         <a href="<?php echo base_url_lang() . 'clientes/form_edit/' . $cli->clientes_id ?>"
                                            class="badge badge-primary badge-roundless"> <?php echo trans_line('editar_tabla'); ?> </a>
@@ -113,11 +111,11 @@
             "columnDefs": [
                 {
                     "sortable": false,
-                    "targets": [1, 2]
+                    "targets": [1]
                 },
                 {
                     "className": "text-center",
-                    "targets": [1, 2]
+                    "targets": [1]
                 }
             ],
             "order": [

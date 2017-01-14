@@ -31,6 +31,6 @@ $lang['descripcion'] = 'Descripción';
 $lang['descripcion_placeholder'] = 'Ingrese la descripción';
 $lang['descripcion_ayuda'] = 'Descripcion de la categoría';
 
-$lang['alerta_exito'] = 'Se editó la categoría con éxito';
+$lang['alerta_exito'] = 'Se editó la categoría con éxito, también puedes <a class="alert-link btn_loading_page" href="' . base_url_lang() . 'materiales"> generar un material</a>';
 $lang['alerta_error'] = 'Hubo un error al editar la categoría, intente más tarde.';
 $lang['alerta_error_codigo'] = 'Código:';

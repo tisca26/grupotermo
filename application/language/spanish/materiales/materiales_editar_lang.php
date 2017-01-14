@@ -1,8 +1,8 @@
 <?php
-$lang['titulo_pagina'] = 'Activos';
+$lang['titulo_pagina'] = 'Materiales';
 $lang['breadcrumb_home'] = 'Inicio';
-$lang['breadcrumb_pagina'] = 'Listado de activos';
-$lang['breadcrumb_editar_pagina'] = 'Editar activo';
+$lang['breadcrumb_pagina'] = 'Listado de materiales';
+$lang['breadcrumb_editar_pagina'] = 'Editar material';
 
 //Form validation JS
 $lang['minlength'] = 'Este campo debe tener por lo menos {0} caracteres';
@@ -16,13 +16,12 @@ $lang['mexicanDate'] = 'Por favor ingrese una fecha en el formato aaaa-mm-dd';
 $lang['fecha'] = 'El campo {field} no es una fecha válida, por favor revisela.';
 
 //Form
-$lang['titulo_forma'] = 'Datos para la activo';
+$lang['titulo_forma'] = 'Datos para el material';
 $lang['jquery_invalid'] = 'Tiene algunos errores, por favor revise y corrija.';
 $lang['jquery_valid'] = 'Ha llenado correctamente los campos.';
 $lang['btn_submit'] = 'Guardar';
 $lang['btn_cancel'] = 'Cancelar';
 $lang['btn_submit_loading'] = 'Cargando...';
-
 
 $lang['nombre'] = 'Material';
 $lang['nombre_placeholder'] = 'Ingrese el nombre del material';
@@ -42,6 +41,17 @@ $lang['precios_por_proveedor'] = 'Precios por proveedor';
 
 $lang['proveedor'] = 'Proveedor';
 $lang['proveedor_placeholder'] = 'Monto del proveedor';
+
+$lang['nombre_ubicacion'] = 'Nombre de la ubicación';
+$lang['nombre_ubicacion_placeholder'] = 'Ingrese el nombre de la ubicación del material';
+$lang['nombre_ubicacion_ayuda'] = 'Nombre de la ubicación del material';
+
+$lang['unidades_id'] = 'Unidades';
+$lang['unidades_id_placeholder'] = 'Tipo de unidad de carga';
+
+$lang['precio_propio'] = 'Precio propio';
+$lang['precio_propio_placeholder'] = 'Ingrese el precio del material';
+$lang['precio_propio_ayuda'] = 'Precio del material si es que su empresa lo tiene';
 
 $lang['agregar_fila_proveedor'] = 'Agregar precio - proveedor';
 $lang['borrar_fila'] = 'Borrar';

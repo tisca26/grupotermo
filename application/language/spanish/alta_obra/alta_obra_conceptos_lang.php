@@ -48,6 +48,12 @@ $lang['cantidad_placeholder'] = 'Cantidad del concepto';
 $lang['precio_unitario'] = 'Precio unitario';
 $lang['precio_unitario_placeholder'] = 'Precio unitario del concepto';
 
+$lang['descripcion_corta'] = 'Descripción corta del concepto';
+$lang['descripcion_corta_placeholder'] = 'Descripción corta del concepto';
+
+$lang['clave'] = 'Clave del concepto';
+$lang['clave_placeholder'] = 'Clave del concepto';
+
 $lang['alerta_exito'] = 'Se guardó la obra con éxito, inserta otro o <a class="alert-link btn_loading_page" href="' . base_url_lang() . 'obras"> regresa al menú inicial</a>';
 $lang['alerta_error'] = 'Hubo un error al guardar la obra, intente más tarde.';
 $lang['alerta_error_codigo'] = 'Código:';

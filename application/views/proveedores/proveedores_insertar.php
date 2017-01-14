@@ -79,7 +79,7 @@
                                         <label for="tel_fijo"><?php echo trans_line('tel_fijo'); ?>
                                         </label>
                                         <span
-                                            class="help-block"><?php echo trans_line('telefono_ayuda'); ?></span>
+                                            class="help-block"><?php echo trans_line('tel_fijo_ayuda'); ?></span>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -150,7 +150,7 @@
                     required: "<?php echo trans_line('required'); ?>",
                     maxlength: jQuery.validator.format("<?php echo trans_line('maxlength'); ?>")
                 },
-                telefono: {
+                tel_fijo: {
                     minlength: jQuery.validator.format("<?php echo trans_line('minlength'); ?>"),
                     required: "<?php echo trans_line('required'); ?>",
                     maxlength: jQuery.validator.format("<?php echo trans_line('maxlength'); ?>"),
@@ -177,7 +177,7 @@
                     required: true,
                     maxlength: 14
                 },
-                telefono: {
+                tel_fijo: {
                     minlength: 10,
                     required: true,
                     maxlength: 14,

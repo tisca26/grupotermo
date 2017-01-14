@@ -20,6 +20,8 @@ class Activos extends Acl_controller
 
         $this->load->model('activos_model');
         $this->load->model('activos_categoria_model');
+        $this->load->model('unidades_model');
+        $this->load->model('proveedores_model');
         $this->load->library('form_validation');
     }
 
@@ -37,6 +39,8 @@ class Activos extends Acl_controller
         $this->cargar_idioma->carga_lang('activos/activos_insertar');
         $data = array();
         $data['categorias'] = $this->activos_categoria_model->activos_categoria_todos_array_sel();
+        $data['unidades'] = $this->unidades_model->unidades_todos_array();
+        $data['proveedores'] = $this->proveedores_model->proveedores_todos_sel();
         $template['_B'] = 'activos/activos_insertar.php';
         $this->load->template_view($this->template_base, $data, $template);
     }
@@ -45,14 +49,18 @@ class Activos extends Acl_controller
     {
         $this->cargar_idioma->carga_lang('activos/activos_insertar');
         $this->form_validation->set_rules('nombre', trans_line('nombre'), 'required|trim|min_length[3]');
-        $this->form_validation->set_rules('precio_unitario', trans_line('precio_unitario'), 'required|trim|numeric');
+        $this->form_validation->set_rules('precio_propio', trans_line('precio_propio'), 'required|trim|numeric');
         if ($this->form_validation->run() == FALSE) {
             $this->form_insert();
         } else {
             $activo = $this->input->post();
             $activo['estatus'] = (int) $activo['estatus'];
             $categorias = $activo['activos_categoria_id'];
+            $precios = $activo['precio_unitario'];
+            $proveedores = $activo['proveedores_id'];
             unset($activo['activos_categoria_id']);
+            unset($activo['precio_unitario']);
+            unset($activo['proveedores_id']);
             if ($this->activos_model->insertar_activo($activo) == TRUE) {
                 $activos_id = $this->activos_model->ultimo_id();
                 foreach ($categorias as $categoria){
@@ -60,6 +68,15 @@ class Activos extends Acl_controller
                     $rel['activos_id'] = $activos_id;
                     $rel['activos_categoria_id'] = $categoria;
                     $this->activos_model->insertar_rel_activo_categoria($rel);
+                }
+                foreach ($proveedores as $key => $proveedor) {
+                    if (intval($proveedor) > 0) {
+                        $ap = array();
+                        $ap['precio_unitario'] = $precios[$key];
+                        $ap['activos_id'] = $activos_id;
+                        $ap['proveedores_id'] = $proveedor;
+                        $this->activos_model->insertar_rel_activo_precio_proveedor($ap);
+                    }
                 }
                 set_bootstrap_alert(trans_line('alerta_exito'), BOOTSTRAP_ALERT_SUCCESS);
                 return redirect('activos/form_insert');
@@ -79,6 +96,9 @@ class Activos extends Acl_controller
         $data['activo'] = $this->activos_model->activo_por_id($activos_id);
         $data['categorias'] = $this->activos_categoria_model->activos_categoria_todos_array_sel();
         $data['categorias_sel'] = $this->activos_model->rel_activo_categoria_sel($activos_id);
+        $data['unidades'] = $this->unidades_model->unidades_todos_array();
+        $data['proveedores'] = $this->proveedores_model->proveedores_todos_sel();
+        $data['precios'] = $this->activos_model->precios_proveedores_por_activos_id($activos_id);
         $template['_B'] = 'activos/activos_editar.php';
         $this->load->template_view($this->template_base, $data, $template);
     }
@@ -87,7 +107,7 @@ class Activos extends Acl_controller
     {
         $this->cargar_idioma->carga_lang('activos/activos_editar');
         $this->form_validation->set_rules('nombre', trans_line('nombre'), 'required|trim|min_length[3]');
-        $this->form_validation->set_rules('precio_unitario', trans_line('precio_unitario'), 'required|trim|numeric');
+        $this->form_validation->set_rules('precio_propio', trans_line('precio_propio'), 'required|trim|numeric');
         $id = $this->input->post('activos_id');
         if ($this->form_validation->run() == FALSE) {
             $this->form_edit($id);
@@ -95,7 +115,11 @@ class Activos extends Acl_controller
             $activo = $this->input->post();
             $activo['estatus'] = (int) $activo['estatus'];
             $categorias = $activo['activos_categoria_id'];
+            $precios = $activo['precio_unitario'];
+            $proveedores = $activo['proveedores_id'];
             unset($activo['activos_categoria_id']);
+            unset($activo['precio_unitario']);
+            unset($activo['proveedores_id']);
             if ($this->activos_model->editar_activo($activo) == TRUE) {
                 $this->activos_model->borrar_rel_activo_categoria($id);
                 foreach ($categorias as $categoria){
@@ -103,6 +127,16 @@ class Activos extends Acl_controller
                     $rel['activos_id'] = $id;
                     $rel['activos_categoria_id'] = $categoria;
                     $this->activos_model->insertar_rel_activo_categoria($rel);
+                }
+                $this->activos_model->borrar_rel_activo_precio($id);
+                foreach ($proveedores as $key => $proveedor) {
+                    if (intval($proveedor) > 0) {
+                        $ap = array();
+                        $ap['precio_unitario'] = $precios[$key];
+                        $ap['activos_id'] = $id;
+                        $ap['proveedores_id'] = $proveedor;
+                        $this->activos_model->insertar_rel_activo_precio_proveedor($ap);
+                    }
                 }
                 set_bootstrap_alert(trans_line('alerta_exito'), BOOTSTRAP_ALERT_SUCCESS);
                 return redirect('activos');

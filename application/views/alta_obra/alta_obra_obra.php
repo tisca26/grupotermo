@@ -61,6 +61,7 @@
                     <div class="portlet-body">
                         <?php echo validation_errors('<div class="alert alert-danger alert-dismissable">', '</div>'); ?>
                         <?php echo form_open('alta_obra/insertar_obra', array('id' => 'current_form')); ?>
+                        <input type="hidden" name="obras_id" value="<?php echo $obras_id; ?>">
                         <div class="form-body">
                             <div class="alert alert-danger display-hide">
                                 <button class="close" data-close="alert"></button>
@@ -78,6 +79,24 @@
                                             <span class="required">*</span>
                                         </label>
                                         <span class="help-block"><?php echo trans_line('nombre_ayuda'); ?></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group form-md-line-input div_b_select">
+                                        <?php echo form_dropdown('empresas_id', $empresas, '', 'title="' . trans_line('empresas_id_placeholder') . '" class="form-control bs-select"  data-live-search="true" data-size="5" data-live-search-normalize="true" data-rule-required="true" data-msg-required="'. trans_line('required') . '"'); ?>
+                                        <label for="empresas_id"><?php echo trans_line('empresas_id'); ?>
+                                            <span class="required">*</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group form-md-line-input div_b_select">
+                                        <?php echo form_dropdown('clientes_id', $clientes, '', 'title="' . trans_line('clientes_id_placeholder') . '" class="form-control bs-select"  data-live-search="true" data-size="5" data-live-search-normalize="true" data-rule-required="true" data-msg-required="'. trans_line('required') . '"'); ?>
+                                        <label for="clientes_id"><?php echo trans_line('clientes_id'); ?>
+                                            <span class="required">*</span>
+                                        </label>
                                     </div>
                                 </div>
                             </div>
@@ -150,6 +169,23 @@
             orientation: "left",
             autoclose: true,
             format: 'yyyy-mm-dd'
+        });
+
+        $('.bs-select').selectpicker({
+            iconBase: 'fa',
+            tickIcon: 'fa-check'
+        });
+
+        $(".select2, .select2-multiple, .select2-allow-clear, .js-data-example-ajax").on("select2:open", function() {
+            if ($(this).parents("[class*='has-']").length) {
+                var classNames = $(this).parents("[class*='has-']")[0].className.split(/\s+/);
+
+                for (var i = 0; i < classNames.length; ++i) {
+                    if (classNames[i].match("has-")) {
+                        $("body > .select2-container").addClass(classNames[i]);
+                    }
+                }
+            }
         });
 
         var form1 = $('#current_form');

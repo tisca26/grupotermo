@@ -70,33 +70,61 @@
                         <div data-repeater-list="group-a">
                             <div data-repeater-item class="mt-repeater-item">
                                 <!-- jQuery Repeater Container -->
-                                <div class="mt-repeater-input form-group">
-                                    <label class="control-label"><?php echo trans_line('nombre'); ?></label>
-                                    <br/>
-                                    <input type="text" name="nombre" class="form-control th_element"
-                                           placeholder="<?php echo trans_line('nombre_placeholder'); ?>" required/>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="mt-repeater-input form-group">
+                                            <label class="control-label"><?php echo trans_line('nombre'); ?></label>
+                                            <br/>
+                                            <input type="text" name="nombre" class="form-control th_element"
+                                                   placeholder="<?php echo trans_line('nombre_placeholder'); ?>"
+                                                   required/>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="mt-repeater-input form-group">
-                                    <label class="control-label"><?php echo trans_line('unidad'); ?></label>
-                                    <br/>
-                                    <?php echo form_dropdown('unidades_id', $unidades, '', 'class="form-control unidades" placeholder="' . trans_line('unidad_placeholder') . '"'); ?>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="mt-repeater-input form-group">
+                                            <label class="control-label"><?php echo trans_line('descripcion_corta'); ?></label>
+                                            <br/>
+                                            <input type="text" name="descripcion_corta" class="form-control"
+                                                   placeholder="<?php echo trans_line('descripcion_corta_placeholder'); ?>"
+                                                   required/>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="mt-repeater-input form-group">
-                                    <label class="control-label"><?php echo trans_line('cantidad'); ?></label>
-                                    <br/>
-                                    <input type="text" name="cantidad" class="form-control cantidades" value=""
-                                           placeholder="<?php echo trans_line('cantidad_placeholder'); ?>"/>
-                                </div>
-                                <div class="mt-repeater-input form-group">
-                                    <label class="control-label"><?php echo trans_line('precio_unitario'); ?></label>
-                                    <br/>
-                                    <input type="text" name="precio_unitario" class="form-control precios" value=""
-                                           placeholder="<?php echo trans_line('precio_unitario_placeholder'); ?>"/>
-                                </div>
-                                <div class="mt-repeater-input">
-                                    <a href="javascript:;" data-repeater-delete
-                                       class="btn btn-danger mt-repeater-delete">
-                                        <i class="fa fa-close"></i> <?php echo trans_line('borrar_fila'); ?></a>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="mt-repeater-input form-group">
+                                            <label class="control-label"><?php echo trans_line('clave'); ?></label>
+                                            <br/>
+                                            <input type="text" name="clave" class="form-control"
+                                                   placeholder="<?php echo trans_line('clave_placeholder'); ?>"
+                                                   required/>
+                                        </div>
+                                        <div class="mt-repeater-input form-group">
+                                            <label class="control-label"><?php echo trans_line('unidad'); ?></label>
+                                            <br/>
+                                            <?php echo form_dropdown('unidades_id', $unidades, '', 'class="form-control unidades" placeholder="' . trans_line('unidad_placeholder') . '"'); ?>
+                                        </div>
+                                        <div class="mt-repeater-input form-group">
+                                            <label class="control-label"><?php echo trans_line('cantidad'); ?></label>
+                                            <br/>
+                                            <input type="text" name="cantidad" class="form-control cantidades" value=""
+                                                   placeholder="<?php echo trans_line('cantidad_placeholder'); ?>"/>
+                                        </div>
+                                        <div class="mt-repeater-input form-group">
+                                            <label class="control-label"><?php echo trans_line('precio_unitario'); ?></label>
+                                            <br/>
+                                            <input type="text" name="precio_unitario" class="form-control precios"
+                                                   value=""
+                                                   placeholder="<?php echo trans_line('precio_unitario_placeholder'); ?>"/>
+                                        </div>
+                                        <div class="mt-repeater-input">
+                                            <a href="javascript:;" data-repeater-delete
+                                               class="btn btn-danger mt-repeater-delete">
+                                                <i class="fa fa-close"></i> <?php echo trans_line('borrar_fila'); ?></a>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -105,7 +133,7 @@
                         <div class="form-actions">
                             <div class="row">
                                 <div class="col-md-12 text-center">
-                                    <a class="btn default" href="<?php echo base_url_lang() . 'alta_obra' ?>"><i
+                                    <a class="btn default" href="<?php echo base_url_lang() . 'alta_obra/zona_concepto/' . $etapas_id ?>"><i
                                                 class="fa fa-backward"></i> <?php echo trans_line('btn_cancel'); ?></a>
                                     <button type="submit" class="btn green"
                                             id="btn_submit"><?php echo trans_line('btn_submit'); ?> <i
@@ -178,14 +206,14 @@
         var error1 = $('.alert-danger', form1);
 
         jQuery.validator.addClassRules({
-            unidades:{
+            unidades: {
                 required: true
             },
-            cantidades:{
+            cantidades: {
                 required: true,
                 number: true
             },
-            precios:{
+            precios: {
                 required: true,
                 number: true
             }
@@ -196,12 +224,10 @@
             errorClass: 'help-block help-block-error', // default input error message class
             focusInvalid: false, // do not focus the last invalid input
             ignore: "", // validate all fields including form hidden input
-            messages: {
-            },
-            rules: {
-            },
+            messages: {},
+            rules: {},
             invalidHandler: function (event, validator) { //display error alert on form submit
-                for (var i=0;i<validator.errorList.length;i++){
+                for (var i = 0; i < validator.errorList.length; i++) {
                     console.log(validator.errorList[i]);
                 }
 
@@ -210,7 +236,7 @@
                     console.log(i, ":", validator.errorMap[i]);
                 }
                 error1.show();
-                $( "#errores" ).text( validator.numberOfInvalids() + " field(s) are invalid" );
+                $("#errores").text(validator.numberOfInvalids() + " field(s) are invalid");
                 App.scrollTo(error1, -200);
             },
 

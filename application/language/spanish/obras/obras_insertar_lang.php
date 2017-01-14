@@ -27,6 +27,12 @@ $lang['nombre'] = 'Obra';
 $lang['nombre_placeholder'] = 'Ingrese el nombre de la obra';
 $lang['nombre_ayuda'] = 'Nombre con el cual identificará la obra';
 
+$lang['empresas_id'] = 'Empresa';
+$lang['empresas_id_placeholder'] = 'Empresa que hará la obra';
+
+$lang['clientes_id'] = 'Cliente';
+$lang['clientes_id_placeholder'] = 'Cliente dueño de la obra';
+
 $lang['fecha_inicio'] = 'Fecha inicio';
 $lang['fecha_inicio_placeholder'] = 'aaaa-mm-dd';
 $lang['fecha_inicio_ayuda'] = 'Fecha de inicio de la obra';

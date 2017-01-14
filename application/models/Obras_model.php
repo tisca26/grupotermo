@@ -64,4 +64,14 @@ class Obras_model extends CI_Model
         $my_array[6] = 'Otro';
         return $my_array;
     }
+
+    public function obras_por_empresas_id ($empresas_id = 0)
+    {
+        $result = array();
+        $query = $this->db->where('empresas_id', $empresas_id)->get('obras');
+        if ($query->num_rows() > 0) {
+            $result = $query->result();
+        }
+        return $result;
+    }
 }

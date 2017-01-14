@@ -19,6 +19,18 @@ class Empresas_model extends CI_Model
         return $this->db->error();
     }
 
+    public function empresas_todos_sel($order = 'empresas_id')
+    {
+        $result = array();
+        $query = $this->db->order_by($order)->get('empresas');
+        if ($query->num_rows() > 0) {
+            foreach ($query->result() as $q){
+                $result[$q->empresas_id] = $q->razon_social;
+            }
+        }
+        return $result;
+    }
+
     public function empresas_todos($order = 'empresas_id')
     {
         $result = array();

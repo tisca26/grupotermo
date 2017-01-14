@@ -27,15 +27,29 @@ $lang['nombre'] = 'Servicio';
 $lang['nombre_placeholder'] = 'Ingrese el nombre del servicio';
 $lang['nombre_ayuda'] = 'Nombre con el cual identificará el servicio';
 
-$lang['precio_unitario'] = 'Precio unitario';
-$lang['precio_unitario_placeholder'] = 'Ingrese el precio unitario';
-$lang['precio_unitario_ayuda'] = 'Costo del servicio en MXN';
+$lang['precio_propio'] = 'Precio unitario propio';
+$lang['precio_propio_placeholder'] = 'Ingrese el precio unitario propio';
+$lang['precio_propio_ayuda'] = 'Costo del activo en MXN si es que es propio';
 
 $lang['categoria'] = 'Categoría';
 $lang['categoria_placeholder'] = 'Ingrese la categoría del servicio';
 
 $lang['estatus'] = 'Estatus';
 $lang['estatus_servicio'] = '¿Activo?';
+$lang['unidades_id'] = 'Unidades';
+$lang['unidades_id_placeholder'] = 'Tipo de unidad de carga';
+
+$lang['precios_por_proveedor'] = 'Precios por proveedor';
+
+$lang['proveedor'] = 'Proveedor';
+$lang['proveedor_placeholder'] = 'Monto del proveedor';
+
+$lang['precio_unitario'] = 'Precio unitario';
+$lang['precio_unitario_placeholder'] = 'Ingrese el precio unitario';
+$lang['precio_unitario_ayuda'] = 'Costo del material en MXN';
+
+$lang['agregar_fila_proveedor'] = 'Agregar precio - proveedor';
+$lang['borrar_fila'] = 'Borrar';
 
 $lang['alerta_exito'] = 'Se guardó el servicio con éxito, inserta otro o <a class="alert-link btn_loading_page" href="' . base_url_lang() . 'servicios"> regresa al menú inicial</a>';
 $lang['alerta_error'] = 'Hubo un error al guardar la servicio, intente más tarde.';

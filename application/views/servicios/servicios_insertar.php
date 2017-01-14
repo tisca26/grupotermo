@@ -62,20 +62,18 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group form-md-line-input">
-                                        <?php echo form_input('precio_unitario', set_value('precio_unitario', 0), 'id="precio_unitario" placeholder="' . trans_line('precio_unitario_placeholder') . '" class="form-control"'); ?>
-                                        <label for="precio_unitario"><?php echo trans_line('precio_unitario'); ?>
-                                            <span class="required">*</span>
+                                        <?php echo form_input('precio_propio', set_value('precio_propio', 0), 'id="precio_propio" placeholder="' . trans_line('precio_propio_placeholder') . '" class="form-control"'); ?>
+                                        <label for="precio_propio"><?php echo trans_line('precio_propio'); ?>
                                         </label>
-                                        <span class="help-block"><?php echo trans_line('precio_unitario_ayuda'); ?></span>
+                                        <span class="help-block"><?php echo trans_line('precio_propio_ayuda'); ?></span>
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group form-md-line-input">
-                                        <?php echo form_dropdown('servicios_categoria_id[]', $categorias, set_value('servicios_categoria_id'), 'id="servicios_categoria_id" title="' . trans_line('categoria_placeholder') . '" class="form-control bs-select" data-live-search="true" data-live-search-normalize="true" multiple'); ?>
-                                        <label for="categoria"><?php echo trans_line('categoria'); ?>
-                                            <span class="required">*</span>
+                                        <?php echo form_dropdown('unidades_id', $unidades, set_value('unidades_id'), 'id="unidades_id" title="' . trans_line('unidades_id_placeholder') . '" class="form-control bs-select" data-size="5" data-live-search="true" data-live-search-normalize="true"'); ?>
+                                        <label for="unidades_id"><?php echo trans_line('unidades_id'); ?>
                                         </label>
                                     </div>
                                 </div>
@@ -92,6 +90,60 @@
                                                     <span class="box"></span> <?php echo trans_line('estatus_servicio'); ?>
                                                 </label>
                                             </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group form-md-line-input">
+                                        <?php echo form_dropdown('servicios_categoria_id[]', $categorias, set_value('servicios_categoria_id'), 'id="servicios_categoria_id" title="' . trans_line('categoria_placeholder') . '" class="form-control bs-select" data-live-search="true" data-live-search-normalize="true" multiple'); ?>
+                                        <label for="categoria"><?php echo trans_line('categoria'); ?>
+                                            <span class="required">*</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h4><?php echo trans_line('precios_por_proveedor'); ?></h4>
+                                    <a href="javascript:;" id="btn_agregar_proveedor" class="btn btn-success mt-repeater-add">
+                                        <i class="fa fa-plus"></i> <?php echo trans_line('agregar_fila_proveedor'); ?>
+                                    </a>
+                                    <br /><br />
+                                </div>
+                            </div>
+                            <div id="my_div_repeat">
+                                <div id="my_repeat" class="generated_div_proveedor row">
+                                    <div class="col-md-3">
+                                        <div class="form-group form-md-line-input">
+                                            <input type="text" name="precio_unitario[0]"
+                                                   value="<?php echo set_value('precio_unitario[]'); ?>"
+                                                   placeholder="<?php echo trans_line('precio_unitario_placeholder'); ?>"
+                                                   class="form-control precio_unitario" data-rule-required="true"
+                                                   data-msg-required="<?php echo trans_line('required'); ?>"
+                                                   data-rule-number="true"
+                                                   data-msg-number="<?php echo trans_line('number'); ?>">
+                                            <label for="precio_unitario"><?php echo trans_line('precio_unitario'); ?>
+                                                <span class="required">*</span>
+                                            </label>
+                                            <span class="help-block"><?php echo trans_line('precio_unitario_ayuda'); ?></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-7">
+                                        <div class="form-group form-md-line-input div_b_select">
+                                            <?php echo form_dropdown('proveedores_id[0]', $proveedores, '', 'title="' . trans_line('proveedor_placeholder') . '" class="form-control bs-select proveedores_id"  data-live-search="true" data-size="5" data-live-search-normalize="true" data-rule-required="true" data-msg-required="' . trans_line('required') . '"'); ?>
+                                            <label for="proveedor"><?php echo trans_line('proveedor'); ?>
+                                                <span class="required">*</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group form-md-line-input">
+                                            <button class="btn btn-danger btn_borrar_proveedor" type="button"
+                                                    onclick="borrar_proveedor(this)">
+                                                <i class="fa fa-close"/></i> <?php echo trans_line('borrar_fila'); ?>
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
@@ -118,15 +170,52 @@
     <!-- END CONTENT BODY -->
 </div>
 <script type="application/javascript">
+    var proveedor_index = 1;
+    var agrega_provedor = function (provedor_html) {
+        var pu_name = provedor_html.find("input.precio_unitario").attr('name');
+        var pu_elem = pu_name.split(/\d+/g);
+        var pu_new_name = pu_elem[0] + proveedor_index + pu_elem[1];
+
+        var pi_name = provedor_html.find("select.proveedores_id").attr('name');
+        var pi_elem = pi_name.split(/\d+/g);
+        var pi_new_name = pi_elem[0] + proveedor_index + pi_elem[1];
+
+        proveedor_index++;
+        provedor_html.find("input.precio_unitario").attr('name', pu_new_name);
+        provedor_html.find("select.proveedores_id").attr('name', pi_new_name);
+
+        var my_new_div = '<div class="generated_div_proveedor row">' + provedor_html.html() + '</div>';
+        var $my_new_div = $(my_new_div);
+        $('#my_div_repeat').append($my_new_div);
+        //Regresamos el name a la normalidad, no pudimos clonar el objeto provedor_html con exito
+        provedor_html.find("input.precio_unitario").attr('name', pu_name);
+        provedor_html.find("select.proveedores_id").attr('name', pi_name);
+        //Borramos div generado por la libreria bootstrap select
+        var $my_new_sel = $my_new_div.find("select.proveedores_id");
+        $my_new_div.find('div.bootstrap-select').remove();
+        $my_new_div.find('div.div_b_select').prepend($my_new_sel);
+        $('.bs-select').selectpicker({
+            iconBase: 'fa',
+            tickIcon: 'fa-check'
+        });
+    };
+    var borrar_proveedor = function (elem) {
+        var my_div = $(elem).parents('div.generated_div_proveedor');
+        my_div.remove();
+    };
     $(document).ready(function () {
+        var provedor_html = $('#my_repeat');
         $('#spinner_gt').hide(600);
 
+        $('#btn_agregar_proveedor').click(function () {
+            agrega_provedor(provedor_html);
+        });
         $('.bs-select').selectpicker({
             iconBase: 'fa',
             tickIcon: 'fa-check'
         });
 
-        $(".select2, .select2-multiple, .select2-allow-clear, .js-data-example-ajax").on("select2:open", function() {
+        $(".select2, .select2-multiple, .select2-allow-clear, .js-data-example-ajax").on("select2:open", function () {
             if ($(this).parents("[class*='has-']").length) {
                 var classNames = $(this).parents("[class*='has-']")[0].className.split(/\s+/);
 
@@ -152,11 +241,10 @@
                     required: "<?php echo trans_line('required'); ?>",
                     minlength: jQuery.validator.format("<?php echo trans_line('minlength'); ?>")
                 },
-                precio_unitario: {
-                    required: "<?php echo trans_line('required'); ?>",
+                precio_propio: {
                     number: "<?php echo trans_line('number'); ?>"
                 },
-                'servicios_categoria_id[]':{
+                'servicios_categoria_id[]': {
                     required: "<?php echo trans_line('required'); ?>"
                 }
             },
@@ -165,11 +253,10 @@
                     minlength: 3,
                     required: true
                 },
-                precio_unitario: {
-                    required: true,
+                precio_propio: {
                     number: true
                 },
-                'servicios_categoria_id[]':{
+                'servicios_categoria_id[]': {
                     required: true
                 }
             },
@@ -206,7 +293,7 @@
             },
 
             submitHandler: function (form) {
-                $('#disablingPage').css( "display", "block");
+                $('#disablingPage').css("display", "block");
                 $('#spinner_gt').show(300);
                 $('#btn_submit').html("<?php echo trans_line('btn_submit_loading'); ?>");
                 $('#btn_submit').prop('disabled', true);

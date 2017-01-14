@@ -24,6 +24,7 @@ $lang['fecha_inicio_tabla'] = 'Fecha Inicio';
 $lang['fecha_fin_tabla'] = 'Fecha Fin';
 $lang['acciones_tabla'] = 'Acciones';
 $lang['editar_tabla'] = 'Editar';
+$lang['resumen_tabla'] = 'Resumen';
 $lang['borrar_tabla'] = 'Borrar';
 //FIN TABLA
 $lang['confirmacion_borrado_titulo'] = '¿Desea borrarlo?';

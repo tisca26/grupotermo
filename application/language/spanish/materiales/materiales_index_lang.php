@@ -19,7 +19,7 @@ $lang['breadcrumb_home'] = 'Inicio';
 $lang['breadcrumb_pagina'] = 'Materiales';
 $lang['agregar_btn'] = 'Agregar material';
 //TABLA
-$lang['activo_tabla'] = 'Material';
+$lang['material_tabla'] = 'Material';
 $lang['acciones_tabla'] = 'Acciones';
 $lang['editar_tabla'] = 'Editar';
 $lang['borrar_tabla'] = 'Borrar';

@@ -82,12 +82,28 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="row">
+                                <div class="form-group">
+                                    <label class="control-label col-md-2">
+                                        <?php echo trans_line('periodo_fechas'); ?>
+                                        <span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-10">
+                                        <div class="input-group date-picker input-daterange" data-date="<?php echo date('Y-m-d') ?>" data-date-format="yyyy-mm-dd">
+                                            <?php echo form_input('fecha_inicio', set_value('fecha_inicio'), 'id="fecha_inicio" placeholder="' . trans_line('fecha_inicio_placeholder') . '" class="form-control"'); ?>
+                                            <span class="input-group-addon"> <?php echo trans_line('fechas_a'); ?> </span>
+                                            <?php echo form_input('fecha_fin', set_value('fecha_fin'), 'id="fecha_fin" placeholder="' . trans_line('fecha_fin_placeholder') . '" class="form-control"'); ?>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="row"></div>
                         </div>
+                        <br />
                         <div class="form-actions">
                             <div class="row">
                                 <div class="col-md-12 text-center">
-                                    <a class="btn default" href="<?php echo base_url_lang() . 'alta_obra' ?>"><i class="fa fa-backward"></i> <?php echo trans_line('btn_cancel'); ?></a>
+<!--                                    <a class="btn default" href="--><?php //echo base_url_lang() . 'alta_obra/obra/' . $obra->obras_id; ?><!--"><i class="fa fa-backward"></i> --><?php //echo trans_line('btn_cancel'); ?><!--</a>-->
                                     <button type="submit" class="btn green" id="btn_submit"><?php echo trans_line('btn_submit'); ?> <i class="fa fa-forward"></i></button>
                                 </div>
                             </div>
@@ -138,9 +154,6 @@
                     maxlength: jQuery.validator.format("<?php echo trans_line('maxlength'); ?>"),
                     required: "<?php echo trans_line('required'); ?>",
                     mexicanDate: "<?php echo trans_line('mexicanDate'); ?>"
-                },
-                total_autorizado: {
-                    number: "<?php echo trans_line('number'); ?>"
                 }
             },
             rules: {
@@ -159,9 +172,6 @@
                     maxlength: 10,
                     required: true,
                     mexicanDate: true
-                },
-                total_autorizado: {
-                    number: true
                 }
             },
 

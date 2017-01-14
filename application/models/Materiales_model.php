@@ -87,9 +87,10 @@ class Materiales_model extends CI_Model
     public function precios_proveedores_por_material_id($materiales_id = 0)
     {
         $result = array();
-        $this->db->select('mp.*, p.razon_social');
+        $this->db->select('mp.*, p.razon_social, mu.nombre as nombre_ubicacion');
         $this->db->from('materiales_precios mp');
         $this->db->join('proveedores p', 'mp.proveedores_id = p.proveedores_id', 'inner');
+        $this->db->join('materiales_ubicacion mu', 'mu.materiales_precios_id = mp.materiales_precios_id', 'inner');
         $this->db->where('mp.materiales_id', $materiales_id);
         $q = $this->db->get();
         if ($q->num_rows() > 0){

@@ -24,9 +24,9 @@ $lang['rfc'] = 'RFC';
 $lang['rfc_placeholder'] = 'Ingrese el RFC del cliente';
 $lang['rfc_ayuda'] = 'Ingrese el RFC a dar de alta';
 
-$lang['telefono'] = 'Teléfono';
-$lang['telefono_placeholder'] = 'Ingrese el teléfono del cliente';
-$lang['telefono_ayuda'] = 'Ingrese el teléfono a dar de alta';
+$lang['tel_fijo'] = 'Teléfono';
+$lang['tel_fijo_placeholder'] = 'Ingrese el teléfono del cliente';
+$lang['tel_fijo_ayuda'] = 'Ingrese el teléfono a dar de alta';
 
 $lang['email'] = 'Email';
 $lang['email_placeholder'] = 'Ingrese el email del cliente';

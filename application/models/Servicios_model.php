@@ -74,4 +74,28 @@ class Servicios_model extends CI_Model
     {
         return $this->db->delete('servicios_cat', array('servicios_id' => $servicios_id));
     }
+
+    public function insertar_rel_servicio_precio_proveedor($rel_sevicio = array())
+    {
+        return $this->db->insert('servicios_precios', $rel_sevicio);
+    }
+
+    public function precios_proveedores_por_servicios_id($servicios_id = 0)
+    {
+        $result = array();
+        $this->db->select('sp.*, p.razon_social');
+        $this->db->from('servicios_precios sp');
+        $this->db->join('proveedores p', 'sp.proveedores_id = p.proveedores_id', 'inner');
+        $this->db->where('sp.servicios_id', $servicios_id);
+        $q = $this->db->get();
+        if ($q->num_rows() > 0) {
+            $result = $q->result();
+        }
+        return $result;
+    }
+
+    public function borrar_rel_servicio_precio($servicios_id = 0)
+    {
+        return $this->db->delete('servicios_precios', array('servicios_id' => $servicios_id));
+    }
 }
