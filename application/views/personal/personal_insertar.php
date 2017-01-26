@@ -21,7 +21,7 @@
                     <i class="fa fa-circle"></i>
                 </li>
                 <li>
-                    <a href="<?php echo base_url_lang() . 'activos'; ?>"><?php echo trans_line('breadcrumb_pagina'); ?></a>
+                    <a href="<?php echo base_url_lang() . 'personal'; ?>"><?php echo trans_line('breadcrumb_pagina'); ?></a>
                     <i class="fa fa-circle"></i>
                 </li>
                 <li>
@@ -52,8 +52,7 @@
                         <div class="form-body">
                             <div class="row">
                                 <div class="col-md-2">
-                                    <img src="<?php echo base_url() . 'assets/docs/personal/personal_1.jpg'; ?>"
-                                         class="img-responsive center-block" style="width: 150px;">
+                                    <h3><?php echo trans_line('sin_foto'); ?></h3>
                                 </div>
                                 <div class="col-md-10">
                                     <div class="row">
@@ -817,7 +816,7 @@
                                     <button type="submit" class="btn green"
                                             id="btn_submit"><?php echo trans_line('btn_submit'); ?></button>
                                     <a class="btn default btn_loading_page"
-                                       href="<?php echo base_url_lang() . 'activos' ?>"><?php echo trans_line('btn_cancel'); ?></a>
+                                       href="<?php echo base_url_lang() . 'personal' ?>"><?php echo trans_line('btn_cancel'); ?></a>
                                 </div>
                             </div>
                         </div>
@@ -873,7 +872,7 @@
         var $select = $('#' + elem_id);
         $select.empty();
         for (var idx in municipios) {
-            $select.append('<option value=' + municipios[idx].nacimiento_municipio_id + '>' + municipios[idx].nombre + '</option>');
+            $select.append('<option value=' + municipios[idx].cat_municipios_id + '>' + municipios[idx].nombre + '</option>');
         }
         $select.selectpicker('refresh');
     }

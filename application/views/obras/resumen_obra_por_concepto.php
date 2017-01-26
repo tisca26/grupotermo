@@ -54,7 +54,7 @@
                                         </div>
                                         <div class="col-md-6">
                                             <strong><?php echo trans_line('obra_total_autorizado'); ?>:</strong>
-                                            $<?php echo $obra->total_autorizado; ?>
+                                            $<?php echo number_format($obra->total_autorizado, 2); ?>
                                         </div>
                                     </div>
                                 </div>
@@ -74,46 +74,46 @@
                                                 <strong><?php echo trans_line('etapa_periodo'); ?>
                                                     :</strong> <?php echo $etapa->fecha_inicio; ?> <?php echo trans_line('etapa_periodo_al'); ?> <?php echo $etapa->fecha_fin; ?>
                                             </div>
-                                            <div class="col-md-12 text-right">
-                                                <button id="btn_etapa_<?php echo $etapa->etapas_id; ?>" class="btn btn-primary btn_etapa" data-id="<?php echo $etapa->etapas_id; ?>">
-                                                    <?php echo trans_line('btn_ver_ocultar_conceptos'); ?>
-                                                </button>
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div id="etapa_<?php echo $etapa->etapas_id; ?>_conceptos">
-                                <?php foreach ($etapa->conceptos as $concepto): ?>
-                                    <div class="row">
-                                        <div class="col-xs-10 col-xs-offset-2">
-                                            <div class="mt-element-ribbon bg-grey-steel">
-                                                <div class="ribbon ribbon-border-hor ribbon-clip ribbon-color-info uppercase">
-                                                    <div class="ribbon-sub ribbon-clip"></div> <?php echo trans_line('conceptos_datos'); ?>
-                                                </div>
-                                                <div class="row ribbon-content">
-                                                    <div class="col-md-12">
-                                                        <strong><?php echo trans_line('concepto_nombre'); ?>
-                                                            :</strong> <?php echo $concepto->concepto_nombre; ?><br/>
-                                                    </div>
-                                                    <div class="col-md-2">
-                                                        <strong><?php echo trans_line('concepto_unidad'); ?>:</strong>
-                                                        <?php echo $concepto->unidad; ?>
-                                                    </div>
-                                                    <div class="col-md-2">
-                                                        <strong><?php echo trans_line('concepto_cantidad'); ?>:</strong>
-                                                        <?php echo $concepto->cantidad; ?>
-                                                    </div>
-                                                    <div class="col-md-2">
-                                                        <strong><?php echo trans_line('concepto_precio_unitario'); ?>
-                                                            :</strong>
-                                                        $<?php echo $concepto->precio_unitario; ?>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                <?php endforeach; ?>
+                            <div class="table-scrollable">
+                                <table class="table table-striped table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th> <?php echo trans_line('concepto'); ?> </th>
+                                        <th class="text-center"> <?php echo trans_line('concepto_unidad'); ?> </th>
+                                        <th class="text-center"> <?php echo trans_line('concepto_cantidad'); ?> </th>
+                                        <th class="text-center"> <?php echo trans_line('concepto_precio_unitario'); ?> </th>
+                                        <th class="text-center"> <?php echo trans_line('concepto_total'); ?> </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <?php $etapa->subtotal_concepto = 0; ?>
+                                    <?php foreach ($etapa->conceptos as $concepto): ?>
+                                        <tr>
+                                            <td> <?php echo $concepto->concepto_nombre; ?> </td>
+                                            <td class="text-center"> <?php echo $concepto->unidad; ?> </td>
+                                            <td class="text-center"> <?php echo $concepto->cantidad; ?> </td>
+                                            <td class="text-center">
+                                                $<?php echo number_format($concepto->precio_unitario, 2); ?> </td>
+                                            <td class="text-center">
+                                                $<?php echo number_format($concepto->total_autorizado, 2) ?> </td>
+                                        </tr>
+                                        <?php $etapa->subtotal_concepto += $concepto->total_autorizado; ?>
+                                    <?php endforeach; ?>
+                                    <tr>
+                                        <td colspan="4"></td>
+                                        <td class="text-center">
+                                            <strong><?php echo trans_line('concepto_subtotal'); ?>:</strong>
+                                            $<?php echo number_format($etapa->subtotal_concepto, 2); ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="5" class="text-center"><strong><?php echo numero_a_letra($etapa->subtotal_concepto); ?></strong></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
                             </div>
                         <?php endforeach; ?>
                         <div class="form-actions">
@@ -143,9 +143,9 @@
             var btn = $(this);
             var etapa_id = btn.attr('data-id');
             var conceptos_div = $('#etapa_' + etapa_id + '_conceptos');
-            if (conceptos_div.is(':visible')){
+            if (conceptos_div.is(':visible')) {
                 conceptos_div.hide(200);
-            }else{
+            } else {
                 conceptos_div.show(200);
             }
         });

@@ -29,4 +29,14 @@ class Cat_paises_model extends CI_Model
         }
         return $result;
     }
+
+    public function pais_por_id($cat_paises_id = 0)
+    {
+        $result = new stdClass();
+        $query = $this->db->where('cat_paises_id',$cat_paises_id)->get('cat_paises');
+        if ($query->num_rows() > 0) {
+            $result = $query->row();
+        }
+        return $result;
+    }
 }

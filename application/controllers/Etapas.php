@@ -36,7 +36,7 @@ class Etapas extends Acl_controller
     {
         $this->cargar_idioma->carga_lang('etapas/etapas_insertar');
         $data = array();
-        $data['obras'] = $this->obras_model->obras_todos_array();
+        $data['obras'] = $this->obras_model->obras_todos_sel();
         $template['_B'] = 'etapas/etapas_insertar.php';
         $this->load->template_view($this->template_base, $data, $template);
     }

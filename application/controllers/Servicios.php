@@ -39,7 +39,7 @@ class Servicios extends Acl_controller
         $this->cargar_idioma->carga_lang('servicios/servicios_insertar');
         $data = array();
         $data['categorias'] = $this->servicios_categoria_model->servicios_categoria_todos_array_sel();
-        $data['unidades'] = $this->unidades_model->unidades_todos_array();
+        $data['unidades'] = $this->unidades_model->unidades_todos_sel();
         $data['proveedores'] = $this->proveedores_model->proveedores_todos_sel();
         $template['_B'] = 'servicios/servicios_insertar.php';
         $this->load->template_view($this->template_base, $data, $template);
@@ -96,7 +96,7 @@ class Servicios extends Acl_controller
         $data['servicio'] = $this->servicios_model->servicio_por_id($servicios_id);
         $data['categorias'] = $this->servicios_categoria_model->servicios_categoria_todos_array_sel();
         $data['categorias_sel'] = $this->servicios_model->rel_servicio_categoria_sel($servicios_id);
-        $data['unidades'] = $this->unidades_model->unidades_todos_array();
+        $data['unidades'] = $this->unidades_model->unidades_todos_sel();
         $data['proveedores'] = $this->proveedores_model->proveedores_todos_sel();
         $data['precios'] = $this->servicios_model->precios_proveedores_por_servicios_id($servicios_id   );
         $template['_B'] = 'servicios/servicios_editar.php';

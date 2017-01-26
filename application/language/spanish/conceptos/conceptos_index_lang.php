@@ -17,10 +17,11 @@ $lang['first'] = 'Primero';
 $lang['titulo_pagina'] = 'Conceptos';
 $lang['breadcrumb_home'] = 'Inicio';
 $lang['breadcrumb_pagina'] = 'Conceptos';
-$lang['agregar_btn'] = 'Agregar concepto';
+$lang['agregar_btn'] = 'Agregar concepto al catálogo';
+$lang['agregar_a_obra_btn'] = 'Agregar conceptos a una obra';
 //TABLA
 $lang['concepto_tabla'] = 'Concepto';
-$lang['obra_tabla'] = 'Obra';
+$lang['categorias_tabla'] = 'Categorías';
 $lang['acciones_tabla'] = 'Acciones';
 $lang['editar_tabla'] = 'Editar';
 $lang['borrar_tabla'] = 'Borrar';

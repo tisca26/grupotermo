@@ -36,7 +36,7 @@ class Registro_patronal_model extends CI_Model
     public function registro_patronal_por_empresa_id_sel($empresas_id = 'empresas_id')
     {
         $result = array();
-        $this->db->select('rp.*, e.estado');
+        $this->db->select('rp.*, e.nombre as estado');
         $this->db->from('registro_patronal rp');
         $this->db->join('cat_estados e', 'rp.cat_estados_id = e.cat_estados_id', 'inner');
         $query = $this->db->where('empresas_id', $empresas_id)->get();

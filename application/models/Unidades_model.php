@@ -54,7 +54,7 @@ class Unidades_model extends CI_Model
         return $this->db->delete('unidades', array('unidades_id' => $unidades_id));
     }
 
-    public function unidades_todos_array($order_id = 'unidades_id')
+    public function unidades_todos_sel($order_id = 'unidades_id')
     {
         $results = $this->unidades_todos($order_id);
         $my_array = array();

@@ -74,23 +74,24 @@ class Personal extends Acl_controller
         if ($this->form_validation->run() == FALSE) {
             $this->form_insert();
         } else {
-
-            $dir_carpeta_base = $this->config->item('dir_foto_personal');
-            $nombre_archivo = uniqid('personal_');
-            $config = $this->_crea_opciones_carga($dir_carpeta_base , 'jpg|png', $nombre_archivo);
-            $this->load->library('upload', $config);
-            if (!$this->upload->do_upload('foto_personal')) {
-                $error = trans_line('foto_personal') . ': ' . $this->upload->display_errors() . $dir_carpeta_base;
-                set_bootstrap_alert($error, BOOTSTRAP_ALERT_DANGER);
+            if (isset($_FILES['foto_personal']) && $_FILES['foto_personal']['size'] > 0) {
+                $dir_carpeta_base = $this->config->item('dir_foto_personal');
+                $nombre_archivo = uniqid('personal_');
+                $config = $this->_crea_opciones_carga($dir_carpeta_base, 'jpg|png', $nombre_archivo);
+                $this->load->library('upload', $config);
+                if (!$this->upload->do_upload('foto_personal')) {
+                    $foto_data = $this->upload->data();
+                    $error = trans_line('foto_personal') . ': ' . $this->upload->display_errors();
+                    set_bootstrap_alert($error, BOOTSTRAP_ALERT_DANGER);
+                }
             }
             $personal = $this->input->post();
-            $personal['foto_personal'] = $nombre_archivo;
+            $personal['foto_personal'] = $nombre_archivo . $foto_data['file_ext'];
             if ($this->personal_model->insertar_personal($personal) == TRUE) {
-                $personal_id = $this->personal_model->ultimo_id();
                 set_bootstrap_alert(trans_line('alerta_exito'), BOOTSTRAP_ALERT_SUCCESS);
                 return redirect('personal/form_insert');
             } else {
-                unlink();
+                unlink($dir_carpeta_base . $nombre_archivo);
                 $error = $this->personal_model->error_consulta();
                 $mensajes_error = array(trans_line('alerta_error'), trans_line('alerta_error_codigo') . base64_encode($error['message']));
                 set_bootstrap_alert($mensajes_error, BOOTSTRAP_ALERT_DANGER);
@@ -101,14 +102,31 @@ class Personal extends Acl_controller
 
     public function form_edit($personal_id = 0)
     {
+        $this->load->business('lugares');
         $this->cargar_idioma->carga_lang('personal/personal_editar');
         $data = array();
         $data['personal'] = $this->personal_model->personal_por_id($personal_id);
-        $data['categorias'] = $this->personal_categoria_model->personal_categoria_todos_array_sel();
-        $data['categorias_sel'] = $this->personal_model->rel_personal_categoria_sel($personal_id);
-        $data['proveedores'] = $this->proveedores_model->proveedores_todos_sel();
-        $data['precios'] = $this->personal_model->precios_proveedores_por_personal_id($personal_id);
-        $data['unidades'] = $this->unidades_model->unidades_todos_array();
+        $data['bancos'] = $this->bancos_model->bancos_todos_sel();
+        $data['empresas'] = $this->empresas_model->empresas_todos_sel();
+        $data['puestos'] = $this->mano_de_obra_model->mano_de_obra_todos_sel();
+        $data['paises'] = $this->cat_paises_model->paises_todos_sel();
+        $data['contratos'] = $this->personal_contratos_model->personal_contratos_todos_sel();
+        $data['generos'] = $this->catalogos_model->sexo_sel();
+        $data['estados_civiles'] = $this->catalogos_model->estado_civil_sel();
+        $data['tipos_regimen'] = $this->tipos_regimen_model->tipos_regimen_todos_sel();
+        $data['tipo'] = $this->catalogos_model->personal_tipo_sel();
+        $data['turnos'] = $this->catalogos_model->personal_turno_sel();
+        $data['tipos_credito'] = $this->catalogos_model->tipos_credito_imss_sel();
+        $data['periodos_pago'] = $this->periodo_de_pago_model->periodo_de_pago_todos_sel();
+        $data['lugares_nacimiento'] = $this->lugares->pais_estado_municpio_por_municipio_id($data['personal']->nacimiento_municipio_id);
+        $data['estados_nacimiento'] = $this->cat_estados_model->estados_por_pais_id_sel($data['lugares_nacimiento'][2]->cat_paises_id);
+        $data['municipios_nacimiento'] = $this->cat_municipios_model->municipios_por_estado_id_sel($data['lugares_nacimiento'][1]->cat_estados_id);
+        $data['registros_patronales'] = $this->registro_patronal_model->registro_patronal_por_empresa_id_sel($data['personal']->empresas_id);
+        $data['empresa_deptos'] = $this->empresas_departamentos_model->departamentos_por_empresas_id_sel($data['personal']->empresas_id);
+        $data['obras_por_empresa'] = $this->obras_model->obras_por_empresas_id_sel($data['personal']->empresas_id);
+        $data['lugares_direccion'] = $this->lugares->pais_estado_municpio_por_municipio_id($data['personal']->direccion_municipio_id);
+        $data['estados_direccion'] = $this->cat_estados_model->estados_por_pais_id_sel($data['lugares_direccion'][2]->cat_paises_id);
+        $data['municipios_direccion'] = $this->cat_municipios_model->municipios_por_estado_id_sel($data['lugares_direccion'][1]->cat_estados_id);
         $template['_B'] = 'personal/personal_editar.php';
         $this->load->template_view($this->template_base, $data, $template);
     }
@@ -116,44 +134,44 @@ class Personal extends Acl_controller
     public function editar_personal()
     {
         $this->cargar_idioma->carga_lang('personal/personal_editar');
-        $this->form_validation->set_rules('nombre', trans_line('nombre'), 'required|trim|min_length[3]');
+        $this->form_validation->set_rules('rfc', trans_line('rfc'), 'required|trim|min_length[10]');
         $id = $this->input->post('personal_id');
         if ($this->form_validation->run() == FALSE) {
             $this->form_edit($id);
         } else {
             $personal = $this->input->post();
-            $personal['estatus'] = (int)$personal['estatus'];
-            $categorias = $personal['personal_categoria_id'];
-            $precios = $personal['precio_unitario'];
-            $proveedores = $personal['proveedores_id'];
-            unset($personal['personal_categoria_id']);
-            unset($personal['precio_unitario']);
-            unset($personal['proveedores_id']);
+            if (isset($_FILES['foto_personal']) && $_FILES['foto_personal']['size'] > 0){
+                if ($personal['foto_personal_hidden'] != ''){
+                    list($nombre_archivo, $ext_archivo) = explode('.', $personal['foto_personal_hidden']);
+                }else{
+                    $nombre_archivo = uniqid('personal_');
+                }
+                $dir_carpeta_base = $this->config->item('dir_foto_personal');
+                $config = $this->_crea_opciones_carga($dir_carpeta_base , 'jpg|png', $nombre_archivo);
+                $this->load->library('upload', $config);
+
+                if (!$this->upload->do_upload('foto_personal')) {
+                    $error = trans_line('foto_personal') . ': ' . $this->upload->display_errors();
+                    set_bootstrap_alert($error, BOOTSTRAP_ALERT_DANGER);
+                    $personal['foto_personal'] = $personal['foto_personal_hidden'];
+                }else{
+                    $foto_data = $this->upload->data();
+                    $personal['foto_personal'] = $nombre_archivo . $foto_data['file_ext'];
+                }
+
+            }else{
+                $personal['foto_personal'] = $personal['foto_personal_hidden'];
+            }
+            unset($personal['foto_personal_hidden']);
+
             if ($this->personal_model->editar_personal($personal) == TRUE) {
-                $this->personal_model->borrar_rel_personal_categoria($id);
-                foreach ($categorias as $categoria) {
-                    $rel = array();
-                    $rel['personal_id'] = $id;
-                    $rel['personal_categoria_id'] = $categoria;
-                    $this->personal_model->insertar_rel_personal_categoria($rel);
-                }
-                $this->personal_model->borrar_rel_personal_precio($id);
-                foreach ($proveedores as $key => $proveedor) {
-                    if (intval($proveedor) > 0) {
-                        $mp = array();
-                        $mp['precio_unitario'] = $precios[$key];
-                        $mp['personal_id'] = $id;
-                        $mp['proveedores_id'] = $proveedor;
-                        $this->personal_model->insertar_rel_personal_precio_proveedor($mp);
-                    }
-                }
                 set_bootstrap_alert(trans_line('alerta_exito'), BOOTSTRAP_ALERT_SUCCESS);
                 return redirect('personal');
             } else {
                 $error = $this->personal_model->error_consulta();
                 $mensajes_error = array(trans_line('alerta_error'), trans_line('alerta_error_codigo') . base64_encode($error['message']));
                 set_bootstrap_alert($mensajes_error, BOOTSTRAP_ALERT_DANGER);
-                return $this->form_edit($id);
+                return $this->form_edit();
             }
         }
     }

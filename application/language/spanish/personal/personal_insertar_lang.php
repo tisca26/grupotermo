@@ -27,6 +27,8 @@ $lang['datos_generales'] = 'Datos generales';
 $lang['datos_seguridad_social'] = 'Datos de la seguridad social';
 $lang['datos_pago'] = 'Datos de pago';
 
+$lang['sin_foto'] = 'Sin foto';
+
 $lang['rfc'] = 'RFC';
 $lang['rfc_placeholder'] = 'RFC del empleado';
 $lang['rfc_ayuda'] = 'RFC del empleado';
@@ -179,6 +181,6 @@ $lang['cat_estados_id_domicilio_placeholder'] = 'Domicilio';
 $lang['direccion_municipio_id'] = 'Municipio domicilio';
 $lang['direccion_municipio_id_placeholder'] = 'Municipio domicilio';
 
-$lang['alerta_exito'] = 'Se guardó el activo con éxito, inserta otro o <a class="alert-link btn_loading_page" href="' . base_url_lang() . 'activos"> regresa al menú inicial</a>';
-$lang['alerta_error'] = 'Hubo un error al guardar la activo, intente más tarde.';
+$lang['alerta_exito'] = 'Se guardó el personal con éxito, inserta otro o <a class="alert-link btn_loading_page" href="' . base_url_lang() . 'personal"> regresa al menú inicial</a>';
+$lang['alerta_error'] = 'Hubo un error al guardar el personal, intente más tarde.';
 $lang['alerta_error_codigo'] = 'Código:';

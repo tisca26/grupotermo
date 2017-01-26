@@ -17,11 +17,13 @@ $lang['first'] = 'Primero';
 $lang['titulo_pagina'] = 'Obras';
 $lang['breadcrumb_home'] = 'Inicio';
 $lang['breadcrumb_pagina'] = 'Obras';
-$lang['agregar_btn'] = 'Agregar obra';
+$lang['agregar_btn'] = 'Agregar obra sencillo';
+$lang['agregar_completo_btn'] = 'Agregar obra completo';
 //TABLA
 $lang['obra_tabla'] = 'Obra';
 $lang['fecha_inicio_tabla'] = 'Fecha Inicio';
 $lang['fecha_fin_tabla'] = 'Fecha Fin';
+$lang['estatus_tabla'] = 'Estatus';
 $lang['acciones_tabla'] = 'Acciones';
 $lang['editar_tabla'] = 'Editar';
 $lang['resumen_tabla'] = 'Resumen';

@@ -19,6 +19,8 @@ class Obras extends Acl_controller
 
         $this->check_access();
 
+        $this->load->business('obra');
+
         $this->load->model('clientes_model');
         $this->load->model('empresas_model');
         $this->load->model('etapas_model');
@@ -106,11 +108,11 @@ class Obras extends Acl_controller
     public function borrar_obra($id = 0)
     {
         $this->cargar_idioma->carga_lang('obras/obras_index');
-        if ($this->obras_model->borrar_obra($id) != FALSE){
+        if ($this->obra->borrar_obra($id) != FALSE){
             set_bootstrap_alert(trans_line('alerta_borrado'), BOOTSTRAP_ALERT_SUCCESS);
             return redirect('obras');
         }else{
-            $error = $this->obras_model->error_consulta();
+            $error = $this->obra->error_consulta();
             $mensajes_error = array(trans_line('alerta_borrado_fail'), trans_line('alerta_error_codigo') . base64_encode($error['message']));
             set_bootstrap_alert($mensajes_error, BOOTSTRAP_ALERT_DANGER);
         }

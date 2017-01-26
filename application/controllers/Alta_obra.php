@@ -12,22 +12,21 @@ class Alta_obra extends Acl_controller
     {
         parent::__construct();
 
-        $this->set_read_list(array('index', 'obra', 'etapa', 'zona_concepto', 'conceptos_json', 'muestra_conceptos', 'resumen_alta_obra', 'muestra_zonas', 'relacionar_zonas_conceptos'));
-        $this->set_insert_list(array('insertar_obra', 'insertar_etapa', 'seleccionar_zona_concepto', 'insertar_conceptos', 'insertar_zonas_conceptos'));
+        $this->set_read_list(array('index', 'obra', 'etapa', 'zona_concepto', 'conceptos_json', 'muestra_conceptos', 'resumen_alta_obra', 'muestra_zonas'));
+        $this->set_insert_list(array('insertar_obra', 'insertar_etapa', 'seleccionar_zona_concepto', 'insertar_conceptos', 'insertar_zonas_conceptos', 'relacionar_zonas_conceptos'));
         $this->set_update_list(array(''));
         $this->set_delete_list(array(''));
 
         $this->check_access();
 
+        $this->load->business('obra');
+
         $this->load->model('catalogos_model');
-        $this->load->model('conceptos_model');
         $this->load->model('clientes_model');
+        $this->load->model('conceptos_categoria_model');
+        $this->load->model('conceptos_catalogo_model');
         $this->load->model('empresas_model');
-        $this->load->model('etapas_zonas_conceptos_model');
-        $this->load->model('etapas_model');
-        $this->load->model('obras_model');
         $this->load->model('unidades_model');
-        $this->load->model('zonas_model');
         $this->load->library('form_validation');
     }
 
@@ -61,15 +60,15 @@ class Alta_obra extends Acl_controller
             $accion = false;
             if ($obra['obras_id'] <= 0){
                 unset($obra['obras_id']);
-                $accion = $this->obras_model->insertar_obra($obra);
+                $accion = $this->obra->insertar_obra($obra);
             }else{
-                $accion = $this->obras_model->editar_obra($obra);
+                $accion = $this->obra->editar_obra($obra);
             }
             if ($accion == TRUE) {
-                return redirect('alta_obra/etapa/' . $this->obras_model->ultimo_id());
+                return redirect('alta_obra/etapa/' . $this->obra->ultimo_id());
             } else {
                 $this->cargar_idioma->carga_lang('alta_obra/alta_obra_obra');
-                $error = $this->obras_model->error_consulta();
+                $error = $this->obra->error_consulta();
                 $mensajes_error = array(trans_line('alerta_error'), trans_line('alerta_error_codigo') . base64_encode($error['message']));
                 set_bootstrap_alert($mensajes_error, BOOTSTRAP_ALERT_DANGER);
                 return $this->obra();
@@ -82,7 +81,7 @@ class Alta_obra extends Acl_controller
         if ($obras_id > 0) {
             $this->cargar_idioma->carga_lang('alta_obra/alta_obra_etapa');
             $data = array();
-            $data['obra'] = $this->obras_model->obra_por_id($obras_id);
+            $data['obra'] = $this->obra->obra_por_id($obras_id);
             $template['_B'] = 'alta_obra/alta_obra_etapa.php';
             return $this->load->template_view($this->template_base, $data, $template);
         }
@@ -97,10 +96,10 @@ class Alta_obra extends Acl_controller
             $this->etapa($obras_id);
         } else {
             $etapa = $this->input->post();
-            if ($this->etapas_model->insertar_etapa($etapa) == TRUE) {
-                return redirect('alta_obra/zona_concepto/' . $this->etapas_model->ultimo_id());
+            if ($this->obra->insertar_etapa($etapa) == TRUE) {
+                return redirect('alta_obra/zona_concepto/' . $this->obra->ultimo_id());
             } else {
-                $error = $this->etapas_model->error_consulta();
+                $error = $this->obra->error_consulta();
                 $mensajes_error = array(trans_line('alerta_error'), trans_line('alerta_error_codigo') . base64_encode($error['message']));
                 set_bootstrap_alert($mensajes_error, BOOTSTRAP_ALERT_DANGER);
                 return $this->etapa($obras_id);
@@ -113,13 +112,16 @@ class Alta_obra extends Acl_controller
         if ($etapas_id > 0) {
             $this->cargar_idioma->carga_lang('alta_obra/alta_obra_zona_concepto');
             $data = array();
-            $data['etapa'] = $this->etapas_model->etapa_por_id($etapas_id);
+            $data['etapa'] = $this->obra->etapa_por_id($etapas_id);
             $template['_B'] = 'alta_obra/alta_obra_zona_concepto.php';
             return $this->load->template_view($this->template_base, $data, $template);
         }
         return redirect('alta_obra');
     }
 
+    /*
+     * Seleccion entre zona y concepto
+     */
     public function seleccionar_zona_concepto()
     {
         $tipo_zona_concepto = $this->input->post('tipo_zona_concepto');
@@ -134,11 +136,15 @@ class Alta_obra extends Acl_controller
 
     }
 
+    /*
+     * Zonas
+     */
     public function muestra_zonas($obras_id, $etapas_id)
     {
         $this->cargar_idioma->carga_lang('alta_obra/alta_obra_zonas');
         $data = array();
-        $data['unidades'] = $this->unidades_model->unidades_todos_array();
+        $data['categorias'] = $this->conceptos_categoria_model->conceptos_categoria_todos_sel();
+        $data['unidades'] = $this->unidades_model->unidades_todos_sel();
         $data['etapas_id'] = $etapas_id;
         $data['obras_id'] = $obras_id;
         $template['_B'] = 'alta_obra/alta_obra_zonas.php';
@@ -152,7 +158,7 @@ class Alta_obra extends Acl_controller
         $zonas_fechas_fin = $this->input->post('zonas_fechas_fin');
         $etapas_id = $this->input->post('etapas_id');
         $obras_id = $this->input->post('obras_id');
-        $conceptos = $this->input->post('group-a');
+        //$conceptos = $this->input->post('group-a');
         $zonas_ids = array();
         $conceptos_ids = array();
         foreach ($zonas as $z_key => $zona) {
@@ -163,20 +169,34 @@ class Alta_obra extends Acl_controller
                 $zona_ins['obras_id'] = $obras_id;
                 $zona_ins['fecha_inicio'] = $zonas_fechas_inicio[$z_key];
                 $zona_ins['fecha_fin'] = $zonas_fechas_fin[$z_key];
-                $this->zonas_model->insertar_zona($zona_ins);
-                $zonas_ids[] = $this->zonas_model->ultimo_id();
+                $this->obra->insertar_zona($zona_ins);
+                $zonas_ids[] = $this->obra->ultimo_id();
             }
         }
-        foreach ($conceptos as $concepto) {
-            $concepto['obras_id'] = $obras_id;
-            $this->conceptos_model->insertar_concepto($concepto);
-            $conceptos_ids[] = $this->conceptos_model->ultimo_id();
+
+        $conceptos_catalogos = $this->input->post('conceptos_catalogo_id');
+        $claves = $this->input->post('clave_en_obra');
+        $pus = $this->input->post('precio_unitario');
+        foreach ($conceptos_catalogos as $idx => $conceptos_catalogo_id){
+            //falta validar si ya existe concepto en obra
+            $concepto = $this->conceptos_catalogo_model->conceptos_catalogo_por_id($conceptos_catalogo_id);
+            $con_ins['conceptos_catalogo_id'] = $conceptos_catalogo_id;
+            $con_ins['clave_en_obra'] = $claves[$idx];
+            $con_ins['clave'] = $concepto->clave;
+            $con_ins['nombre'] = $concepto->nombre;
+            $con_ins['descripcion_corta'] = $concepto->descripcion_corta;
+            $con_ins['precio_unitario'] = $pus[$idx];
+            $con_ins['unidades_id'] = $concepto->unidades_id;
+            $con_ins['obras_id'] = $obras_id;
+            $last_ins = $this->obra->insertar_concepto($con_ins);
+            $conceptos_ids[] = $this->obra->ultimo_id();
         }
-        $data['zonas_final'] = $this->zonas_model->zonas_por_ids($zonas_ids);
-        $data['conceptos_final'] = $this->conceptos_model->conceptos_por_ids($conceptos_ids);
+
+        $data['zonas_final'] = $this->obra->zonas_por_ids($zonas_ids);
+        $data['conceptos_final'] = $this->obra->conceptos_por_ids($conceptos_ids);
         $data['etapas_id'] = $etapas_id;
         $data['obras_id'] = $obras_id;
-        $data['unidades'] = $this->unidades_model->unidades_todos_array();
+        $data['unidades'] = $this->unidades_model->unidades_todos_sel();
 
         $this->cargar_idioma->carga_lang('alta_obra/insertar_zonas_conceptos');
         $template['_B'] = 'alta_obra/insertar_zonas_conceptos.php';
@@ -193,13 +213,14 @@ class Alta_obra extends Acl_controller
         foreach ($conceptos as $key => $concepto) {
             if (isset($concepto['asignar']) && $concepto['asignar'] == 1) {
                 $ezc = array();
+                $concepto['cantidad'] = round($concepto['cantidad'], 2);
+                $concepto['precio_unitario'] = round($concepto['precio_unitario'], 2);
                 $ezc['conceptos_id'] = $concepto['conceptos_id'];
                 $ezc['etapas_id'] = $etapas_id;
                 $ezc['cantidad'] = $concepto['cantidad'];
                 $ezc['precio_unitario'] = $concepto['precio_unitario'];
                 $ezc['zonas_id'] = $concepto['zonas_id'];
-                // Preguntar cual es el precio unitario y en que momento registran el precio autorizado
-                $this->etapas_zonas_conceptos_model->insertar_etapa_zona_concepto($ezc);
+                $this->obra->insertar_etapa_zona_concepto($ezc);
                 if (isset($rel_concepto_cantidad[$concepto['conceptos_id']])) {
                     $rel_concepto_cantidad[$concepto['conceptos_id']] = $rel_concepto_cantidad[$concepto['conceptos_id']] + $concepto['cantidad'];
                 } else {
@@ -217,40 +238,64 @@ class Alta_obra extends Acl_controller
             $concepto_insert = array();
             $concepto_insert['conceptos_id'] = $conceptos_id;
             $concepto_insert['cantidad'] = $cantidad;
-            $this->conceptos_model->editar_concepto($concepto_insert);
+            $this->obra->editar_concepto($concepto_insert);
         }
     }
 
+    /*
+     * Conceptos
+     */
     public function muestra_conceptos($obras_id = 0, $etapas_id = 0)
     {
         $this->cargar_idioma->carga_lang('alta_obra/alta_obra_conceptos');
         $data = array();
-        $data['unidades'] = $this->unidades_model->unidades_todos_array();
+        $data['categorias'] = $this->conceptos_categoria_model->conceptos_categoria_todos_sel();
+        $data['unidades'] = $this->unidades_model->unidades_todos_sel();
         $data['etapas_id'] = $etapas_id;
         $data['obras_id'] = $obras_id;
         $template['_B'] = 'alta_obra/alta_obra_conceptos.php';
         return $this->load->template_view($this->template_base, $data, $template);
     }
 
-    /*
-     * Se crea una obra por concepto
-     */
     public function insertar_conceptos()
     {
-        $posted_group = $this->input->post('group-a');
         $obras_id = $this->input->post('obras_id');
         $etapas_id = $this->input->post('etapas_id');
-        foreach ($posted_group as $concepto) {
-            $concepto['obras_id'] = $obras_id;
-            $this->conceptos_model->insertar_concepto($concepto);
-            $ezc = array();
-            $ezc['conceptos_id'] = $this->conceptos_model->ultimo_id();
+        $conceptos_catalogos = $this->input->post('conceptos_catalogo_id');
+        $claves = $this->input->post('clave_en_obra');
+        $pus = $this->input->post('precio_unitario');
+        $cantidades = $this->input->post('cantidades');
+        foreach ($conceptos_catalogos as $idx => $conceptos_catalogo_id){
+            //falta validar si ya existe concepto en obra
+            $concepto = $this->conceptos_catalogo_model->conceptos_catalogo_por_id($conceptos_catalogo_id);
+            $con_ins['conceptos_catalogo_id'] = $conceptos_catalogo_id;
+            $con_ins['clave_en_obra'] = $claves[$idx];
+            $con_ins['clave'] = $concepto->clave;
+            $con_ins['nombre'] = $concepto->nombre;
+            $con_ins['descripcion_corta'] = $concepto->descripcion_corta;
+            $con_ins['cantidad'] = $cantidades[$idx];
+            $con_ins['precio_unitario'] = $pus[$idx];
+            $con_ins['unidades_id'] = $concepto->unidades_id;
+            $con_ins['obras_id'] = $obras_id;
+            $last_ins = $this->obra->insertar_concepto($con_ins);
+            $concepto_id = $this->obra->ultimo_id();
             $ezc['etapas_id'] = $etapas_id;
-            $ezc['cantidad'] = $concepto['cantidad'];
-            $ezc['precio_unitario'] = $concepto['precio_unitario'];
-            // Preguntar cual es el precio unitario y en que momento registran el precio autorizado
-            $this->etapas_zonas_conceptos_model->insertar_etapa_zona_concepto($ezc);
+            $ezc['conceptos_id'] = $concepto_id;
+            $ezc['cantidad'] = $cantidades[$idx];
+            $ezc['precio_unitario'] = $pus[$idx];
+            $last_ins = $this->obra->insertar_etapa_zona_concepto($ezc);
         }
+//        foreach ($posted_group as $concepto) {
+//            $concepto['obras_id'] = $obras_id;
+//            $this->obra->insertar_concepto($concepto);
+//
+//            $ezc = array();
+//            $ezc['conceptos_id'] = $this->obra->ultimo_id();
+//            $ezc['etapas_id'] = $etapas_id;
+//            $ezc['cantidad'] = $concepto['cantidad'];
+//            $ezc['precio_unitario'] = $concepto['precio_unitario'];
+//            $this->obra->insertar_etapa_zona_concepto($ezc);
+//        }
         return redirect('alta_obra/resumen_alta_obra/' . $obras_id . '/' . 2);
     }
 
@@ -258,13 +303,17 @@ class Alta_obra extends Acl_controller
      * Resumen de la obra
      * @param obras_id ID DE LA OBRA
      * @param tipo_alta FORMA EN QUE SE DIO DE ALTA LA OBRA, POR ZONA=1; POR CONCEPTO=2
+     *
+     * REDIRIGIMOS EL RESUMEN AL RESUMEN DE OBRAS CONTROLLER
      */
     public function resumen_alta_obra($obras_id = 0, $tipo_alta = 0)
     {
+        return redirect('obras/resumen_obra/' . $obras_id);
+
         if (intval($obras_id) === 0 && intval($tipo_alta) === 0) {
             return redirect('alta_obra');
         }
-        $obra = $this->obras_model->obra_por_id($obras_id);
+        $obra = $this->obra->obra_por_id($obras_id);
         $etapas = $this->etapas_model->etapas_por_obras_id($obras_id);
         if (intval($tipo_alta) === 2) {
             foreach ($etapas as $etapa) {
@@ -296,7 +345,7 @@ class Alta_obra extends Acl_controller
 
     public function conceptos_json()
     {
-        $conceptos = $this->conceptos_model->conceptos_nombres();
+        $conceptos = $this->obra->conceptos_nombres();
         $my_array = array();
         foreach ($conceptos as $con) {
             $my_array[] = $con->nombre;

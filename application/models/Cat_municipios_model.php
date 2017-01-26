@@ -52,4 +52,14 @@ class Cat_municipios_model extends CI_Model
         }
         return $result;
     }
+
+    public function municipio_por_id($cat_municipios_id = 0)
+    {
+        $result = new stdClass();
+        $query = $this->db->where('cat_municipios_id',$cat_municipios_id)->get('cat_municipios');
+        if ($query->num_rows() > 0) {
+            $result = $query->row();
+        }
+        return $result;
+    }
 }

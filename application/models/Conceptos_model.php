@@ -57,12 +57,13 @@ class Conceptos_model extends CI_Model
         return $result;
     }
 
-    public function conceptos_todos($order = 'conceptos_id')
+    public function conceptos_todos($order = 'conceptos_catalogo_id')
     {
         $result = array();
-        $this->db->select('c.*, o.nombre as obra_nombre');
-        $this->db->from('conceptos c');
-        $this->db->join('obras o', 'c.obras_id = o.obras_id', 'inner');
+        $this->db->select('c.*, GROUP_CONCAT(v_cc.categoria) as categorias', false);
+        $this->db->from('conceptos_catalogo c');
+        $this->db->join('v_conceptos_catalogo v_cc', 'v_cc.conceptos_catalogo_id = c.conceptos_catalogo_id', 'inner');
+        $this->db->group_by('c.conceptos_catalogo_id');
         $query = $this->db->order_by($order)->get();
         if ($query->num_rows() > 0) {
             $result = $query->result();
@@ -77,7 +78,7 @@ class Conceptos_model extends CI_Model
 
     public function concepto_por_id($conceptos_id = 0)
     {
-        $result = new stdClass();
+        $result = null;
         $query = $this->db->where('conceptos_id', $conceptos_id)->get('conceptos');
         if ($query->num_rows() > 0) {
             $result = $query->row();

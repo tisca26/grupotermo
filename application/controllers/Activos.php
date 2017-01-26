@@ -39,7 +39,7 @@ class Activos extends Acl_controller
         $this->cargar_idioma->carga_lang('activos/activos_insertar');
         $data = array();
         $data['categorias'] = $this->activos_categoria_model->activos_categoria_todos_array_sel();
-        $data['unidades'] = $this->unidades_model->unidades_todos_array();
+        $data['unidades'] = $this->unidades_model->unidades_todos_sel();
         $data['proveedores'] = $this->proveedores_model->proveedores_todos_sel();
         $template['_B'] = 'activos/activos_insertar.php';
         $this->load->template_view($this->template_base, $data, $template);
@@ -96,7 +96,7 @@ class Activos extends Acl_controller
         $data['activo'] = $this->activos_model->activo_por_id($activos_id);
         $data['categorias'] = $this->activos_categoria_model->activos_categoria_todos_array_sel();
         $data['categorias_sel'] = $this->activos_model->rel_activo_categoria_sel($activos_id);
-        $data['unidades'] = $this->unidades_model->unidades_todos_array();
+        $data['unidades'] = $this->unidades_model->unidades_todos_sel();
         $data['proveedores'] = $this->proveedores_model->proveedores_todos_sel();
         $data['precios'] = $this->activos_model->precios_proveedores_por_activos_id($activos_id);
         $template['_B'] = 'activos/activos_editar.php';

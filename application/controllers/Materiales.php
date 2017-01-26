@@ -41,7 +41,7 @@ class Materiales extends Acl_controller
         $data = array();
         $data['categorias'] = $this->materiales_categoria_model->materiales_categoria_todos_array_sel();
         $data['proveedores'] = $this->proveedores_model->proveedores_todos_sel();
-        $data['unidades'] = $this->unidades_model->unidades_todos_array();
+        $data['unidades'] = $this->unidades_model->unidades_todos_sel();
         $template['_B'] = 'materiales/materiales_insertar.php';
         $this->load->template_view($this->template_base, $data, $template);
     }
@@ -105,7 +105,7 @@ class Materiales extends Acl_controller
         $data['categorias_sel'] = $this->materiales_model->rel_material_categoria_sel($materiales_id);
         $data['proveedores'] = $this->proveedores_model->proveedores_todos_sel();
         $data['precios'] = $this->materiales_model->precios_proveedores_por_material_id($materiales_id);
-        $data['unidades'] = $this->unidades_model->unidades_todos_array();
+        $data['unidades'] = $this->unidades_model->unidades_todos_sel();
         $template['_B'] = 'materiales/materiales_editar.php';
         $this->load->template_view($this->template_base, $data, $template);
     }

@@ -46,8 +46,8 @@
                             <tbody>
                             <?php foreach ($rows as $personal): ?>
                                 <tr class="odd gradeX">
-                                    <td> <?php echo $personal->nombre; ?></td>
-                                    <td> <?php echo $personal->apellidos; ?></td>
+                                    <td> <?php echo $personal->nombres; ?></td>
+                                    <td> <?php echo $personal->apellido_paterno . ' ' . $personal->apellido_materno; ?></td>
                                     <td>
                                         <a href="<?php echo base_url_lang() . 'personal/form_edit/' . $personal->personal_id ?>"
                                            class="badge badge-primary badge-roundless btn_loading_page"> <?php echo trans_line('editar_tabla'); ?> </a>

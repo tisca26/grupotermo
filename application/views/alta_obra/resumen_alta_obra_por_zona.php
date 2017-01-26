@@ -105,7 +105,9 @@
                                                     :</strong> <?php echo $etapa->fecha_inicio; ?> <?php echo trans_line('etapa_periodo_al'); ?> <?php echo $etapa->fecha_fin; ?>
                                             </div>
                                             <div class="col-md-12 text-right">
-                                                <button id="btn_etapa_<?php echo $etapa->etapas_id; ?>" class="btn btn-primary btn_etapa" data-id="<?php echo $etapa->etapas_id; ?>">
+                                                <button id="btn_etapa_<?php echo $etapa->etapas_id; ?>"
+                                                        class="btn btn-primary btn_etapa"
+                                                        data-id="<?php echo $etapa->etapas_id; ?>">
                                                     <?php echo trans_line('btn_ver_ocultar_zonas'); ?>
                                                 </button>
                                             </div>
@@ -129,7 +131,10 @@
                                                             :</strong> <?php echo $zona->fecha_inicio; ?> <?php echo trans_line('zona_periodo_al'); ?> <?php echo $zona->fecha_fin; ?>
                                                     </div>
                                                     <div class="col-md-12 text-right">
-                                                        <button id="btn_zona_<?php echo $zona->zonas_id; ?>" class="btn btn-success btn_zona" data-id-etapa="<?php echo $etapa->etapas_id; ?>" data-id-zona="<?php echo $zona->zonas_id; ?>">
+                                                        <button id="btn_zona_<?php echo $zona->zonas_id; ?>"
+                                                                class="btn btn-success btn_zona"
+                                                                data-id-etapa="<?php echo $etapa->etapas_id; ?>"
+                                                                data-id-zona="<?php echo $zona->zonas_id; ?>">
                                                             <?php echo trans_line('btn_ver_ocultar_conceptos'); ?>
                                                         </button>
                                                     </div>
@@ -212,9 +217,9 @@
             var btn = $(this);
             var etapa_id = btn.attr('data-id');
             var zonas_div = $('#etapa_' + etapa_id + '_zonas');
-            if (zonas_div.is(':visible')){
+            if (zonas_div.is(':visible')) {
                 zonas_div.hide(200);
-            }else{
+            } else {
                 zonas_div.show(200);
             }
         });
@@ -224,9 +229,9 @@
             var etapa_id = btn.attr('data-id-etapa');
             var zona_id = btn.attr('data-id-zona');
             var conceptos_div = $('#etapa_' + etapa_id + '_zona_' + zona_id + '_conceptos');
-            if (conceptos_div.is(':visible')){
+            if (conceptos_div.is(':visible')) {
                 conceptos_div.hide(200);
-            }else{
+            } else {
                 conceptos_div.show(200);
             }
         });

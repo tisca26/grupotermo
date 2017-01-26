@@ -138,23 +138,39 @@ class CI_Model
  * <examples>
  *
  * @property acl_model 					            $acl_model
- * @property activos_model                          $activos_model
  * @property activos_categoria_model                $activos_categoria_model
+ * @property activos_model                          $activos_model
+ * @property bancos_model                           $bancos_model
  * @property cambiocontrasena_model                 $cambiocontrasena_model
+ * @property cat_estados_model                      $cat_estados_model
+ * @property cat_municipios_model                   $cat_municipios_model
+ * @property cat_paises_model                       $cat_paises_model
  * @property catalogos_model                        $catalogos_model
  * @property clientes_model                         $clientes_model
  * @property conceptos_model                        $conceptos_model
- * @property etapas_zonas_conceptos_model           $etapas_zonas_conceptos_model
+ * @property conceptos_categoria_model              $conceptos_categoria_model
+ * @property conceptos_catalogo_model               $conceptos_catalogo_model
+ * @property empresas_departamentos_model           $empresas_departamentos_model
  * @property empresas_model                         $empresas_model
  * @property etapas_model                           $etapas_model
+ * @property etapas_zonas_conceptos_model           $etapas_zonas_conceptos_model
  * @property groups_model                           $groups_model
  * @property logs_oe_model                          $logs_oe_model
+ * @property mano_de_obra_model                     $mano_de_obra_model
  * @property materiales_categoria_model             $materiales_categoria_model
  * @property materiales_model                       $materiales_model
+ * @property materiales_ubicacion_model             $materiales_ubicacion_model
  * @property menu_model                             $menu_model
  * @property obras_model                            $obras_model
+ * @property periodo_de_pago_model                  $periodo_de_pago_model
+ * @property personal_contratos_model               $personal_contratos_model
+ * @property personal_model                         $personal_model
  * @property proveedores_model                      $proveedores_model
+ * @property registro_patronal_model                $registro_patronal_model
  * @property resources_model                        $resources_model
+ * @property servicios_categoria_model              $servicios_categoria_model
+ * @property servicios_model                        $servicios_model
+ * @property tipos_regimen_model                    $tipos_regimen_model
  * @property unidades_model                         $unidades_model
  * @property users_model                            $users_model
  * @property zonas_model                            $zonas_model
@@ -176,6 +192,8 @@ class my_models extends my_business
  * <examples>
  *
  * @property etapa                                  $etapa
+ * @property lugares                                $lugares
+ * @property obra                                   $obra
  * @property zona                                   $zona
  */
 class my_business

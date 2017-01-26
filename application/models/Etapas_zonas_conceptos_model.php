@@ -21,7 +21,7 @@ class Etapas_zonas_conceptos_model extends CI_Model
     public function conceptos_por_etapa($etapas_id = 0)
     {
         $result = array();
-        $this->db->select('ezc.*,c.nombre as concepto_nombre, u.nombre as unidad, o.nombre as obra_nombre');
+        $this->db->select('ezc.*,c.nombre as concepto_nombre, u.nombre as unidad, o.nombre as obra_nombre, ezc.total_autorizado');
         $this->db->from('etapas_zonas_conceptos ezc');
         $this->db->join('etapas e', 'ezc.etapas_id = e.etapas_id', 'inner');
         $this->db->join('obras o', 'e.obras_id = o.obras_id', 'inner');
@@ -51,7 +51,7 @@ class Etapas_zonas_conceptos_model extends CI_Model
     public function conceptos_por_etapa_zona($etapas_id = 0, $zonas_id = 0)
     {
         $result = array();
-        $this->db->select('ezc.*,c.nombre as concepto_nombre, c.clave as concepto_clave, c.descripcion_corta as concepto_desc_corta, u.nombre as unidad');
+        $this->db->select('ezc.*,c.nombre as concepto_nombre, c.clave as concepto_clave, c.descripcion_corta as concepto_desc_corta, u.nombre as unidad, ezc.total_autorizado');
         $this->db->from('etapas_zonas_conceptos ezc');
         $this->db->join('conceptos c', 'c.conceptos_id = ezc.conceptos_id', 'inner');
         $this->db->join('unidades u', 'c.unidades_id = u.unidades_id', 'inner');

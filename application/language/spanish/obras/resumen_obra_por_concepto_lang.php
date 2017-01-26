@@ -44,27 +44,22 @@ $lang['obra_total_autorizado'] = 'Total autorizado';
 $lang['etapas'] = 'Etapas registradas';
 $lang['etapa_nombre'] = 'Nombre de la etapa';
 
-$lang['conceptos'] = 'Conceptos';
-$lang['concepto_nombre'] = 'Nombre concepto';
-$lang['concepto_unidad'] = 'Unidad';
-$lang['concepto_cantidad'] = 'Cantidad';
-$lang['concepto_precio_unitario'] = 'Precio unidad';
-
 $lang['etapas_datos'] = 'Datos de la etapa';
 $lang['etapa_nombre'] = 'Nombre de la etapa';
 $lang['etapa_periodo'] = 'Periodo de la etapa';
 $lang['etapa_periodo_al'] = 'al';
 
-$lang['conceptos_datos'] = 'Datos del concepto';
-$lang['concepto_nombre'] = 'Nombre concepto';
+$lang['concepto'] = 'Concepto';
 $lang['concepto_unidad'] = 'Unidad';
 $lang['concepto_cantidad'] = 'Cantidad';
 $lang['concepto_precio_unitario'] = 'Precio unitario';
+$lang['concepto_total'] = 'Total';
+
+$lang['concepto_subtotal'] = 'Subtotal';
+
+$lang['costo'] = 'Costo';
+
+$lang['resumen'] = 'Resumen';
+$lang['total'] = 'Total';
 
 $lang['btn_finalizar'] = 'Listo';
-$lang['btn_ver_ocultar_conceptos'] = 'Ver / Ocultar Conceptos';
-
-
-$lang['alerta_exito'] = 'Se guardó la obra con éxito, inserta otro o <a class="alert-link btn_loading_page" href="' . base_url_lang() . 'obras"> regresa al menú inicial</a>';
-$lang['alerta_error'] = 'Hubo un error al guardar la obra, intente más tarde.';
-$lang['alerta_error_codigo'] = 'Código:';

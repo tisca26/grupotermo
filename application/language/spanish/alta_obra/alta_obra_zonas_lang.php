@@ -37,6 +37,8 @@ $lang['borrar_fila'] = 'Borrar';
 $lang['agregar_fila_zona'] = 'Agregar zona';
 $lang['agregar_fila_concepto'] = 'Agregar concepto';
 
+$lang['zonas'] = 'Zonas';
+
 $lang['zona_nombre'] = 'Zona';
 $lang['zona_nombre_placeholder'] = 'Nombre de la zona';
 
@@ -45,22 +47,57 @@ $lang['zona_fechas_a'] = 'a';
 $lang['zona_fecha_inicio_placeholder'] = 'Fecha de inicio';
 $lang['zona_fecha_fin_placeholder'] = 'Fecha fin';
 
-$lang['concepto_nombre'] = 'Concepto';
-$lang['concepto_nombre_placeholder'] = 'Nombre del concepto';
+$lang['categoria_sel'] = 'Seleccionar categoría';
+$lang['categoria_placeholder'] = 'Categorías';
 
-$lang['concepto_desc_corta'] = 'Descripción corta';
-$lang['concepto_desc_corta_placeholder'] = 'Descripción corta del concepto';
+$lang['btn_agregar_nuevo_concepto'] = '¿No está el concepto? Agrégalo';
 
-$lang['concepto_clave'] = 'Clave del concepto';
-$lang['concepto_clave_placeholder'] = 'Clave del concepto';
+$lang['agregar_nuevo_concepto'] = 'Agregar nuevo concepto';
+$lang['cerrar'] = 'Cerrar';
+$lang['guardar_modal'] = 'Guardar concepto';
 
-$lang['concepto_unidad'] = 'Unidad';
-$lang['concepto_unidad_placeholder'] = 'Tipo unidad del concepto';
+$lang['conceptos'] = 'Conceptos:';
+$lang['anadir_btn'] = 'Añadir';
+$lang['conceptos_agregados'] = 'Conceptos agregados:';
 
-$lang['concepto_precio_unitario'] = 'Precio unitario';
-$lang['concepto_precio_unitario_placeholder'] = 'Precio unitario del concepto';
+$lang['nombre_nuevo'] = 'Nombre';
+$lang['nombre_nuevo_placeholder'] = 'Nombre del concepto';
+$lang['nombre_nuevo_ayuda'] = 'Nombre del concepto';
 
-$lang['borrar_concepto_alert'] = '¿Desea borrar el concepto?';
+$lang['desc_nuevo'] = 'Descripción corta';
+$lang['desc_nuevo_placeholder'] = 'Descripción corta del concepto';
+$lang['desc_nuevo_ayuda'] = 'Descripción corta del concepto';
+
+$lang['clave_nuevo'] = 'Clave';
+$lang['clave_nuevo_placeholder'] = 'Clave del concepto';
+$lang['clave_nuevo_ayuda'] = 'Clave del concepto';
+
+$lang['unidades_nuevo'] = 'Unidad';
+$lang['unidades_nuevo_placeholder'] = 'Unidad del concepto';
+
+$lang['categoria_nuevo'] = 'Categoría';
+$lang['categoria_nuevo_placeholder'] = 'Categoría del concepto';
+
+$lang['guardar_modal_success'] = 'Se guardó el concepto con éxito';
+$lang['guardar_modal_error'] = 'Error al guardar el concepto, intentelo más tarde';
+
+$lang['clave'] = 'Clave en obra';
+$lang['clave_placeholder'] = 'Clave en obra del concepto';
+$lang['clave_ayuda'] = 'Clave ID del concepto';
+
+$lang['precio_unitario'] = 'Precio unitario';
+$lang['precio_unitario_placeholder'] = 'PU del concepto';
+$lang['precio_unitario_ayuda'] = 'PU del concepto';
+
+$lang['cantidad'] = 'Cantidad';
+$lang['cantidad_placeholder'] = 'Cantidad';
+$lang['cantidad_ayuda'] = 'Cantidad del concepto';
+
+$lang['borrar_btn'] = 'Borrar';
+
+$lang['nombre'] = 'Concepto';
+$lang['nombre_placeholder'] = 'Ingrese el nombre del concepto';
+$lang['nombre_ayuda'] = 'Nombre con el cual identificará el concepto';
 
 $lang['alerta_exito'] = 'Se guardó la obra con éxito, inserta otro o <a class="alert-link btn_loading_page" href="' . base_url_lang() . 'obras"> regresa al menú inicial</a>';
 $lang['alerta_error'] = 'Hubo un error al guardar la obra, intente más tarde.';

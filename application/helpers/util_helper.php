@@ -37,4 +37,13 @@ if (!function_exists('in_array_field')) {
         return false;
     }
 }
+
+if (!function_exists('numero_a_letra')) {
+    function numero_a_letra($monto = 0, $moneda = 'MXN')
+    {
+        $CI =& get_instance();
+        $CI->load->library('number_to_letter_converter');
+        return $CI->number_to_letter_converter->to_word($monto, $moneda);
+    }
+}
 ?>

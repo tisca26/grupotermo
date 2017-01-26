@@ -49,4 +49,17 @@ class Empresas_departamentos_model extends CI_Model
         }
         return $result;
     }
+
+    public function departamentos_por_empresas_id_sel($empresas_id = 0)
+    {
+        $result = array();
+        $query = $this->db->where('empresas_id', $empresas_id)->get('empresas_departamentos');
+        if ($query->num_rows() > 0) {
+            $deptos = $query->result();
+            foreach ($deptos as $depto){
+                $result[$depto->empresas_departamentos_id] = $depto->nombre;
+            }
+        }
+        return $result;
+    }
 }

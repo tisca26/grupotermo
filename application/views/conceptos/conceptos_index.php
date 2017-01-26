@@ -31,7 +31,9 @@
                     <div class="portlet-body">
                         <?php echo validation_errors('<div class="alert alert-danger alert-dismissable">', '</div>'); ?>
                         <?php echo get_bootstrap_alert(); ?>
-                        <a href="<?php echo base_url_lang() . 'conceptos/form_insert' ?>" class="btn btn-success">
+                        <a href="<?php echo base_url_lang() . 'conceptos/form_insert' ?>" class="btn btn-info">
+                            <i class="fa fa-plus"></i> <?php echo trans_line('agregar_a_obra_btn'); ?></a>
+                        <a disabled="ture" href="<?php echo base_url_lang() . 'conceptos/form_insert' ?>" class="btn btn-success">
                             <i class="fa fa-plus"></i> <?php echo trans_line('agregar_btn'); ?></a>
                         <hr>
                         <table class="table table-striped table-bordered table-hover table-checkable order-column"
@@ -39,7 +41,7 @@
                             <thead>
                             <tr>
                                 <th> <?php echo trans_line('concepto_tabla'); ?></th>
-                                <th> <?php echo trans_line('obra_tabla'); ?></th>
+                                <th> <?php echo trans_line('categorias_tabla'); ?></th>
                                 <th> <?php echo trans_line('acciones_tabla'); ?></th>
                             </tr>
                             </thead>
@@ -47,9 +49,9 @@
                             <?php foreach ($rows as $concepto): ?>
                                 <tr class="odd gradeX">
                                     <td> <?php echo $concepto->nombre; ?></td>
-                                    <td> <?php echo $concepto->obra_nombre; ?></td>
+                                    <td> <?php echo $concepto->categorias; ?></td>
                                     <td>
-                                        <a href="<?php echo base_url_lang() . 'conceptos/form_edit/' . $concepto->conceptos_id ?>"
+                                        <a href="<?php echo base_url_lang() . 'conceptos/form_edit/' . $concepto->conceptos_catalogo_id ?>"
                                            class="badge badge-primary badge-roundless"> <?php echo trans_line('editar_tabla'); ?> </a>
                                         <a class="badge badge-danger badge-roundless delete_confirmation"
                                            data-toggle="confirmation" data-placement="top"
@@ -58,7 +60,7 @@
                                            data-btn-ok-icon="icon-like" data-btn-ok-class="btn-success"
                                            data-btn-cancel-label="<?php echo trans_line('confirmacion_borrado_cancel'); ?>"
                                            data-btn-cancel-icon="icon-close" data-btn-cancel-class="btn-danger"
-                                           data-id="<?php echo $concepto->conceptos_id ?>">
+                                           data-id="<?php echo $concepto->conceptos_catalogo_id ?>">
                                             <?php echo trans_line('borrar_tabla'); ?>
                                         </a>
                                     </td>

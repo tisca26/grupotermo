@@ -91,3 +91,9 @@ defined('BOOTSTRAP_ALERT_SUCCESS')  OR define('BOOTSTRAP_ALERT_SUCCESS', 'succes
 defined('BOOTSTRAP_ALERT_INFO')     OR define('BOOTSTRAP_ALERT_INFO', 'info');
 defined('BOOTSTRAP_ALERT_WARNING')  OR define('BOOTSTRAP_ALERT_WARNING', 'warning');
 defined('BOOTSTRAP_ALERT_DANGER')   OR define('BOOTSTRAP_ALERT_DANGER', 'danger');
+
+/*
+ * ESTATUS DE SISTEMA
+ */
+defined('ESTATUS_ACTIVO')       OR define('ESTATUS_ACTIVO', 1);
+defined('ESTATUS_INACTIVO')     OR define('ESTATUS_INACTIVO', 0);

@@ -36,7 +36,7 @@ class Zonas extends Acl_controller
     {
         $this->cargar_idioma->carga_lang('zonas/zonas_insertar');
         $data = array();
-        $data['obras'] = $this->obras_model->obras_todos_array();
+        $data['obras'] = $this->obras_model->obras_todos_sel();
         $template['_B'] = 'zonas/zonas_insertar.php';
         $this->load->template_view($this->template_base, $data, $template);
     }
@@ -70,7 +70,7 @@ class Zonas extends Acl_controller
     {
         $this->cargar_idioma->carga_lang('zonas/zonas_editar');
         $data = array();
-        $data['obras'] = $this->obras_model->obras_todos_array();
+        $data['obras'] = $this->obras_model->obras_todos_sel();
         $data['zona'] = $this->zonas_model->zona_por_id($zonas_id);
         $template['_B'] = 'zonas/zonas_editar.php';
         $this->load->template_view($this->template_base, $data, $template);

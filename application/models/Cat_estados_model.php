@@ -52,4 +52,14 @@ class Cat_estados_model extends CI_Model
         }
         return $result;
     }
+
+    public function estado_por_id($cat_estados_id = 0)
+    {
+        $result = new stdClass();
+        $query = $this->db->where('cat_estados_id',$cat_estados_id)->get('cat_estados');
+        if ($query->num_rows() > 0) {
+            $result = $query->row();
+        }
+        return $result;
+    }
 }

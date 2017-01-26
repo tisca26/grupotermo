@@ -31,6 +31,8 @@
                     <div class="portlet-body">
                         <?php echo validation_errors('<div class="alert alert-danger alert-dismissable">', '</div>'); ?>
                         <?php echo get_bootstrap_alert(); ?>
+                        <a href="<?php echo base_url_lang() . 'alta_obra' ?>" class="btn btn-info">
+                            <i class="fa fa-plus"></i> <?php echo trans_line('agregar_completo_btn'); ?></a>
                         <a href="<?php echo base_url_lang() . 'obras/form_insert' ?>" class="btn btn-success">
                             <i class="fa fa-plus"></i> <?php echo trans_line('agregar_btn'); ?></a>
                         <hr>
@@ -41,6 +43,7 @@
                                 <th> <?php echo trans_line('obra_tabla'); ?></th>
                                 <th> <?php echo trans_line('fecha_inicio_tabla'); ?></th>
                                 <th> <?php echo trans_line('fecha_fin_tabla'); ?></th>
+                                <th class="text-center"> <?php echo trans_line('estatus_tabla'); ?></th>
                                 <th> <?php echo trans_line('acciones_tabla'); ?></th>
                             </tr>
                             </thead>
@@ -50,21 +53,26 @@
                                     <td> <?php echo $obra->nombre; ?></td>
                                     <td> <?php echo $obra->fecha_inicio; ?></td>
                                     <td> <?php echo $obra->fecha_fin; ?></td>
+                                    <td class="text-center" data-order="<?php echo $obra->estatus; ?>"><i class="fa fa-<?php echo ((bool)$obra->estatus) ? 'check' : 'times'; ?>"></i>
+                                    </td>
                                     <td>
-                                        <a href="<?php echo base_url_lang() . 'obras/form_edit/' . $obra->obras_id ?>"
-                                           class="badge badge-primary badge-roundless"> <?php echo trans_line('editar_tabla'); ?> </a>
                                         <a href="<?php echo base_url_lang() . 'obras/resumen_obra/' . $obra->obras_id ?>"
                                            class="badge badge-success badge-roundless"> <?php echo trans_line('resumen_tabla'); ?> </a>
-                                        <a class="badge badge-danger badge-roundless delete_confirmation"
-                                           data-toggle="confirmation" data-placement="top"
-                                           data-original-title="<?php echo trans_line('confirmacion_borrado_titulo'); ?>"
-                                           data-btn-ok-label="<?php echo trans_line('confirmacion_borrado_ok'); ?>"
-                                           data-btn-ok-icon="icon-like" data-btn-ok-class="btn-success"
-                                           data-btn-cancel-label="<?php echo trans_line('confirmacion_borrado_cancel'); ?>"
-                                           data-btn-cancel-icon="icon-close" data-btn-cancel-class="btn-danger"
-                                           data-id="<?php echo $obra->obras_id ?>">
-                                            <?php echo trans_line('borrar_tabla'); ?>
-                                        </a>
+                                        <?php if ((bool)$obra->estatus): ?>
+                                            <a href="<?php echo base_url_lang() . 'obras/form_edit/' . $obra->obras_id ?>"
+                                               class="badge badge-primary badge-roundless"> <?php echo trans_line('editar_tabla'); ?> </a>
+
+                                            <a class="badge badge-danger badge-roundless delete_confirmation"
+                                               data-toggle="confirmation" data-placement="top"
+                                               data-original-title="<?php echo trans_line('confirmacion_borrado_titulo'); ?>"
+                                               data-btn-ok-label="<?php echo trans_line('confirmacion_borrado_ok'); ?>"
+                                               data-btn-ok-icon="icon-like" data-btn-ok-class="btn-success"
+                                               data-btn-cancel-label="<?php echo trans_line('confirmacion_borrado_cancel'); ?>"
+                                               data-btn-cancel-icon="icon-close" data-btn-cancel-class="btn-danger"
+                                               data-id="<?php echo $obra->obras_id ?>">
+                                                <?php echo trans_line('borrar_tabla'); ?>
+                                            </a>
+                                        <?php endif; ?>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
@@ -116,7 +124,7 @@
             "columnDefs": [
                 {
                     "sortable": false,
-                    "targets": [3]
+                    "targets": [4]
                 },
                 {
                     "className": "text-center",
