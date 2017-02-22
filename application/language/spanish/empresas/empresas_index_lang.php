@@ -16,8 +16,8 @@ $lang['first'] = 'Primero';
 //  FIN TABLA JS
 $lang['titulo_pagina'] = 'Empresas';
 $lang['breadcrumb_home'] = 'Inicio';
-$lang['breadcrumb_empresas'] = 'Lista de empresas';
-$lang['agregar_empresa'] = 'Agregar empresa';
+$lang['breadcrumb_pagina'] = 'Lista de empresas';
+$lang['agregar_pagina'] = 'Agregar empresa';
 //TABLA
 $lang['empresa_tabla'] = 'Empresa';
 $lang['contacto_tabla'] = 'Contacto';

@@ -21,7 +21,7 @@
                     <i class="fa fa-circle"></i>
                 </li>
                 <li>
-                    <span><?php echo trans_line('breadcrumb_empresas'); ?></span>
+                    <span><?php echo trans_line('breadcrumb_pagina'); ?></span>
                 </li>
             </ul>
             <!-- END PAGE BREADCRUMBS -->
@@ -32,7 +32,7 @@
                         <?php echo validation_errors('<div class="alert alert-danger alert-dismissable">', '</div>'); ?>
                         <?php echo get_bootstrap_alert(); ?>
                         <a href="<?php echo base_url_lang() . 'empresas/form_insert' ?>" class="btn btn-success">
-                            <i class="fa fa-plus"></i> <?php echo trans_line('agregar_empresa'); ?></a>
+                            <i class="fa fa-plus"></i> <?php echo trans_line('agregar_pagina'); ?></a>
                         <hr>
                         <table class="table table-striped table-bordered table-hover table-checkable order-column"
                                id="users_table">
