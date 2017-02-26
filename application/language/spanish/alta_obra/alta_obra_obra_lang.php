@@ -60,6 +60,37 @@ $lang['total_real'] = 'Total real';
 $lang['total_real_placeholder'] = 'Total real';
 $lang['total_real_ayuda'] = 'Costo real de la obra';
 
+//modals
+$lang['guardar_modal'] = 'Guardar';
+$lang['cerrar_modal'] = 'Cerrar';
+$lang['btn_submit_loading'] = 'Cargando...';
+$lang['guardar_modal_success'] = 'Los datos se guardaron con éxito';
+$lang['guardar_modal_error'] = 'Error al guardar los datos, vuelva a intentarlo';
+
+$lang['error_generar_empresas_sel'] = 'Error al generar el combo de empresas';
+
+$lang['agregar_empresa'] = 'Agregar empresa';
+
+$lang['razon_social'] = 'Razón social';
+$lang['razon_social_placeholder'] = 'Ingrese la razón social del empresa';
+$lang['razon_social_ayuda'] = 'Ingrese la razón social a dar de alta';
+
+$lang['rfc'] = 'RFC';
+$lang['rfc_placeholder'] = 'Ingrese el RFC del empresa';
+$lang['rfc_ayuda'] = 'Ingrese el RFC a dar de alta';
+
+$lang['tel_fijo'] = 'Teléfono';
+$lang['tel_fijo_placeholder'] = 'Ingrese el teléfono del empresa';
+$lang['tel_fijo_ayuda'] = 'Ingrese el teléfono a dar de alta';
+
+$lang['email'] = 'Email';
+$lang['email_placeholder'] = 'Ingrese el email del empresa';
+$lang['email_ayuda'] = 'Ingrese el email a dar de alta';
+
+$lang['direccion'] = 'Dirección';
+$lang['direccion_placeholder'] = 'Ingrese la dirección del empresa';
+$lang['direccion_ayuda'] = 'Ingrese la dirección a dar de alta';
+
 $lang['alerta_exito'] = 'Se guardó la obra con éxito, inserta otro o <a class="alert-link btn_loading_page" href="' . base_url_lang() . 'obras"> regresa al menú inicial</a>';
 $lang['alerta_error'] = 'Hubo un error al guardar la obra, intente más tarde.';
 $lang['alerta_error_codigo'] = 'Código:';

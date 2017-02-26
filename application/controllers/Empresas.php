@@ -19,7 +19,7 @@ class Empresas extends Acl_controller
 
         $this->check_access();
 
-        $this->load->model('empresas_model');
+        $this->load->business('empresa');
         $this->load->library('form_validation');
     }
 
@@ -27,7 +27,7 @@ class Empresas extends Acl_controller
     {
         $this->cargar_idioma->carga_lang('empresas/empresas_index');
         $data = array();
-        $data['rows'] = $this->empresas_model->empresas_todos();
+        $data['rows'] = $this->empresa->empresas_todos();
         $template['_B'] = 'empresas/empresas_index.php';
         $this->load->template_view($this->template_base, $data, $template);
     }
@@ -49,11 +49,11 @@ class Empresas extends Acl_controller
             $this->form_insert();
         } else {
             $empresa = $this->input->post();
-            if ($this->empresas_model->insertar_empresa($empresa) == TRUE) {
+            if ($this->empresa->guardar_empresa($empresa) == TRUE) {
                 set_bootstrap_alert(trans_line('alerta_exito'), BOOTSTRAP_ALERT_SUCCESS);
                 return redirect('empresas/form_insert');
             } else {
-                $error = $this->empresas_model->error_consulta();
+                $error = $this->empresa->error_consulta();
                 $mensajes_error = array(trans_line('alerta_error'), trans_line('alerta_error_codigo') . base64_encode($error['message']));
                 set_bootstrap_alert($mensajes_error, BOOTSTRAP_ALERT_DANGER);
                 return $this->form_insert();
@@ -65,7 +65,7 @@ class Empresas extends Acl_controller
     {
         $this->cargar_idioma->carga_lang('empresas/empresas_editar');
         $data = array();
-        $data['empr'] = $this->empresas_model->empresa_por_id($id);
+        $data['empr'] = $this->empresa->empresa_por_id($id);
         $template['_B'] = 'empresas/empresas_editar.php';
         $this->load->template_view($this->template_base, $data, $template);
     }
@@ -80,11 +80,11 @@ class Empresas extends Acl_controller
             $this->form_edit($id);
         } else {
             $empresa = $this->input->post();
-            if ($this->empresas_model->editar_empresa($empresa) == TRUE) {
+            if ($this->empresa->editar_empresa($empresa) == TRUE) {
                 set_bootstrap_alert(trans_line('alerta_exito'), BOOTSTRAP_ALERT_SUCCESS);
                 return redirect('empresas');
             } else {
-                $error = $this->empresas_model->error_consulta();
+                $error = $this->empresa->error_consulta();
                 $mensajes_error = array(trans_line('alerta_error'), trans_line('alerta_error_codigo') . base64_encode($error['message']));
                 set_bootstrap_alert($mensajes_error, BOOTSTRAP_ALERT_DANGER);
                 return $this->form_edit($id);
@@ -95,11 +95,11 @@ class Empresas extends Acl_controller
     public function borrar_empresa($id = 0)
     {
         $this->cargar_idioma->carga_lang('empresas/empresas_index');
-        if ($this->empresas_model->borrar_empresa($id) != FALSE){
+        if ($this->empresa->borrar_empresa($id) != FALSE){
             set_bootstrap_alert(trans_line('alerta_borrado'), BOOTSTRAP_ALERT_SUCCESS);
             return redirect('empresas');
         }else{
-            $error = $this->empresas_model->error_consulta();
+            $error = $this->empresa->error_consulta();
             $mensajes_error = array(trans_line('alerta_borrado_fail'), trans_line('alerta_error_codigo') . base64_encode($error['message']));
             set_bootstrap_alert($mensajes_error, BOOTSTRAP_ALERT_DANGER);
         }

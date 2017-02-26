@@ -12,13 +12,14 @@ class Alta_obra extends Acl_controller
     {
         parent::__construct();
 
-        $this->set_read_list(array('index', 'obra', 'etapa', 'zona_concepto', 'conceptos_json', 'muestra_conceptos', 'resumen_alta_obra', 'muestra_zonas'));
-        $this->set_insert_list(array('insertar_obra', 'insertar_etapa', 'seleccionar_zona_concepto', 'insertar_conceptos', 'insertar_zonas_conceptos', 'relacionar_zonas_conceptos'));
+        $this->set_read_list(array('index', 'empresas_json', 'obra', 'etapa', 'zona_concepto', 'conceptos_json', 'muestra_conceptos', 'resumen_alta_obra', 'muestra_zonas'));
+        $this->set_insert_list(array('insertar_empresa_ajax', 'insertar_obra', 'insertar_etapa', 'seleccionar_zona_concepto', 'insertar_conceptos', 'insertar_zonas_conceptos', 'relacionar_zonas_conceptos'));
         $this->set_update_list(array(''));
         $this->set_delete_list(array(''));
 
         $this->check_access();
 
+        $this->load->business('empresa');
         $this->load->business('obra');
 
         $this->load->model('catalogos_model');
@@ -46,6 +47,37 @@ class Alta_obra extends Acl_controller
         $this->load->template_view($this->template_base, $data, $template);
     }
 
+    public function empresas_json()
+    {
+        return $this->empresa->empresas_todos_json();
+    }
+
+    public function insertar_empresa_ajax()
+    {
+        $this->form_validation->set_rules('razon_social', trans_line('razon_social'), 'required|trim');
+        $this->form_validation->set_rules('rfc', trans_line('rfc'), 'required|trim');
+        if ($this->form_validation->run() == FALSE) {
+            $obj = new stdClass();
+            $obj->estatus = 'ERROR';
+            header('Content-Type: application/json');
+            echo json_encode($obj);
+        } else {
+            $empresa = $this->input->post();
+            if ($this->empresa->guardar_empresa($empresa) == TRUE){
+                $obj = new stdClass();
+                $obj->estatus = 'OK';
+                header('Content-Type: application/json');
+                echo json_encode($obj);
+            }else{
+                $obj = new stdClass();
+                $obj->estatus = 'ERROR';
+                $obj->mensaje = $this->empresa->error_consulta();
+                header('Content-Type: application/json');
+                echo json_encode($obj);
+            }
+        }
+    }
+
     public function insertar_obra()
     {
         $this->form_validation->set_rules('nombre', trans_line('nombre'), 'required|trim|min_length[3]');
@@ -58,10 +90,10 @@ class Alta_obra extends Acl_controller
         } else {
             $obra = $this->input->post();
             $accion = false;
-            if ($obra['obras_id'] <= 0){
+            if ($obra['obras_id'] <= 0) {
                 unset($obra['obras_id']);
                 $accion = $this->obra->insertar_obra($obra);
-            }else{
+            } else {
                 $accion = $this->obra->editar_obra($obra);
             }
             if ($accion == TRUE) {
@@ -177,7 +209,7 @@ class Alta_obra extends Acl_controller
         $conceptos_catalogos = $this->input->post('conceptos_catalogo_id');
         $claves = $this->input->post('clave_en_obra');
         $pus = $this->input->post('precio_unitario');
-        foreach ($conceptos_catalogos as $idx => $conceptos_catalogo_id){
+        foreach ($conceptos_catalogos as $idx => $conceptos_catalogo_id) {
             //falta validar si ya existe concepto en obra
             $concepto = $this->conceptos_catalogo_model->conceptos_catalogo_por_id($conceptos_catalogo_id);
             $con_ins['conceptos_catalogo_id'] = $conceptos_catalogo_id;
@@ -234,7 +266,7 @@ class Alta_obra extends Acl_controller
 
     private function _actualiza_cantidades_conceptos_generales($conceptos = array())
     {
-        foreach ($conceptos as $conceptos_id => $cantidad){
+        foreach ($conceptos as $conceptos_id => $cantidad) {
             $concepto_insert = array();
             $concepto_insert['conceptos_id'] = $conceptos_id;
             $concepto_insert['cantidad'] = $cantidad;
@@ -265,7 +297,7 @@ class Alta_obra extends Acl_controller
         $claves = $this->input->post('clave_en_obra');
         $pus = $this->input->post('precio_unitario');
         $cantidades = $this->input->post('cantidades');
-        foreach ($conceptos_catalogos as $idx => $conceptos_catalogo_id){
+        foreach ($conceptos_catalogos as $idx => $conceptos_catalogo_id) {
             //falta validar si ya existe concepto en obra
             $concepto = $this->conceptos_catalogo_model->conceptos_catalogo_por_id($conceptos_catalogo_id);
             $con_ins['conceptos_catalogo_id'] = $conceptos_catalogo_id;

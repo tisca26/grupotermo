@@ -191,6 +191,7 @@ class my_models extends my_business
  * ---------------------- Business to Load ----------------------
  * <examples>
  *
+ * @property empresa                                $empresa
  * @property etapa                                  $etapa
  * @property lugares                                $lugares
  * @property obra                                   $obra
