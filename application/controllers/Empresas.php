@@ -49,7 +49,7 @@ class Empresas extends Acl_controller
             $this->form_insert();
         } else {
             $empresa = $this->input->post();
-            if ($this->empresa->guardar_empresa($empresa) == TRUE) {
+            if ($this->empresa->insertar_empresa($empresa) == TRUE) {
                 set_bootstrap_alert(trans_line('alerta_exito'), BOOTSTRAP_ALERT_SUCCESS);
                 return redirect('empresas/form_insert');
             } else {

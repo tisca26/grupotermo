@@ -83,7 +83,7 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-5">
+                                <div class="col-sm-5 col-xs-10">
                                     <div class="form-group form-md-line-input div_b_select">
                                         <?php echo form_dropdown('empresas_id', $empresas, '', 'id="empresas_id" title="' . trans_line('empresas_id_placeholder') . '" class="form-control bs-select"  data-live-search="true" data-size="5" data-live-search-normalize="true" data-rule-required="true" data-msg-required="'. trans_line('required') . '"'); ?>
                                         <label for="empresas_id"><?php echo trans_line('empresas_id'); ?>
@@ -91,22 +91,22 @@
                                         </label>
                                     </div>
                                 </div>
-                                <div class="col-md-1">
+                                <div class="col-xs-1">
                                     <div class="form-group form-md-line-input div_b_select">
                                         <button type="button" class="btn btn-circle default btn-lg" id="agregar_nueva_empresa_btn" data-toggle="modal" href="#agregar_nueva_empresa_modal"><i class="fa fa-plus"></i></button>
                                     </div>
                                 </div>
-                                <div class="col-md-5">
+                                <div class="col-sm-5 col-xs-10">
                                     <div class="form-group form-md-line-input div_b_select">
-                                        <?php echo form_dropdown('clientes_id', $clientes, '', 'title="' . trans_line('clientes_id_placeholder') . '" class="form-control bs-select"  data-live-search="true" data-size="5" data-live-search-normalize="true" data-rule-required="true" data-msg-required="'. trans_line('required') . '"'); ?>
+                                        <?php echo form_dropdown('clientes_id', $clientes, '', 'id="clientes_id" title="' . trans_line('clientes_id_placeholder') . '" class="form-control bs-select"  data-live-search="true" data-size="5" data-live-search-normalize="true" data-rule-required="true" data-msg-required="'. trans_line('required') . '"'); ?>
                                         <label for="clientes_id"><?php echo trans_line('clientes_id'); ?>
                                             <span class="required">*</span>
                                         </label>
                                     </div>
                                 </div>
-                                <div class="col-md-1">
+                                <div class="col-xs-1">
                                     <div class="form-group form-md-line-input div_b_select">
-                                        <button type="button" class="btn btn-circle default btn-lg"><i class="fa fa-plus"></i></button>
+                                        <button type="button" class="btn btn-circle default btn-lg" id="agregar_nuevo_cliente_btn" data-toggle="modal" href="#agregar_nuevo_cliente_modal"><i class="fa fa-plus"></i></button>
                                     </div>
                                 </div>
                             </div>
@@ -149,6 +149,7 @@
     <!-- END CONTENT BODY -->
 </div>
 <!-- MODALS -->
+    <!-- Empresa -->
 <div class="modal fade" id="agregar_nueva_empresa_modal" tabindex="-1" role="agregar_nueva_empresa_modal" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -158,7 +159,7 @@
                 <h4 class="modal-title"><?php echo trans_line('agregar_empresa'); ?></h4>
             </div>
             <div class="modal-body">
-                <?php echo form_open('conceptos/insertar_concepto_obra', array('id' => 'frm_nueva_empresa')); ?>
+                <?php echo form_open('', array('id' => 'frm_nueva_empresa')); ?>
                 <div class="form-body">
                     <div class="row">
                         <div class="col-md-12">
@@ -260,6 +261,119 @@
     </div>
     <!-- /.modal-dialog -->
 </div>
+
+    <!-- Cliente -->
+<div class="modal fade" id="agregar_nuevo_cliente_modal" tabindex="-1" role="agregar_nuevo_cliente_modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"
+                        aria-hidden="true"></button>
+                <h4 class="modal-title"><?php echo trans_line('agregar_cliente'); ?></h4>
+            </div>
+            <div class="modal-body">
+                <?php echo form_open('', array('id' => 'frm_nuevo_cliente')); ?>
+                <div class="form-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group form-md-line-input">
+                                <?php $data_razon_social = [
+                                    'placeholder' => trans_line('razon_social_cliente_placeholder'),
+                                    'class' => 'form-control',
+                                    'data-rule-required' => 'true',
+                                    'data-msg-required' => trans_line('required')
+                                ]; ?>
+                                <?php echo form_input('razon_social', '', $data_razon_social); ?>
+                                <label for=""><?php echo trans_line('razon_social_cliente'); ?>
+                                    <span class="required">*</span>
+                                </label>
+                                <span class="help-block"><?php echo trans_line('razon_social_cliente_ayuda'); ?></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group form-md-line-input">
+                                <?php $data_rfc = [
+                                    'placeholder' => trans_line('rfc_cliente_placeholder'),
+                                    'class' => 'form-control',
+                                    'data-rule-required' => 'true',
+                                    'data-msg-required' => trans_line('required')
+                                ]; ?>
+                                <?php echo form_input('rfc', '', $data_rfc); ?>
+                                <label for=""><?php echo trans_line('rfc_cliente'); ?>
+                                    <span class="required">*</span>
+                                </label>
+                                <span class="help-block"><?php echo trans_line('rfc_cliente_ayuda'); ?></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group form-md-line-input">
+                                <?php $data_tel_fijo = [
+                                    'placeholder' => trans_line('tel_fijo_cliente_placeholder'),
+                                    'class' => 'form-control',
+                                    'data-rule-required' => 'true',
+                                    'data-msg-required' => trans_line('required')
+                                ]; ?>
+                                <?php echo form_input('tel_fijo', '', $data_tel_fijo); ?>
+                                <label for=""><?php echo trans_line('tel_fijo_cliente'); ?>
+                                    <span class="required">*</span>
+                                </label>
+                                <span class="help-block"><?php echo trans_line('tel_fijo_cliente_ayuda'); ?></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group form-md-line-input">
+                                <?php $data_email = [
+                                    'placeholder' => trans_line('email_cliente_placeholder'),
+                                    'class' => 'form-control',
+                                    'data-rule-required' => 'true',
+                                    'data-msg-required' => trans_line('required'),
+                                    'data-rule-email' => 'true',
+                                    'data-msg-email' => trans_line('correo')
+                                ]; ?>
+                                <?php echo form_input('email', '', $data_email); ?>
+                                <label for=""><?php echo trans_line('email_cliente'); ?>
+                                    <span class="required">*</span>
+                                </label>
+                                <span class="help-block"><?php echo trans_line('email_cliente_ayuda'); ?></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group form-md-line-input">
+                                <?php $data_direccion = [
+                                    'placeholder' => trans_line('direccion_cliente_placeholder'),
+                                    'class' => 'form-control',
+                                    'data-rule-required' => 'true',
+                                    'data-msg-required' => trans_line('required')
+                                ]; ?>
+                                <?php echo form_input('direccion', '', $data_direccion); ?>
+                                <label for=""><?php echo trans_line('direccion_cliente'); ?>
+                                    <span class="required">*</span>
+                                </label>
+                                <span class="help-block"><?php echo trans_line('direccion_cliente_ayuda'); ?></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <?php echo form_close(); ?>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn dark btn-outline"
+                        data-dismiss="modal"><?php echo trans_line('cerrar_modal'); ?>
+                </button>
+                <button type="button" id="guarda_nuevo_cliente_btn"
+                        class="btn blue"><?php echo trans_line('guardar_modal'); ?></button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
 <!-- MODALS FIN-->
 <script type="application/javascript">
 
@@ -290,6 +404,21 @@
             $select.selectpicker('refresh');
         }).fail(function () {
             alert("<?php echo trans_line('error_generar_empresas_sel'); ?>");
+        });
+    }
+    function genera_clientes_sel() {
+        $.get(
+            "<?php echo base_url_lang() . 'alta_obra/clientes_json' ?>",
+            "json"
+        ).done(function (data) {
+            var $select = $('#clientes_id');
+            $select.empty();
+            for (var idx in data) {
+                $select.append('<option value=' + data[idx].clientes_id + '>' + data[idx].razon_social + '</option>');
+            }
+            $select.selectpicker('refresh');
+        }).fail(function () {
+            alert("<?php echo trans_line('error_generar_clientes_sel'); ?>");
         });
     }
 
@@ -420,8 +549,144 @@
             errorClass: 'help-block help-block-error', // default input error message class
             focusInvalid: false, // do not focus the last invalid input
             ignore: "", // validate all fields including form hidden input
-            messages: {},
-            rules: {},
+            messages: {
+                razon_social: {
+                    required: "<?php echo trans_line('required'); ?>",
+                    minlength: jQuery.validator.format("<?php echo trans_line('minlength'); ?>")
+                },
+                rfc: {
+                    minlength: jQuery.validator.format("<?php echo trans_line('minlength'); ?>"),
+                    required: "<?php echo trans_line('required'); ?>",
+                    maxlength: jQuery.validator.format("<?php echo trans_line('maxlength'); ?>")
+                },
+                tel_fijo: {
+                    minlength: jQuery.validator.format("<?php echo trans_line('minlength'); ?>"),
+                    required: "<?php echo trans_line('required'); ?>",
+                    maxlength: jQuery.validator.format("<?php echo trans_line('maxlength'); ?>"),
+                    digits: "<?php echo trans_line('digits'); ?>"
+                },
+                email: {
+                    minlength: jQuery.validator.format("<?php echo trans_line('minlength'); ?>"),
+                    required: "<?php echo trans_line('required'); ?>",
+                    email: "<?php echo trans_line('correo'); ?>"
+                },
+                direccion: {
+                    minlength: jQuery.validator.format("<?php echo trans_line('minlength'); ?>"),
+                    required: "<?php echo trans_line('required'); ?>",
+                    maxlength: jQuery.validator.format("<?php echo trans_line('maxlength'); ?>")
+                }
+            },
+            rules: {
+                razon_social: {
+                    minlength: 3,
+                    required: true
+                },
+                rfc: {
+                    minlength: 12,
+                    required: true,
+                    maxlength: 14
+                },
+                tel_fijo: {
+                    minlength: 10,
+                    required: true,
+                    maxlength: 14,
+                    digits: true
+                },
+                email: {
+                    minlength: 4,
+                    required: true,
+                    email: true
+                },
+                direccion: {
+                    minlength: 3,
+                    required: true,
+                    maxlength: 490
+                }
+            },
+            invalidHandler: function (event, validator) { //display error alert on form submit
+                App.scrollTo(error1, -50);
+            },
+            errorPlacement: function (error, element) {
+                if (element.is(':checkbox')) {
+                    error.insertAfter(element.closest(".md-checkbox-list, .md-checkbox-inline, .checkbox-list, .checkbox-inline"));
+                } else if (element.is(':radio')) {
+                    error.insertAfter(element.closest(".md-radio-list, .md-radio-inline, .radio-list,.radio-inline"));
+                } else {
+                    error.insertAfter(element); // for other inputs, just perform default behavior
+                }
+            },
+            highlight: function (element) { // hightlight error inputs
+                $(element).closest('.form-group').addClass('has-error'); // set error class to the control group
+            },
+            unhighlight: function (element) { // revert the change done by hightlight
+                $(element).closest('.form-group').removeClass('has-error'); // set error class to the control group
+            },
+            success: function (label) {
+                label.closest('.form-group').removeClass('has-error'); // set success class to the control group
+            },
+            submitHandler: function (form) {
+                return false;
+            }
+        });
+        $('#frm_nuevo_cliente').validate({
+            errorElement: 'span', //default input error message container
+            errorClass: 'help-block help-block-error', // default input error message class
+            focusInvalid: false, // do not focus the last invalid input
+            ignore: "", // validate all fields including form hidden input
+            messages: {
+                razon_social: {
+                    required: "<?php echo trans_line('required'); ?>",
+                    minlength: jQuery.validator.format("<?php echo trans_line('minlength'); ?>")
+                },
+                rfc: {
+                    minlength: jQuery.validator.format("<?php echo trans_line('minlength'); ?>"),
+                    required: "<?php echo trans_line('required'); ?>",
+                    maxlength: jQuery.validator.format("<?php echo trans_line('maxlength'); ?>")
+                },
+                tel_fijo: {
+                    minlength: jQuery.validator.format("<?php echo trans_line('minlength'); ?>"),
+                    required: "<?php echo trans_line('required'); ?>",
+                    maxlength: jQuery.validator.format("<?php echo trans_line('maxlength'); ?>"),
+                    digits: "<?php echo trans_line('digits'); ?>"
+                },
+                email: {
+                    minlength: jQuery.validator.format("<?php echo trans_line('minlength'); ?>"),
+                    required: "<?php echo trans_line('required'); ?>",
+                    email: "<?php echo trans_line('correo'); ?>"
+                },
+                direccion: {
+                    minlength: jQuery.validator.format("<?php echo trans_line('minlength'); ?>"),
+                    required: "<?php echo trans_line('required'); ?>",
+                    maxlength: jQuery.validator.format("<?php echo trans_line('maxlength'); ?>")
+                }
+            },
+            rules: {
+                razon_social: {
+                    minlength: 3,
+                    required: true
+                },
+                rfc: {
+                    minlength: 12,
+                    required: true,
+                    maxlength: 14
+                },
+                tel_fijo: {
+                    minlength: 10,
+                    required: true,
+                    maxlength: 14,
+                    digits: true
+                },
+                email: {
+                    minlength: 4,
+                    required: true,
+                    email: true
+                },
+                direccion: {
+                    minlength: 3,
+                    required: true,
+                    maxlength: 490
+                }
+            },
             invalidHandler: function (event, validator) { //display error alert on form submit
                 App.scrollTo(error1, -50);
             },
@@ -466,8 +731,8 @@
                             btn_submit.html('<?php echo trans_line('guardar_modal'); ?>');
                             btn_submit.prop("disabled", false);
                             form.trigger("reset");
-                            $('#agregar_nueva_empresa_modal').modal('toggle');
                             genera_empresas_sel();
+                            $('#agregar_nueva_empresa_modal').modal('toggle');
                             toastr.success('<?php echo trans_line('guardar_modal_success'); ?>');
                         } else {
                             toastr.error('<?php echo trans_line('guardar_modal_error'); ?>' + '\n' + data.mensaje);
@@ -476,6 +741,39 @@
                     error: function (data) {
                         btn_submit.html('<?php echo trans_line('guardar_modal'); ?>');
                         btn_submit.prop("disabled", false);
+                        toastr.error('<?php echo trans_line('guardar_modal_error'); ?>');
+                    }
+
+                });
+            }
+        })
+        $(document).on('click', '#guarda_nuevo_cliente_btn', function () {
+            var btn_submit_cliente = $('#guarda_nuevo_cliente_btn');
+            var form = $('#frm_nuevo_cliente');
+            if (form.valid()) {
+                btn_submit_cliente.html('<?php echo trans_line('btn_submit_loading'); ?>');
+                btn_submit_cliente.prop("disabled", true);
+                var $form_srlze_cliente = form.serialize();
+                $.ajax({
+                    url: "<?php echo base_url_lang(); ?>alta_obra/insertar_cliente_ajax",
+                    type: 'POST',
+                    dataType: 'json',
+                    data: $form_srlze_cliente,
+                    success: function (data) {
+                        btn_submit_cliente.html('<?php echo trans_line('guardar_modal'); ?>');
+                        btn_submit_cliente.prop("disabled", false);
+                        if (data.estatus == 'OK') {
+                            form.trigger("reset");
+                            genera_clientes_sel();
+                            $('#agregar_nuevo_cliente_modal').modal('toggle');
+                            toastr.success('<?php echo trans_line('guardar_modal_success'); ?>');
+                        } else {
+                            toastr.error('<?php echo trans_line('guardar_modal_error'); ?>' + '\n' + data.mensaje);
+                        }
+                    },
+                    error: function (data) {
+                        btn_submit_cliente.html('<?php echo trans_line('guardar_modal'); ?>');
+                        btn_submit_cliente.prop("disabled", false);
                         toastr.error('<?php echo trans_line('guardar_modal_error'); ?>');
                     }
 

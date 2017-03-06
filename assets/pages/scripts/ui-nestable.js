@@ -50,6 +50,6 @@ var UINestable = function () {
 
 }();
 
-jQuery(document).ready(function() {    
+jQuery(document).ready(function() {
    UINestable.init();
 });

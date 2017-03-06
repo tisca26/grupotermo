@@ -19,7 +19,7 @@ class Clientes extends Acl_controller
 
         $this->check_access();
 
-        $this->load->model('clientes_model');
+        $this->load->business('cliente');
         $this->load->library('form_validation');
     }
 
@@ -27,7 +27,7 @@ class Clientes extends Acl_controller
     {
         $this->cargar_idioma->carga_lang('clientes/clientes_index');
         $data = array();
-        $data['rows'] = $this->clientes_model->clientes_todos();
+        $data['rows'] = $this->cliente->clientes_todos();
         $template['_B'] = 'clientes/clientes_index.php';
         $this->load->template_view($this->template_base, $data, $template);
     }
@@ -49,11 +49,11 @@ class Clientes extends Acl_controller
             $this->form_insert();
         } else {
             $cliente = $this->input->post();
-            if ($this->clientes_model->insertar_cliente($cliente) == TRUE) {
+            if ($this->cliente->insertar_cliente($cliente) == TRUE) {
                 set_bootstrap_alert(trans_line('alerta_exito'), BOOTSTRAP_ALERT_SUCCESS);
                 return redirect('clientes/form_insert');
             } else {
-                $error = $this->clientes_model->error_consulta();
+                $error = $this->cliente->error_consulta();
                 $mensajes_error = array(trans_line('alerta_error'), trans_line('alerta_error_codigo') . base64_encode($error['message']));
                 set_bootstrap_alert($mensajes_error, BOOTSTRAP_ALERT_DANGER);
                 return $this->form_insert();
@@ -65,7 +65,7 @@ class Clientes extends Acl_controller
     {
         $this->cargar_idioma->carga_lang('clientes/clientes_editar');
         $data = array();
-        $data['cli'] = $this->clientes_model->cliente_por_id($id);
+        $data['cli'] = $this->cliente->cliente_por_id($id);
         $template['_B'] = 'clientes/clientes_editar.php';
         $this->load->template_view($this->template_base, $data, $template);
     }
@@ -80,11 +80,11 @@ class Clientes extends Acl_controller
             $this->form_edit($id);
         } else {
             $cliente = $this->input->post();
-            if ($this->clientes_model->editar_cliente($cliente) == TRUE) {
+            if ($this->cliente->editar_cliente($cliente) == TRUE) {
                 set_bootstrap_alert(trans_line('alerta_exito'), BOOTSTRAP_ALERT_SUCCESS);
                 return redirect('clientes');
             } else {
-                $error = $this->clientes_model->error_consulta();
+                $error = $this->cliente->error_consulta();
                 $mensajes_error = array(trans_line('alerta_error'), trans_line('alerta_error_codigo') . base64_encode($error['message']));
                 set_bootstrap_alert($mensajes_error, BOOTSTRAP_ALERT_DANGER);
                 return $this->form_edit($id);
@@ -95,11 +95,11 @@ class Clientes extends Acl_controller
     public function borrar_cliente($id = 0)
     {
         $this->cargar_idioma->carga_lang('clientes/clientes_index');
-        if ($this->clientes_model->borrar_cliente($id) != FALSE){
+        if ($this->cliente->borrar_cliente($id) != FALSE){
             set_bootstrap_alert(trans_line('alerta_borrado'), BOOTSTRAP_ALERT_SUCCESS);
             return redirect('clientes');
         }else{
-            $error = $this->clientes_model->error_consulta();
+            $error = $this->cliente->error_consulta();
             $mensajes_error = array(trans_line('alerta_borrado_fail'), trans_line('alerta_error_codigo') . base64_encode($error['message']));
             set_bootstrap_alert($mensajes_error, BOOTSTRAP_ALERT_DANGER);
         }

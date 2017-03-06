@@ -111,6 +111,25 @@
                         <?php echo form_close(); ?>
                     </div>
                 </div>
+                <div class="portlet light">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            <span><?php echo trans_line('preview_forma');?></span>
+                        </div>
+                    </div>
+                    <div class="portlet-body">
+                        <table class="table table-striped table-bordered table-hover"
+                               id="preview_table">
+                            <thead>
+                            <tr>
+                                <th class="nombre"> <?php echo trans_line('preview_nombre_etapa');?> </th>
+                                <th class="fecha_inicio"> <?php echo trans_line('preview_inicio_etapa');?> </th>
+                                <th class="fecha_fin"> <?php echo trans_line('preview_fin_etapa');?> </th>
+                            </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
             </div>
             <!-- END PAGE CONTENT INNER -->
         </div>
@@ -215,6 +234,11 @@
                 error1.hide();
                 form.submit();
             }
+        });
+
+        $('input').on('keyup change',function(event){
+            var preview = $("#preview_table");
+            preview.find("."+event.target.id).html($(this).val());
         });
 
     });// FIN DOCUMENT READY

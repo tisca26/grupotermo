@@ -48,7 +48,7 @@ class Empresa
         echo json_encode($empresas);
     }
 
-    public function guardar_empresa($empresa = array())
+    public function insertar_empresa($empresa = array())
     {
         $this->limpia_datos($empresa);
         return $this->CI->empresas_model->insertar_empresa($empresa);

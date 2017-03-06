@@ -15,16 +15,22 @@ $lang['mexicanDate'] = 'Por favor ingrese una fecha en el formato aaaa-mm-dd';
 $lang['fecha'] = 'El campo {field} no es una fecha válida, por favor revisela.';
 
 $lang['steps_obra'] = 'Obra';
-$lang['steps_obra_desc'] = 'Alta de la obra';
+$lang['steps_obra_desc'] = 'Datos Generales';
 
 $lang['steps_etapa'] = 'Etapa';
-$lang['steps_etapa_desc'] = 'Registro de las etapas';
+$lang['steps_etapa_desc'] = 'Registro de Etapas';
 
-$lang['steps_zona_concepto'] = 'Zona - Concepto';
-$lang['steps_zona_concepto_desc'] = 'Registro de las zonas o conceptos';
+$lang['steps_zona_concepto'] = 'Estructura';
+$lang['steps_zona_concepto_desc'] = 'Registro de zonas y/o conceptos';
 
 $lang['steps_fin'] = 'Fin del proceso';
-$lang['steps_fin_desc'] = 'Fin del alta de obra';
+$lang['steps_fin_desc'] = 'Resumen';
+
+//Preview
+$lang['preview_forma'] = 'Vista Previa';
+$lang['preview_nombre_etapa'] = 'Nombre de la Etapa';
+$lang['preview_inicio_etapa'] = 'Fecha de inicio';
+$lang['preview_fin_etapa'] = 'Fecha de fin';
 
 //Form
 $lang['titulo_forma'] = 'Datos para la etapa';

@@ -192,6 +192,7 @@ class my_models extends my_business
  * <examples>
  *
  * @property empresa                                $empresa
+ * @property cliente                                $cliente
  * @property etapa                                  $etapa
  * @property lugares                                $lugares
  * @property obra                                   $obra

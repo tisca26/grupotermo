@@ -282,7 +282,7 @@
                             <div class="row">
                                 <div class="col-md-12 text-center">
                                     <a class="btn default"
-                                       href="<?php echo base_url_lang() . 'alta_obra/zona_concepto/' . $etapas_id ?>"><i
+                                       href="<?php echo base_url_lang() . 'alta_obra/estructura/' . $etapas_id ?>"><i
                                                 class="fa fa-backward"></i> <?php echo trans_line('btn_cancel'); ?></a>
                                     <button type="submit" class="btn green"
                                             id="btn_submit"><?php echo trans_line('btn_submit'); ?> <i
