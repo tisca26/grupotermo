@@ -12,8 +12,10 @@ class Alta_obra extends Acl_controller
     {
         parent::__construct();
 
-        $this->set_read_list(array('index', 'empresas_json', 'clientes_json', 'obra', 'etapa', 'estructura', 'conceptos_json', 'muestra_conceptos', 'resumen_alta_obra', 'muestra_zonas'));
-        $this->set_insert_list(array('insertar_empresa_ajax', 'insertar_cliente_ajax', 'insertar_obra', 'insertar_etapa', 'seleccionar_zona_concepto', 'insertar_conceptos', 'insertar_zonas_conceptos', 'relacionar_zonas_conceptos'));
+        $this->set_read_list(array('index', 'empresas_json', 'clientes_json', 'zonas_json', 'fases_json', 'obra', 'etapa', 'estructura', 'conceptos_json',
+            'muestra_conceptos', 'resumen_alta_obra', 'muestra_zonas'));
+        $this->set_insert_list(array('insertar_empresa_ajax', 'insertar_cliente_ajax', 'insertar_zona_ajax', 'insertar_fase_ajax', 'insertar_obra',
+            'insertar_etapa', 'seleccionar_zona_concepto', 'insertar_conceptos', 'insertar_zonas_conceptos', 'relacionar_zonas_conceptos'));
         $this->set_update_list(array(''));
         $this->set_delete_list(array(''));
 
@@ -21,7 +23,10 @@ class Alta_obra extends Acl_controller
 
         $this->load->business('empresa');
         $this->load->business('cliente');
+        $this->load->business('concepto');
+        $this->load->business('fase');
         $this->load->business('obra');
+        $this->load->business('zona');
 
         $this->load->model('catalogos_model');
         $this->load->model('clientes_model');
@@ -107,6 +112,93 @@ class Alta_obra extends Acl_controller
                 $obj->estatus = 'ERROR';
                 $obj->mensaje = $this->cliente->error_consulta();
                 log_message('debug','---------------- Error de consulta -------------------');
+                header('Content-Type: application/json');
+                echo json_encode($obj);
+            }
+        }
+    }
+
+    public function zonas_json()
+    {
+        return $this->zona->zonas_todos_json();
+    }
+
+    public function insertar_zona_ajax()
+    {
+        $this->form_validation->set_rules('obras_id', trans_line('obras_id'), 'required');
+        $this->form_validation->set_rules('nombre', trans_line('nombre'), 'required|trim|max_length[100]');
+        if ($this->form_validation->run() == FALSE) {
+            $obj = new stdClass();
+            $obj->estatus = 'ERROR';
+            header('Content-Type: application/json');
+            echo json_encode($obj);
+        } else {
+            $obj = new stdClass();
+            $zona = $this->input->post();
+            if ($this->zona->insertar_zona($zona) == TRUE){
+                $obj->estatus = 'OK';
+            }else{
+                $obj->estatus = 'ERROR';
+                $obj->mensaje = $this->zona->error_consulta();
+            }
+            header('Content-Type: application/json');
+            echo json_encode($obj);
+        }
+    }
+
+    public function conceptos_json()
+    {
+        return $this->concepto->conceptos_todos_json();
+    }
+
+    public function insertar_concepto_ajax()
+    {
+        $this->form_validation->set_rules('obras_id', trans_line('obras_id'), 'required');
+        $this->form_validation->set_rules('nombre', trans_line('nombre'), 'required|trim|max_length[100]');
+        if ($this->form_validation->run() == FALSE) {
+            $obj = new stdClass();
+            $obj->estatus = 'ERROR';
+            header('Content-Type: application/json');
+            echo json_encode($obj);
+        } else {
+            $obj = new stdClass();
+            $concepto = $this->input->post();
+            if ($this->concepto->insertar_concepto($concepto) == TRUE){
+                $obj->estatus = 'OK';
+            }else{
+                $obj->estatus = 'ERROR';
+                $obj->mensaje = $this->concepto->error_consulta();
+            }
+            header('Content-Type: application/json');
+            echo json_encode($obj);
+        }
+    }
+
+    public function fases_json()
+    {
+        return $this->fase->fases_todos_json();
+    }
+
+    public function insertar_fase_ajax()
+    {
+        $this->form_validation->set_rules('obras_id', trans_line('obras_id'), 'required');
+        $this->form_validation->set_rules('nombre', trans_line('nombre'), 'required|trim|max_length[100]');
+        if ($this->form_validation->run() == FALSE) {
+            $obj = new stdClass();
+            $obj->estatus = 'ERROR';
+            header('Content-Type: application/json');
+            echo json_encode($obj);
+        } else {
+            $fase = $this->input->post();
+            if ($this->fase->insertar_fase($fase) == TRUE){
+                $obj = new stdClass();
+                $obj->estatus = 'OK';
+                header('Content-Type: application/json');
+                echo json_encode($obj);
+            }else{
+                $obj = new stdClass();
+                $obj->estatus = 'ERROR';
+                $obj->mensaje = $this->fase->error_consulta();
                 header('Content-Type: application/json');
                 echo json_encode($obj);
             }
@@ -410,17 +502,6 @@ class Alta_obra extends Acl_controller
             return $this->load->template_view($this->template_base, $data, $template);
         }
         return redirect('alta_obra');
-    }
-
-    public function conceptos_json()
-    {
-        $conceptos = $this->obra->conceptos_nombres();
-        $my_array = array();
-        foreach ($conceptos as $con) {
-            $my_array[] = $con->nombre;
-        }
-        header('Content-Type: application/json');
-        echo json_encode($my_array);
     }
 
     public function valid_date($date)

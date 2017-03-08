@@ -154,6 +154,7 @@ class CI_Model
  * @property empresas_model                         $empresas_model
  * @property etapas_model                           $etapas_model
  * @property etapas_zonas_conceptos_model           $etapas_zonas_conceptos_model
+ * @property fases_model                            $fases_model
  * @property groups_model                           $groups_model
  * @property logs_oe_model                          $logs_oe_model
  * @property mano_de_obra_model                     $mano_de_obra_model
@@ -193,7 +194,9 @@ class my_models extends my_business
  *
  * @property empresa                                $empresa
  * @property cliente                                $cliente
+ * @property concepto                               $concepto
  * @property etapa                                  $etapa
+ * @property fase                                   $fase
  * @property lugares                                $lugares
  * @property obra                                   $obra
  * @property zona                                   $zona

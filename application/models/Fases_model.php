@@ -72,13 +72,4 @@ class Fases_model extends CI_Model
         return $this->db->delete('fases', array('fases_id' => $fases_id));
     }
 
-    public function fases_todos_array($order_id = 'fases_id')
-    {
-        $results = $this->fases_todos($order_id);
-        $my_array = array();
-        foreach ($results as $fase){
-            $my_array[$fase->fases_id] = $fase->nombre;
-        }
-        return $my_array;
-    }
 }
