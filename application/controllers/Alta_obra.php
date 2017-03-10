@@ -37,22 +37,9 @@ class Alta_obra extends Acl_controller
         $this->load->library('form_validation');
     }
 
-    public function index()
-    {
-        return $this->obra();
-    }
-
-    public function obra($obras_id = 0)
-    {
-        $this->cargar_idioma->carga_lang('alta_obra/alta_obra_obra');
-        $data = array();
-        $data['empresas'] = $this->empresas_model->empresas_todos_sel();
-        $data['clientes'] = $this->clientes_model->clientes_todos_sel();
-        $data['obras_id'] = $obras_id;
-        $template['_B'] = 'alta_obra/alta_obra_obra.php';
-        $this->load->template_view($this->template_base, $data, $template);
-    }
-
+    /*
+     * Métodos de inserción al vuelo
+     */
     public function empresas_json()
     {
         return $this->empresa->empresas_todos_json();
@@ -69,12 +56,12 @@ class Alta_obra extends Acl_controller
             echo json_encode($obj);
         } else {
             $empresa = $this->input->post();
-            if ($this->empresa->insertar_empresa($empresa) == TRUE){
+            if ($this->empresa->insertar_empresa($empresa) == TRUE) {
                 $obj = new stdClass();
                 $obj->estatus = 'OK';
                 header('Content-Type: application/json');
                 echo json_encode($obj);
-            }else{
+            } else {
                 $obj = new stdClass();
                 $obj->estatus = 'ERROR';
                 $obj->mensaje = $this->empresa->error_consulta();
@@ -97,21 +84,52 @@ class Alta_obra extends Acl_controller
             $obj = new stdClass();
             $obj->estatus = 'ERROR';
             $obj->mensaje = 'Error en Validación';
-            log_message('debug','---------------- Error de validación -------------------');
+            log_message('debug', '---------------- Error de validación -------------------');
             header('Content-Type: application/json');
             echo json_encode($obj);
         } else {
             $cliente = $this->input->post();
-            if ($this->cliente->insertar_cliente($cliente) == TRUE){
+            if ($this->cliente->insertar_cliente($cliente) == TRUE) {
                 $obj = new stdClass();
                 $obj->estatus = 'OK';
                 header('Content-Type: application/json');
                 echo json_encode($obj);
-            }else{
+            } else {
                 $obj = new stdClass();
                 $obj->estatus = 'ERROR';
                 $obj->mensaje = $this->cliente->error_consulta();
-                log_message('debug','---------------- Error de consulta -------------------');
+                log_message('debug', '---------------- Error de consulta -------------------');
+                header('Content-Type: application/json');
+                echo json_encode($obj);
+            }
+        }
+    }
+
+    public function fases_json()
+    {
+        return $this->fase->fases_todos_json();
+    }
+
+    public function insertar_fase_ajax()
+    {
+        $this->form_validation->set_rules('obras_id', trans_line('obras_id'), 'required');
+        $this->form_validation->set_rules('nombre', trans_line('nombre'), 'required|trim|max_length[100]');
+        if ($this->form_validation->run() == FALSE) {
+            $obj = new stdClass();
+            $obj->estatus = 'ERROR';
+            header('Content-Type: application/json');
+            echo json_encode($obj);
+        } else {
+            $fase = $this->input->post();
+            if ($this->fase->insertar_fase($fase) == TRUE) {
+                $obj = new stdClass();
+                $obj->estatus = 'OK';
+                header('Content-Type: application/json');
+                echo json_encode($obj);
+            } else {
+                $obj = new stdClass();
+                $obj->estatus = 'ERROR';
+                $obj->mensaje = $this->fase->error_consulta();
                 header('Content-Type: application/json');
                 echo json_encode($obj);
             }
@@ -135,9 +153,9 @@ class Alta_obra extends Acl_controller
         } else {
             $obj = new stdClass();
             $zona = $this->input->post();
-            if ($this->zona->insertar_zona($zona) == TRUE){
+            if ($this->zona->insertar_zona($zona) == TRUE) {
                 $obj->estatus = 'OK';
-            }else{
+            } else {
                 $obj->estatus = 'ERROR';
                 $obj->mensaje = $this->zona->error_consulta();
             }
@@ -163,9 +181,9 @@ class Alta_obra extends Acl_controller
         } else {
             $obj = new stdClass();
             $concepto = $this->input->post();
-            if ($this->concepto->insertar_concepto($concepto) == TRUE){
+            if ($this->concepto->insertar_concepto($concepto) == TRUE) {
                 $obj->estatus = 'OK';
-            }else{
+            } else {
                 $obj->estatus = 'ERROR';
                 $obj->mensaje = $this->concepto->error_consulta();
             }
@@ -174,35 +192,27 @@ class Alta_obra extends Acl_controller
         }
     }
 
-    public function fases_json()
+    /*
+    * FIN métodos de inserción al vuelo
+    */
+
+    /*
+     * Insertar OBRA
+     */
+    public function index()
     {
-        return $this->fase->fases_todos_json();
+        return $this->obra();
     }
 
-    public function insertar_fase_ajax()
+    public function obra($obras_id = 0)
     {
-        $this->form_validation->set_rules('obras_id', trans_line('obras_id'), 'required');
-        $this->form_validation->set_rules('nombre', trans_line('nombre'), 'required|trim|max_length[100]');
-        if ($this->form_validation->run() == FALSE) {
-            $obj = new stdClass();
-            $obj->estatus = 'ERROR';
-            header('Content-Type: application/json');
-            echo json_encode($obj);
-        } else {
-            $fase = $this->input->post();
-            if ($this->fase->insertar_fase($fase) == TRUE){
-                $obj = new stdClass();
-                $obj->estatus = 'OK';
-                header('Content-Type: application/json');
-                echo json_encode($obj);
-            }else{
-                $obj = new stdClass();
-                $obj->estatus = 'ERROR';
-                $obj->mensaje = $this->fase->error_consulta();
-                header('Content-Type: application/json');
-                echo json_encode($obj);
-            }
-        }
+        $this->cargar_idioma->carga_lang('alta_obra/alta_obra_obra');
+        $data = array();
+        $data['empresas'] = $this->empresas_model->empresas_todos_sel();
+        $data['clientes'] = $this->clientes_model->clientes_todos_sel();
+        $data['obras_id'] = $obras_id;
+        $template['_B'] = 'alta_obra/alta_obra_obra.php';
+        $this->load->template_view($this->template_base, $data, $template);
     }
 
     public function insertar_obra()
@@ -235,6 +245,13 @@ class Alta_obra extends Acl_controller
         }
     }
 
+    /*
+     * FIN insertar OBRA
+     */
+
+    /*
+     * Insertar ETAPA
+     */
     public function etapa($obras_id = 0)
     {
         if ($obras_id > 0) {
@@ -265,7 +282,13 @@ class Alta_obra extends Acl_controller
             }
         }
     }
+    /*
+     * FIN insertar ETAPA
+     */
 
+    /*
+     * Generar ESTRUCTURA
+     */
     public function estructura($etapas_id = 0)
     {
         if ($etapas_id > 0) {
@@ -279,6 +302,14 @@ class Alta_obra extends Acl_controller
         }
         return redirect('alta_obra');
     }
+    /*
+     * FIN generar estructura
+     */
+
+
+    /* ++++++++++++++++++++++++++++++++++++++++++++++++++++ DE AQUI EN ADELANTE ES CÓDIGO DE LA V01 ++++++++++++++++++++++++++++++++++++++++++++++++++++ */
+    /* ++++++++++++++++++++++++++++++++++++++++++++++++++++ ++++++++++++++++++++++++++++++++++++++++++++++++++++ +++++++++++++++++++++++++++++++++++++++ */
+
 
     /*
      * Seleccion entre zona y concepto
