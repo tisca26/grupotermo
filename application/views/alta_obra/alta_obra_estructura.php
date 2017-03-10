@@ -53,37 +53,114 @@
                         </div>
                     </div>
                 </div>
-                <div class="portlet light ">
-                    <div class="portlet-title">
-                        <div class="caption">
-                            <span>OUTPUT</span>
-                        </div>
-                    </div>
-                    <div class="portlet-body">
-                        <?php echo validation_errors('<div class="alert alert-danger alert-dismissable">', '</div>'); ?>
-                        <?php echo form_open('alta_obra/seleccionar_zona_concepto', array('id' => 'current_form')); ?>
-                            <input type="hidden" name="etapas_id" value="<?php echo $etapa->etapas_id; ?>">
-                            <input type="hidden" name="obras_id" value="<?php echo $etapa->obras_id; ?>">
-                            <div class="form-body">
-                                <div class="alert alert-danger display-hide">
-                                    <button class="close" data-close="alert"></button>
-                                    <?php echo trans_line('jquery_invalid'); ?>
-                                </div>
-                                <div class="alert alert-success display-hide">
-                                    <button class="close" data-close="alert"></button>
-                                    <?php echo trans_line('jquery_valid'); ?>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="portlet light ">
+                            <div class="portlet-title">
+                                <div class="caption">
+                                    <i class="icon-bubble font-yellow-gold"></i>
+                                    <span class="caption-subject font-yellow-gold sbold uppercase">FASES AGREGADAS</span>
                                 </div>
                             </div>
-                            <textarea id="nestable_list_1_output" class="form-control col-md-12 margin-bottom-10"></textarea>
-                        <?php echo form_close(); ?>
+                            <div class="portlet-body">
+                                <div class="scroller" style="height:250px" data-always-visible="1" data-rail-visible="0" >
+                                    <div class="dd" id="nestable_list_fases">
+                                        <ol class="dd-list">
+                                            <li class="dd-item" data-id="13">
+                                                <div class="dd-handle"> item </div>
+                                            </li>
+                                        </ol>
+                                    </div>
+                                </div>
+                                <br/>
+                                <div class="portlet-footer text-right">
+                                    <button type="button" class="btn yellow-gold" id="agregar_nueva_fase_btn" data-toggle="modal" href="#agregar_nueva_fase_modal">AGEGAR NUEVA FASE <i class="fa fa-plus"></i></button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-12 text-center">
-                        <div class="btn-group">
-                            <button type="button" class="btn yellow-gold" id="agregar_nueva_fase_btn" data-toggle="modal" href="#agregar_nueva_fase_modal">AGEGAR NUEVA FASE <i class="fa fa-plus"></i></button>
-                            <button type="button" class="btn yellow-crusta" id="agregar_nueva_zona_btn" data-toggle="modal" href="#agregar_nueva_zona_modal">AGEGAR NUEVA ZONA <i class="fa fa-plus"></i></button>
-                            <button type="button" class="btn blue-soft" id="agregar_nuevo_concepto_btn" data-toggle="modal" href="#agregar_nuevo_concepto_modal">AGEGAR NUEVO CONCEPTO <i class="fa fa-plus"></i></button>
+                    <div class="col-md-4">
+                        <div class="portlet light" id="portlet_zonas">
+                            <div class="portlet-title">
+                                <div class="caption">
+                                    <i class="icon-bubble font-yellow-crusta"></i>
+                                    <span class="caption-subject font-yellow-crusta sbold uppercase">ZONAS AGREGADAS</span>
+                                </div>
+                            </div>
+                            <div class="portlet-body" class="display:none;">
+                                <div class="scroller" style="height:250px" data-always-visible="1" data-rail-visible="0" >
+                                    <div class="dd" id="nestable_list_zonas">
+                                        <ol class="dd-list">
+                                            <li class="dd-item" data-id="13">
+                                                <div class="dd-handle"> Item 13 </div>
+                                            </li>
+                                            <li class="dd-item" data-id="14">
+                                                <div class="dd-handle"> Item 14 </div>
+                                            </li>
+                                            <li class="dd-item" data-id="15">
+                                                <div class="dd-handle"> Item 15 </div>
+                                                <ol class="dd-list">
+                                                    <li class="dd-item" data-id="16">
+                                                        <div class="dd-handle"> Item 16 </div>
+                                                    </li>
+                                                    <li class="dd-item" data-id="17">
+                                                        <div class="dd-handle"> Item 17 </div>
+                                                    </li>
+                                                    <li class="dd-item" data-id="18">
+                                                        <div class="dd-handle"> Item 18 </div>
+                                                    </li>
+                                                </ol>
+                                            </li>
+                                        </ol>
+                                    </div>
+                                </div>
+                                <br/>
+                                <div class="portlet-footer text-right">
+                                    <button type="button" class="btn yellow-crusta" id="agregar_nueva_zona_btn" data-toggle="modal" href="#agregar_nueva_zona_modal">AGEGAR NUEVA ZONA <i class="fa fa-plus"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="portlet light ">
+                            <div class="portlet-title">
+                                <div class="caption">
+                                    <i class="icon-bubble font-blue-soft"></i>
+                                    <span class="caption-subject font-blue-soft sbold uppercase">CONCEPTOS AGREGADOS</span>
+                                </div>
+                            </div>
+                            <div class="portlet-body">
+                                <div class="scroller" style="height:250px" data-always-visible="1" data-rail-visible="0" >
+                                    <div class="dd" id="nestable_list_conceptos">
+                                        <ol class="dd-list">
+                                            <li class="dd-item" data-id="13">
+                                                <div class="dd-handle"> Item 13 </div>
+                                            </li>
+                                            <li class="dd-item" data-id="14">
+                                                <div class="dd-handle"> Item 14 </div>
+                                            </li>
+                                            <li class="dd-item" data-id="15">
+                                                <div class="dd-handle"> Item 15 </div>
+                                                <ol class="dd-list">
+                                                    <li class="dd-item" data-id="16">
+                                                        <div class="dd-handle"> Item 16 </div>
+                                                    </li>
+                                                    <li class="dd-item" data-id="17">
+                                                        <div class="dd-handle"> Item 17 </div>
+                                                    </li>
+                                                    <li class="dd-item" data-id="18">
+                                                        <div class="dd-handle"> Item 18 </div>
+                                                    </li>
+                                                </ol>
+                                            </li>
+                                        </ol>
+                                    </div>
+                                </div>
+                                <br/>
+                                <div class="portlet-footer text-right">
+                                    <button type="button" class="btn blue-soft" id="agregar_nuevo_concepto_btn" data-toggle="modal" href="#agregar_nuevo_concepto_modal">AGEGAR NUEVO CONCEPTO <i class="fa fa-plus"></i></button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -97,15 +174,14 @@
                                     <span class="caption-subject font-green sbold uppercase">ARBOL</span>
                                 </div>
                                 <div class="actions">
-                                    Zonas:
-                                    <input type="checkbox" class="make-switch" checked data-on="success" data-on-color="warning" data-off-color="default" data-on-text="ACTIVO" data-off-text="NO" data-size="small"></div>
-                                    <div class="btn-group" id="nestable_list_menu">
-                                        <button type="button" class="btn green btn-outline sbold" data-action="expand-all">EXPANDIR</button>
-                                        <button type="button" class="btn red btn-outline sbold" data-action="collapse-all">COLAPSAR</button>
+                                    <input id="check_zonas" type="checkbox" class="make-switch" data-on="success" data-label-text="Zonas" data-on-color="warning" data-off-color="default" data-on-text="Activo" data-off-text="Inactivo" data-size="small">
+                                    <div class="btn-group btn-group-xs" id="nestable_list_menu">
+                                        <button type="button" style="font-size:12px;" class="btn green btn-outline sbold" data-action="expand-all">EXPANDIR</button>
+                                        <button type="button" style="font-size:12px;" class="btn red btn-outline sbold" data-action="collapse-all">COLAPSAR</button>
                                     </div>
                                 </div>
                             </div>
-                            <div class="portlet-body ">
+                            <div class="portlet-body">
                                 <div class="dd" id="nestable_list_1">
                                     <ol class="dd-list">
                                         <li class="dd-item" data-tipo="etapa" data-id="1">
@@ -114,8 +190,7 @@
                                                 <div class="text-right pull-right">
                                                     <p style="margin:0;"><?php echo $etapa->fecha_inicio.' A '.$etapa->fecha_fin;?></p>
                                                     <div class="btn-group" style="position:absolute; top:0; right:0;">
-                                                        <a href="javascript:;" class="btn btn-icon-only red"><i class="fa fa-times"></i></a>
-                                                        <a href="javascript:;" class="btn btn-icon-only blue"><i class="fa fa-plus"></i></a>
+                                                        <a href="javascript:;" class="btn btn-icon-only green-turquoise btn-outline"><i class="fa fa-plus"></i></a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -130,100 +205,31 @@
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="portlet light ">
-                            <div class="portlet-title">
-                                <div class="caption">
-                                    <i class="icon-bubble font-yellow-gold"></i>
-                                    <span class="caption-subject font-yellow-gold sbold uppercase">FASES AGREGADAS</span>
-                                </div>
-                                <div class="tools">
-                                    <a href="" class="collapse"> </a>
-                                </div>
+                    </div>
+                </div>
+                <div class="portlet light ">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            <span>OUTPUT</span>
+                        </div>
+                    </div>
+                    <div class="portlet-body">
+                        <?php echo validation_errors('<div class="alert alert-danger alert-dismissable">', '</div>'); ?>
+                        <?php echo form_open('alta_obra/seleccionar_zona_concepto', array('id' => 'current_form')); ?>
+                        <input type="hidden" name="etapas_id" value="<?php echo $etapa->etapas_id; ?>">
+                        <input type="hidden" name="obras_id" value="<?php echo $etapa->obras_id; ?>">
+                        <div class="form-body">
+                            <div class="alert alert-danger display-hide">
+                                <button class="close" data-close="alert"></button>
+                                <?php echo trans_line('jquery_invalid'); ?>
                             </div>
-                            <div class="portlet-body">
-                                <div class="dd" id="nestable_list_2">
-                                    <ol class="dd-list">
-                                        <li class="dd-item" data-id="13">
-                                            <div class="dd-handle"> item </div>
-                                        </li>
-                                    </ol>
-                                </div>
+                            <div class="alert alert-success display-hide">
+                                <button class="close" data-close="alert"></button>
+                                <?php echo trans_line('jquery_valid'); ?>
                             </div>
                         </div>
-                        <div class="portlet light ">
-                            <div class="portlet-title">
-                                <div class="caption">
-                                    <i class="icon-bubble font-yellow-crusta"></i>
-                                    <span class="caption-subject font-yellow-crusta sbold uppercase">ZONAS AGREGADAS</span>
-                                </div>
-                                <div class="tools">
-                                    <a href="" class="collapse"> </a>
-                                </div>
-                            </div>
-                            <div class="portlet-body">
-                                <div class="dd" id="nestable_list_2">
-                                    <ol class="dd-list">
-                                        <li class="dd-item" data-id="13">
-                                            <div class="dd-handle"> Item 13 </div>
-                                        </li>
-                                        <li class="dd-item" data-id="14">
-                                            <div class="dd-handle"> Item 14 </div>
-                                        </li>
-                                        <li class="dd-item" data-id="15">
-                                            <div class="dd-handle"> Item 15 </div>
-                                            <ol class="dd-list">
-                                                <li class="dd-item" data-id="16">
-                                                    <div class="dd-handle"> Item 16 </div>
-                                                </li>
-                                                <li class="dd-item" data-id="17">
-                                                    <div class="dd-handle"> Item 17 </div>
-                                                </li>
-                                                <li class="dd-item" data-id="18">
-                                                    <div class="dd-handle"> Item 18 </div>
-                                                </li>
-                                            </ol>
-                                        </li>
-                                    </ol>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="portlet light ">
-                            <div class="portlet-title">
-                                <div class="caption">
-                                    <i class="icon-bubble font-blue-soft"></i>
-                                    <span class="caption-subject font-blue-soft sbold uppercase">CONCEPTOS AGREGADOS</span>
-                                </div>
-                                <div class="tools">
-                                    <a href="" class="collapse"> </a>
-                                </div>
-                            </div>
-                            <div class="portlet-body">
-                                <div class="dd" id="nestable_list_2">
-                                    <ol class="dd-list">
-                                        <li class="dd-item" data-id="13">
-                                            <div class="dd-handle"> Item 13 </div>
-                                        </li>
-                                        <li class="dd-item" data-id="14">
-                                            <div class="dd-handle"> Item 14 </div>
-                                        </li>
-                                        <li class="dd-item" data-id="15">
-                                            <div class="dd-handle"> Item 15 </div>
-                                            <ol class="dd-list">
-                                                <li class="dd-item" data-id="16">
-                                                    <div class="dd-handle"> Item 16 </div>
-                                                </li>
-                                                <li class="dd-item" data-id="17">
-                                                    <div class="dd-handle"> Item 17 </div>
-                                                </li>
-                                                <li class="dd-item" data-id="18">
-                                                    <div class="dd-handle"> Item 18 </div>
-                                                </li>
-                                            </ol>
-                                        </li>
-                                    </ol>
-                                </div>
-                            </div>
-                        </div>
+                        <textarea id="nestable_list_1_output" class="form-control margin-bottom-10"></textarea>
+                        <?php echo form_close(); ?>
                     </div>
                 </div>
             </div>
@@ -613,10 +619,9 @@
             init: function () {
 
                 // activate Nestable for list 1
-                $('#nestable_list_1').nestable({
-                    maxDepth: 0
-                })
+                $('#nestable_list_1').nestable()
                     .on('change', updateOutput);
+                $("#nestable_list_conceptos").nestable();
 
                 // output initial serialised data
                 updateOutput($('#nestable_list_1').data('output', $('#nestable_list_1_output')));
@@ -638,10 +643,20 @@
 
     }();
 
-    function insert_item(parent_id,item_id,item_text){
+    function insert_item(parent_id,item_id,item_type,item_text){
         jh_parent = $("[data-id="+parent_id+"]");
         jh_list = jh_parent.find("ol");
-        jh_append = "<li class='dd-item' data-id='"+item_id+"'><div class='dd-handle'>"+item_text+"</div></li>";
+        jh_types = ['etapa','fase','zona','concepto'];
+        jh_btn_menu = "<div class='btn-group' style='position:absolute; top:0; right:0;'>";
+        jh_btn_menu += "<a href='javascript:;' class='btn btn-icon-only font-red'><i class='fa fa-times'></i></a>";
+        jh_btn_menu += "<a href='javascript:;' class='btn btn-icon-only green-turquoise btn-outline'><i class='fa fa-plus'></i></a></div></li>";
+        jh_append = "<li class='dd-item' data-id='"+item_id+"' data-type='"+jh_types[item_type]+"'><div class='dd-handle'>"+item_text+"</div>";
+        jh_parent.parents("[data-type='fase']").fadeTo(500,.5);
+        if(jh_types[item_type]=="concepto"){
+            jh_append += "</li>";
+        } else{
+            jh_append += jh_btn_menu;
+        }
         if(!jh_list.length){
             jh_parent.prepend("<button data-action='collapse' type='button'>Collapse</button><button data-action='expand' type='button'>Expand</button>");
             jh_parent.find("[data-action='expand']").hide();
@@ -669,7 +684,31 @@
         $("#nestable_list_1").trigger("change");
     }
 
+    function trigger_zonas(jh_state){
+        jh_zonas_btn = $('#agregar_nueva_zona_btn');
+        jh_zonas_port = $('#portlet_zonas');
+        if(jh_state){
+            jh_zonas_btn.prop("disabled",false);
+            jh_zonas_port.fadeTo(500,1);
+        } else{
+            jh_zonas_btn.prop("disabled",true);
+            jh_zonas_port.fadeTo(500,.5);
+        }
+    }
+
     jQuery(document).ready(function() {
         UINestable.init();
+        trigger_zonas();
+        $("#check_zonas").on('init.bootstrapSwitch switchChange.bootstrapSwitch',function(event,state){
+            trigger_zonas(state);
+        });
+        insert_item(1,2,1,"Agregado 2");
+        insert_item(2,3,2,"Agregado 2.1");
+        insert_item(3,4,3,"Agregado 2.1.1");
+        insert_item(2,5,2,"Agregado 2.2");
+        insert_item(2,6,2,"Agregado 2.3");
+        insert_item(2,7,2,"Agregado 2.4");
+        insert_item(3,8,3,"Agregado 2.1.2");
+        insert_item(3,9,3,"Agregado 2.1.3");
     });
 </script>
