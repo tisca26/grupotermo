@@ -56,11 +56,14 @@
                 </div>
                 <div class="row">
                     <div class="col-md-4">
-                        <div class="portlet light ">
+                        <div class="portlet light" id="portlet_fases">
                             <div class="portlet-title">
                                 <div class="caption">
                                     <i class="icon-bubble font-yellow-gold"></i>
                                     <span class="caption-subject font-yellow-gold sbold uppercase">FASES AGREGADAS</span>
+                                </div>
+                                <div class="tools">
+                                    <a href="#" class="reload"></a>
                                 </div>
                             </div>
                             <div class="portlet-body">
@@ -90,6 +93,9 @@
                                     <i class="icon-bubble font-yellow-crusta"></i>
                                     <span class="caption-subject font-yellow-crusta sbold uppercase">ZONAS AGREGADAS</span>
                                 </div>
+                                <div class="tools">
+                                    <a href="#" class="reload"></a>
+                                </div>
                             </div>
                             <div class="portlet-body" class="display:none;">
                                 <div class="scroller" style="height:250px" data-always-visible="1"
@@ -104,17 +110,6 @@
                                             </li>
                                             <li class="dd-item" data-id="15">
                                                 <div class="dd-handle"> Item 15</div>
-                                                <ol class="dd-list">
-                                                    <li class="dd-item" data-id="16">
-                                                        <div class="dd-handle"> Item 16</div>
-                                                    </li>
-                                                    <li class="dd-item" data-id="17">
-                                                        <div class="dd-handle"> Item 17</div>
-                                                    </li>
-                                                    <li class="dd-item" data-id="18">
-                                                        <div class="dd-handle"> Item 18</div>
-                                                    </li>
-                                                </ol>
                                             </li>
                                         </ol>
                                     </div>
@@ -129,11 +124,14 @@
                         </div>
                     </div>
                     <div class="col-md-4">
-                        <div class="portlet light ">
+                        <div class="portlet light" id="portlet_conceptos">
                             <div class="portlet-title">
                                 <div class="caption">
                                     <i class="icon-bubble font-blue-soft"></i>
                                     <span class="caption-subject font-blue-soft sbold uppercase">CONCEPTOS AGREGADOS</span>
+                                </div>
+                                <div class="tools">
+                                    <a href="#" class="reload"></a>
                                 </div>
                             </div>
                             <div class="portlet-body">
@@ -202,7 +200,7 @@
                                     <ol class="dd-list">
                                         <li class="dd-item" data-tipo="etapa" data-id="1">
                                             <div class="dd-handle">
-                                                <span class="bold">ETAPA: <?php echo $etapa->nombre; ?></span>
+                                                <span class="bold" title="<?php echo $etapa->nombre; ?>" style="display: inline-block; text-overflow: ellipsis; overflow: hidden; white-space: nowrap; max-width: 250px; height: 20px;">ETAPA: <?php echo $etapa->nombre; ?></span>
                                                 <div class="text-right pull-right">
                                                     <p style="margin:0;"><?php echo $etapa->fecha_inicio . ' A ' . $etapa->fecha_fin; ?></p>
                                                     <div class="btn-group" style="position:absolute; top:0; right:0;">
@@ -847,14 +845,19 @@
     }();
 
     function insert_item(parent_id, item_id, item_type, item_text) {
-        jh_parent = $("[data-id=" + parent_id + "]");
-        jh_list = jh_parent.find("ol");
-        jh_types = ['etapa', 'fase', 'zona', 'concepto'];
-        jh_btn_menu = "<div class='btn-group' style='position:absolute; top:0; right:0;'>";
-        jh_btn_menu += "<a href='javascript:;' class='btn btn-icon-only font-red'><i class='fa fa-times'></i></a>";
+        var jh_parent = $("[data-id=" + parent_id + "]");
+        var jh_list = jh_parent.find("ol");
+        var jh_types = ['etapa', 'fase', 'zona', 'concepto'];
+        var jh_btn_menu = "<div class='btn-group' style='position:absolute; top:0; right:0;'>";
+        jh_btn_menu += "<a class='btn btn-icon-only font-red delete_confirmation' data-toggle='confirmation' data-placement='top'"
+                    + "data-title='También eliminará los sub-elementos' data-container='body' data-singleton='true' data-popout='true'"
+                    + "data-btn-ok-label='Eliminar'"
+                    + "data-btn-ok-icon='icon-like' data-btn-ok-class='btn-success'"
+                    + "data-btn-cancel-label='Cancelar'"
+                    + "data-btn-cancel-icon='icon-close' data-btn-cancel-class='btn-danger'"
+                    + "data-id-confirm='"+item_id+"'><i class='fa fa-times'></i></a>";
         jh_btn_menu += "<a href='javascript:;' class='btn btn-icon-only green-turquoise btn-outline'><i class='fa fa-plus'></i></a></div></li>";
-        jh_append = "<li class='dd-item' data-id='" + item_id + "' data-type='" + jh_types[item_type] + "'><div class='dd-handle'>" + item_text + "</div>";
-        jh_parent.parents("[data-type='fase']").fadeTo(500, .5);
+        var jh_append = "<li class='dd-item' data-id='" + item_id + "' data-type='" + jh_types[item_type] + "'><div class='dd-handle'>" + item_text + "</div>";
         if (jh_types[item_type] == "concepto") {
             jh_append += "</li>";
         } else {
@@ -868,12 +871,15 @@
             jh_list.eq(0).append(jh_append);
         }
         $("#nestable_list_1").trigger("change");
+        $('[data-id-confirm='+item_id+']').confirmation({
+            rootSelector: '[data-id-confirm='+item_id+']'
+        });
     }
 
     function delete_item(item_id) {
-        jh_item = $("[data-id=" + item_id + "]");
-        jh_parent_ol = jh_item.parent();
-        jh_parent_li = jh_parent_ol.parent();
+        var jh_item = $("[data-id=" + item_id + "]");
+        var jh_parent_ol = jh_item.parent();
+        var jh_parent_li = jh_parent_ol.parent();
 
         if (jh_item.length) {
             jh_item.remove();
@@ -889,23 +895,128 @@
     }
 
     function trigger_zonas(jh_state) {
-        jh_zonas_btn = $('#agregar_nueva_zona_btn');
-        jh_zonas_port = $('#portlet_zonas');
+        var jh_zonas_btn = $('#agregar_nueva_zona_btn');
+        var jh_zonas_port = $('#portlet_zonas');
         if (jh_state) {
             jh_zonas_btn.prop("disabled", false);
+            jh_zonas_port.find('.reload').show();
             jh_zonas_port.fadeTo(500, 1);
         } else {
-            jh_zonas_btn.prop("disabled", true);
             jh_zonas_port.fadeTo(500, .5);
+            jh_zonas_btn.prop("disabled", true);
+            jh_zonas_port.find('.reload').hide();
         }
+    }
+
+    function get_fases(){
+        $.get(
+            "<?php echo base_url_lang() . 'alta_obra/fases_json' ?>",
+            "json"
+        ).done(function (data) {
+            var fases_list = $('#nestable_list_fases');
+            var fases_append = '';
+            fases_list.empty();
+            fases_list.append('<ol class="dd-list"></ol>');
+            for (var idx in data) {
+                fases_list.children('ol.dd-list').append('<li class="dd-item" data-id="'+data[idx].fase_id+'"><div class="dd-handle">'+data[idx].nombre+'</div></li>');
+            }
+            if(!fases_list.find('.dd-item').length){
+                fases_list.append('<p class="text-center">NO HAY DATOS PARA MOSTRAR</p>');
+            }
+        }).fail(function () {
+            toastr.error("Error al obtener las fases agregadas", "Error",{"closeButton": true});
+        });
+    }
+
+    function get_zonas(){
+        $.get(
+            "<?php echo base_url_lang() . 'alta_obra/zonas_json' ?>",
+            "json"
+        ).done(function (data) {
+            var zonas_list = $('#nestable_list_zonas');
+            var zonas_append = '';
+            zonas_list.empty();
+            zonas_list.append('<ol class="dd-list"></ol>');
+            for (var idx in data) {
+                zonas_list.children('ol.dd-list').append('<li class="dd-item" data-id="'+data[idx].zona_id+'"><div class="dd-handle">'+data[idx].nombre+'</div></li>');
+            }
+            if(!zonas_list.find('.dd-item').length){
+                zonas_list.append('<p class="text-center">NO HAY DATOS PARA MOSTRAR</p>');
+            }
+        }).fail(function () {
+            toastr.error("Error al obtener las zonas agregadas", "Error",{"closeButton": true});
+        });
+    }
+
+    function get_conceptos(){
+        $.get(
+            "<?php echo base_url_lang() . 'alta_obra/conceptos_json' ?>",
+            "json"
+        ).done(function (data) {
+            var con_list = $('#nestable_list_conceptos');
+            var con_append = '';
+            var con_cat_list = con_list;
+            con_list.empty();
+            con_list.append('<ol class="dd-list"></ol>');
+            for (var idx in data) {
+                con_cat_list = con_list.find('[data-cat="'+data[idx].categorias+'"]');
+                con_append = '<li class="dd-item" data-id="'+data[idx].conceptos_catalogo_id+'"><div class="dd-handle">'+data[idx].nombre+'</div></li>';
+                if(con_cat_list.length){
+                    if(!con_cat_list.children('ol.dd-list').length){
+                        con_cat_list.prepend("<button data-action='collapse' type='button'>Collapse</button><button data-action='expand' type='button'>Expand</button>");
+                        con_cat_list.children("[data-action='expand']").hide();
+                        con_cat_list.append("<ol class='dd-list'>" + con_append + "</ol>");
+                    } else{
+                        con_cat_list.children('ol.dd-list').append(con_append);
+                    }
+                }else{
+                    con_list.children('ol.dd-list').append('<li class="dd-item" data-cat="'+data[idx].categorias+'"><div class="dd-handle">'+data[idx].categorias+'</div></li>');
+                    con_cat_list = con_list.find('[data-cat="'+data[idx].categorias+'"]');
+                    if(!con_cat_list.children('ol.dd-list').length){
+                        con_cat_list.prepend("<button data-action='collapse' type='button'>Collapse</button><button data-action='expand' type='button'>Expand</button>");
+                        con_cat_list.children("[data-action='expand']").hide();
+                        con_cat_list.append("<ol class='dd-list'>" + con_append + "</ol>");
+                    } else{
+                        con_cat_list.children('ol.dd-list').append(con_append);
+                    }
+                }
+            }
+            if(!con_list.find('.dd-item').length){
+                con_list.append('<p class="text-center">NO HAY DATOS PARA MOSTRAR</p>');
+            }
+        }).fail(function () {
+            toastr.error("Error al obtener el catalogo de conceptos", "Error",{"closeButton": true});
+        });
     }
 
     jQuery(document).ready(function () {
         UINestable.init();
-        trigger_zonas();
+
+        get_conceptos();
+        get_zonas();
+        get_fases();
+        trigger_zonas()
+
+        $("#portlet_fases").find(".reload").click(function(){
+            get_fases();
+        });
+        $("#portlet_zonas").find(".reload").click(function(){
+            get_zonas();
+        });
+        $("#portlet_conceptos").find(".reload").click(function(){
+            get_conceptos();
+        });
+
         $("#check_zonas").on('init.bootstrapSwitch switchChange.bootstrapSwitch', function (event, state) {
             trigger_zonas(state);
         });
+
+        $('#nestable_list_1').on('confirmed.bs.confirmation','.delete_confirmation', function () {
+            var id = $(this).attr('data-id-confirm');
+            $(this).confirmation('destroy');
+            delete_item(id);
+        });
+
         insert_item(1, 2, 1, "Agregado 2");
         insert_item(2, 3, 2, "Agregado 2.1");
         insert_item(3, 4, 3, "Agregado 2.1.1");

@@ -93,7 +93,7 @@
                                 </div>
                                 <div class="col-xs-1">
                                     <div class="form-group form-md-line-input div_b_select">
-                                        <button type="button" class="btn btn-circle default btn-lg" id="agregar_nueva_empresa_btn" data-toggle="modal" href="#agregar_nueva_empresa_modal"><i class="fa fa-plus"></i></button>
+                                        <button type="button" class="btn btn-icon-only green" id="agregar_nueva_empresa_btn" data-toggle="modal" href="#agregar_nueva_empresa_modal"><i class="fa fa-plus"></i></button>
                                     </div>
                                 </div>
                                 <div class="col-sm-5 col-xs-10">
@@ -106,7 +106,7 @@
                                 </div>
                                 <div class="col-xs-1">
                                     <div class="form-group form-md-line-input div_b_select">
-                                        <button type="button" class="btn btn-circle default btn-lg" id="agregar_nuevo_cliente_btn" data-toggle="modal" href="#agregar_nuevo_cliente_modal"><i class="fa fa-plus"></i></button>
+                                        <button type="button" class="btn btn-icon-only green" id="agregar_nuevo_cliente_btn" data-toggle="modal" href="#agregar_nuevo_cliente_modal"><i class="fa fa-plus"></i></button>
                                     </div>
                                 </div>
                             </div>
