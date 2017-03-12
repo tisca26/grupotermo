@@ -26,7 +26,7 @@ class Concepto
         return $this->CI->conceptos_model->concepto_por_id($conceptos_id);
     }
 
-    public function conceptos_todos($order = 'conceptos_id')
+    public function conceptos_todos($order = 'conceptos_catalogo_id')
     {
         return $this->CI->conceptos_model->conceptos_todos($order);
     }
@@ -41,7 +41,7 @@ class Concepto
         return $select;
     }
 
-    public function conceptos_todos_json($order = 'conceptos_id')
+    public function conceptos_todos_json($order = 'conceptos_catalogo_id')
     {
         $conceptos = $this->conceptos_todos($order);
         header('Content-Type: application/json');

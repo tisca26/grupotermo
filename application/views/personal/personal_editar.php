@@ -59,6 +59,20 @@
                                     <?php else: ?>
                                         <h3><?php echo trans_line('sin_foto'); ?></h3>
                                     <?php endif; ?>
+                                    <div class="fileinput fileinput-new text-center"
+                                         data-provides="fileinput">
+                                        <span class="btn green btn-file text-center">
+                                            <span class="fileinput-new"> <?php echo trans_line('seleccionar_foto'); ?> </span>
+                                            <span class="fileinput-exists"> <?php echo trans_line('cambiar_foto'); ?> </span>
+                                            <input type="file" class="form-control center"
+                                                   name="foto_personal"> </span>
+                                        <input type="hidden" name="foto_personal_hidden"
+                                               value="<?php echo $personal->foto_personal ?>">
+                                        <span class="fileinput-filename"> </span> &nbsp;
+                                        <a href="javascript:;" class="close fileinput-exists"
+                                           data-dismiss="fileinput"> </a>
+                                    </div>
+
                                 </div>
                                 <div class="col-md-10">
                                     <div class="row">
@@ -278,21 +292,6 @@
                                                         <label for="tipos_regimen_id"><?php echo trans_line('tipos_regimen_id'); ?>
                                                             <span class="required">*</span>
                                                         </label>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-2">
-                                                    <div class="fileinput fileinput-new text-center"
-                                                         data-provides="fileinput">
-                                                    <span class="btn green btn-file text-center">
-                                                        <span class="fileinput-new"> <?php echo trans_line('seleccionar_foto'); ?> </span>
-                                                        <span class="fileinput-exists"> <?php echo trans_line('cambiar_foto'); ?> </span>
-                                                        <input type="file" class="form-control center"
-                                                               name="foto_personal"> </span>
-                                                        <input type="hidden" name="foto_personal_hidden"
-                                                               value="<?php echo $personal->foto_personal ?>">
-                                                        <span class="fileinput-filename"> </span> &nbsp;
-                                                        <a href="javascript:;" class="close fileinput-exists"
-                                                           data-dismiss="fileinput"> </a>
                                                     </div>
                                                 </div>
                                             </div>

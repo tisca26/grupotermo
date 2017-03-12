@@ -51,8 +51,18 @@
                         </div>
                         <div class="form-body">
                             <div class="row">
-                                <div class="col-md-2">
+                                <div class="col-md-2" style="overflow-x: auto;">
                                     <h3><?php echo trans_line('sin_foto'); ?></h3>
+                                    <div class="fileinput fileinput-new text-center" data-provides="fileinput">
+                                                    <span class="btn green btn-file text-center">
+                                                        <span class="fileinput-new"> <?php echo trans_line('seleccionar_foto'); ?> </span>
+                                                        <span class="fileinput-exists"> <?php echo trans_line('cambiar_foto'); ?> </span>
+                                                        <input type="file" class="form-control center"
+                                                               name="foto_personal"> </span>
+                                        <span class="fileinput-filename"> </span> &nbsp;
+                                        <a href="javascript:;" class="close fileinput-exists"
+                                           data-dismiss="fileinput"> </a>
+                                    </div>
                                 </div>
                                 <div class="col-md-10">
                                     <div class="row">
@@ -272,16 +282,6 @@
                                                         <label for="tipos_regimen_id"><?php echo trans_line('tipos_regimen_id'); ?>
                                                             <span class="required">*</span>
                                                         </label>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-2">
-                                                    <div class="fileinput fileinput-new text-center" data-provides="fileinput">
-                                                    <span class="btn green btn-file text-center">
-                                                        <span class="fileinput-new"> <?php echo trans_line('seleccionar_foto'); ?> </span>
-                                                        <span class="fileinput-exists"> <?php echo trans_line('cambiar_foto'); ?> </span>
-                                                        <input type="file" class="form-control center" name="foto_personal"> </span>
-                                                        <span class="fileinput-filename"> </span> &nbsp;
-                                                        <a href="javascript:;" class="close fileinput-exists" data-dismiss="fileinput"> </a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -709,7 +709,7 @@
                                             <div class="row">
                                                 <div class="col-md-4">
                                                     <div class="form-group form-md-line-input">
-                                                        <?php $data_porcentaje_numero= [
+                                                        <?php $data_porcentaje_numero = [
                                                             'id' => 'porcentaje_numero',
                                                             'placeholder' => trans_line('porcentaje_numero_placeholder'),
                                                             'class' => 'form-control',
@@ -773,7 +773,7 @@
                                             <div class="row">
                                                 <div class="col-md-4">
                                                     <div class="form-group form-md-line-input">
-                                                        <?php $data_clabe= [
+                                                        <?php $data_clabe = [
                                                             'id' => 'clabe',
                                                             'placeholder' => trans_line('clabe_placeholder'),
                                                             'class' => 'form-control',
@@ -831,7 +831,7 @@
     <!-- END CONTENT BODY -->
 </div>
 <script type="application/javascript">
-    function obtener_estados_por_pais  (cat_paises_id, elem_id) {
+    function obtener_estados_por_pais(cat_paises_id, elem_id) {
         $.get(
             "<?php echo base_url_lang() . 'personal/estados_por_pais/' ?>" + cat_paises_id,
             function (data, status, xhr) {
@@ -845,7 +845,7 @@
         });
     }
 
-    function genera_select_estados (estados, elem_id) {
+    function genera_select_estados(estados, elem_id) {
         var $select = $('#' + elem_id);
         $select.empty();
         for (var idx in estados) {
@@ -854,7 +854,7 @@
         $select.selectpicker('refresh');
     }
 
-    function obtener_municipios_por_estado  (nacimiento_municipio_id, elem_id) {
+    function obtener_municipios_por_estado(nacimiento_municipio_id, elem_id) {
         $.get(
             "<?php echo base_url_lang() . 'personal/municipios_por_estado/' ?>" + nacimiento_municipio_id,
             function (data, status, xhr) {
@@ -868,7 +868,7 @@
         });
     }
 
-    function genera_select_municipios (municipios, elem_id) {
+    function genera_select_municipios(municipios, elem_id) {
         var $select = $('#' + elem_id);
         $select.empty();
         for (var idx in municipios) {
@@ -877,7 +877,7 @@
         $select.selectpicker('refresh');
     }
 
-    function obtener_departamentos_por_empresa  (empresas_id) {
+    function obtener_departamentos_por_empresa(empresas_id) {
         $.get(
             "<?php echo base_url_lang() . 'personal/departamentos_por_empresa/' ?>" + empresas_id,
             function (data, status, xhr) {
@@ -891,7 +891,7 @@
         });
     }
 
-    function genera_select_departamentos (departamentos) {
+    function genera_select_departamentos(departamentos) {
         var $select = $('#empresas_departamentos_id');
         $select.empty();
         for (var idx in departamentos) {
@@ -900,7 +900,7 @@
         $select.selectpicker('refresh');
     }
 
-    function obtener_obras_por_empresa  (empresas_id) {
+    function obtener_obras_por_empresa(empresas_id) {
         $.get(
             "<?php echo base_url_lang() . 'personal/obras_por_empresa/' ?>" + empresas_id,
             function (data, status, xhr) {
@@ -914,7 +914,7 @@
         });
     }
 
-    function genera_select_obras (obras) {
+    function genera_select_obras(obras) {
         var $select = $('#obras_id');
         $select.empty();
         for (var idx in obras) {
@@ -923,7 +923,7 @@
         $select.selectpicker('refresh');
     }
 
-    function obtener_registros_patronales_por_empresa  (empresas_id) {
+    function obtener_registros_patronales_por_empresa(empresas_id) {
         $.get(
             "<?php echo base_url_lang() . 'personal/registros_patronales_por_empresa/' ?>" + empresas_id,
             function (data, status, xhr) {
@@ -937,7 +937,7 @@
         });
     }
 
-    function genera_select_registros_patronales (registros) {
+    function genera_select_registros_patronales(registros) {
         var $select = $('#registro_patronal_id');
         $select.empty();
         for (var idx in registros) {
@@ -1014,12 +1014,8 @@
             errorClass: 'help-block help-block-error', // default input error message class
             focusInvalid: false, // do not focus the last invalid input
             ignore: "", // validate all fields including form hidden input
-            messages: {
-
-            },
-            rules: {
-
-            },
+            messages: {},
+            rules: {},
 
             invalidHandler: function (event, validator) { //display error alert on form submit
                 success1.hide();
