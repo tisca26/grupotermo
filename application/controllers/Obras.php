@@ -25,7 +25,6 @@ class Obras extends Acl_controller
         $this->load->model('empresas_model');
         $this->load->model('etapas_model');
         $this->load->model('zonas_model');
-        $this->load->model('etapas_zonas_conceptos_model');
         $this->load->model('obras_model');
         $this->load->library('form_validation');
     }

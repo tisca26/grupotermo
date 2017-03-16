@@ -8,6 +8,7 @@ class Fase
     {
         $this->CI = & get_instance();
 
+        $this->CI->load->business('obra_etapa_fase_zona_concepto', 'oefzc');
         $this->CI->load->model('fases_model');
     }
 
@@ -16,7 +17,7 @@ class Fase
         return $this->CI->fases_model->error_consulta();
     }
 
-    function ultimo_id()
+    public function ultimo_id()
     {
         return $this->CI->fases_model->ultimo_id();
     }
@@ -50,7 +51,16 @@ class Fase
 
     function insertar_fase($fase = array())
     {
-        return $this->CI->fases_model->insertar_fase($fase);
+        $result = false;
+        $obras_id = $fase['obras_id'];
+        unset($fase['obras_id']);
+        $result = $this->CI->fases_model->insertar_fase($fase);
+        $fases_id = $this->ultimo_id();
+        $oefzc['obras_id'] = $obras_id;
+        $oefzc['fases_id'] = $fases_id;
+        $this->CI->oefzc->insertar_oefzc($oefzc);
+        return $result;
+
     }
     
 }

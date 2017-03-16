@@ -8,9 +8,7 @@ class Zona
     {
         $this->CI = & get_instance();
 
-        $this->CI->load->model('etapas_zonas_conceptos_model');
-        $this->CI->load->model('etapas_model');
-        $this->CI->load->model('obras_model');
+        $this->CI->load->business('obra_etapa_fase_zona_concepto', 'oefzc');
         $this->CI->load->model('zonas_model');
     }
 
@@ -19,7 +17,7 @@ class Zona
         return $this->CI->zonas_model->error_consulta();
     }
 
-    function ultimo_id()
+    public function ultimo_id()
     {
         return $this->CI->zonas_model->ultimo_id();
     }
@@ -53,23 +51,15 @@ class Zona
 
     function insertar_zona($zona = array())
     {
-        return $this->CI->zonas_model->insertar_zona($zona);
+        $result = false;
+        $obras_id = $zona['obras_id'];
+        unset($zona['obras_id']);
+        $result = $this->CI->zonas_model->insertar_zona($zona);
+        $zonas_id = $this->ultimo_id();
+        $oefzc['obras_id'] = $obras_id;
+        $oefzc['zonas_id'] = $zonas_id;
+        $this->CI->oefzc->insertar_oefzc($oefzc);
+        return $result;
     }
-    
-    
-    
-    
-    public function inserta_zona_por_etapas_id($zonas_id = 0, $etapas_id = array())
-    {
-        if (!is_array($etapas_id)){
-            return false;
-        }
-        foreach ($etapas_id as $etapa_id){
-            $ezc = array();
-            $ezc['zonas_id'] = $zonas_id;
-            $ezc['etapas_id'] = $etapa_id;
-            $this->CI->etapas_zonas_conceptos_model->insertar_etapa_zona_concepto($ezc);
-        }
-        return true;
-    }
+
 }

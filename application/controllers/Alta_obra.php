@@ -24,6 +24,7 @@ class Alta_obra extends Acl_controller
         $this->load->business('empresa');
         $this->load->business('cliente');
         $this->load->business('concepto');
+        $this->load->business('etapa');
         $this->load->business('fase');
         $this->load->business('obra');
         $this->load->business('zona');
@@ -272,7 +273,7 @@ class Alta_obra extends Acl_controller
             $this->etapa($obras_id);
         } else {
             $etapa = $this->input->post();
-            if ($this->obra->insertar_etapa($etapa) == TRUE) {
+            if ($this->etapa->insertar_etapa($etapa) == TRUE) {
                 return redirect('alta_obra/estructura/' . $this->obra->ultimo_id());
             } else {
                 $error = $this->obra->error_consulta();

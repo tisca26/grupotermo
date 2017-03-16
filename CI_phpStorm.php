@@ -153,7 +153,8 @@ class CI_Model
  * @property empresas_departamentos_model           $empresas_departamentos_model
  * @property empresas_model                         $empresas_model
  * @property etapas_model                           $etapas_model
- * @property etapas_zonas_conceptos_model           $etapas_zonas_conceptos_model
+ * @property obras_etapas_fases_zonas_conceptos_model    $obras_etapas_fases_zonas_conceptos_model
+ * @property obras_etapas_fases_zonas_conceptos_model    $oefzc_model
  * @property fases_model                            $fases_model
  * @property groups_model                           $groups_model
  * @property logs_oe_model                          $logs_oe_model
@@ -199,6 +200,8 @@ class my_models extends my_business
  * @property fase                                   $fase
  * @property lugares                                $lugares
  * @property obra                                   $obra
+ * @property obra_etapa_fase_zona_concepto          $obra_etapa_fase_zona_concepto
+ * @property obra_etapa_fase_zona_concepto          $oefzc
  * @property zona                                   $zona
  */
 class my_business

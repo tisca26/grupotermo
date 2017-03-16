@@ -705,6 +705,8 @@
                             toastr.success('<?php echo trans_line('guardar_modal_success'); ?>');
                         } else {
                             toastr.error('<?php echo trans_line('guardar_modal_error'); ?>' + '\n' + data.mensaje);
+                            btn_submit.html('<?php echo trans_line('guardar_modal'); ?>');
+                            btn_submit.prop("disabled", false);
                         }
                     },
                     error: function (data) {
@@ -780,6 +782,8 @@
                             toastr.success('<?php echo trans_line('guardar_modal_success'); ?>');
                         } else {
                             toastr.error('<?php echo trans_line('guardar_modal_error'); ?>' + '\n' + data.mensaje);
+                            btn_submit.html('<?php echo trans_line('guardar_modal'); ?>');
+                            btn_submit.prop("disabled", false);
                         }
                     },
                     error: function (data) {

@@ -11,7 +11,6 @@ class Obra
         $this->CI->load->model('conceptos_model');
         $this->CI->load->model('clientes_model');
         $this->CI->load->model('empresas_model');
-        $this->CI->load->model('etapas_zonas_conceptos_model');
         $this->CI->load->model('etapas_model');
         $this->CI->load->model('obras_model');
         $this->CI->load->model('unidades_model');
@@ -137,17 +136,5 @@ class Obra
     {
         return $this->CI->conceptos_model->conceptos_nombres();
     }
-
-    /*
-     * ETAPAS ZONAS CONCEPTOS
-     */
-    public function insertar_etapa_zona_concepto($ezc = array())
-    {
-        $ezc['cantidad'] = isset($ezc['cantidad']) ? round($ezc['cantidad'], 2) : 0;
-        $ezc['precio_unitario'] = isset($ezc['precio_unitario']) ? round($ezc['precio_unitario'], 2) : 0;
-        $ezc['total_autorizado'] = round($ezc['cantidad'] * $ezc['precio_unitario'], 2);
-        return $this->CI->etapas_zonas_conceptos_model->insertar_etapa_zona_concepto($ezc);
-    }
-
 
 }

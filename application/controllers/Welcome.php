@@ -13,6 +13,8 @@ class Welcome extends Acl_controller
         $this->set_read_list(array('index', 'otro'));
         $this->check_access();
 
+        //tests
+        $this->load->business('etapa');
     }
 
     public function index()
@@ -21,6 +23,7 @@ class Welcome extends Acl_controller
         $this->cargar_idioma->carga_lang('welcome/inicio');
         //$data['line'] = $this->lang->line('inicio_msg');
         $data['line'] = trans_line('inicio_msg');
+        $this->etapa->etapa_por_id(1);
         $this->load->view('index', $data);
     }
 

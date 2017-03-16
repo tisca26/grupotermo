@@ -9,22 +9,39 @@ class Zonas_model extends CI_Model
         parent::__construct();
     }
 
-    function ultimo_id()
+    public function ultimo_id()
     {
         return $this->db->insert_id();
     }
 
-    function error_consulta()
+    public function error_consulta()
     {
         return $this->db->error();
+    }
+
+    public function zona_por_id($zonas_id = 0)
+    {
+        $result = new stdClass();
+        $this->db->select('z.*, o.nombre as obra_nombre, o.obras_id');
+        $this->db->from('zonas z');
+        $this->db->join('obras_etapas_fases_zonas_conceptos oefzc', 'z.zonas_id = oefzc.zonas_id', 'inner');
+        $this->db->where('oefzc.etapas_id', 0)->where('oefzc.fases_id', 0)->where('oefzc.conceptos_id', 0);
+        $this->db->join('obras o', 'o.obras_id = oefzc.obras_id', 'inner');
+        $query = $this->db->where('z.zonas_id', $zonas_id)->get();
+        if ($query->num_rows() > 0) {
+            $result = $query->row();
+        }
+        return $result;
     }
 
     public function zonas_por_obras_id($obras_id = 0)
     {
         $result = array();
-        $this->db->select('z.*, o.nombre as obra_nombre');
+        $this->db->select('z.*, o.nombre as obra_nombre, o.obras_id');
         $this->db->from('zonas z');
-        $this->db->join('obras o', 'z.obras_id = o.obras_id', 'inner');
+        $this->db->join('obras_etapas_fases_zonas_conceptos oefzc', 'z.zonas_id = oefzc.zonas_id', 'inner');
+        $this->db->where('oefzc.etapas_id', 0)->where('oefzc.fases_id', 0)->where('oefzc.conceptos_id', 0);
+        $this->db->join('obras o', 'o.obras_id = oefzc.obras_id', 'inner');
         $query = $this->db->where('o.obras_id', $obras_id)->get();
         if ($query->num_rows() > 0) {
             $result = $query->result();
@@ -34,10 +51,11 @@ class Zonas_model extends CI_Model
 
     public function zonas_por_ids($zonas_ids = array())
     {
-        $result = array();
-        $this->db->select('z.*, o.nombre as obra_nombre');
+        $this->db->select('z.*, o.nombre as obra_nombre, o.obras_id');
         $this->db->from('zonas z');
-        $this->db->join('obras o', 'z.obras_id = o.obras_id', 'inner');
+        $this->db->join('obras_etapas_fases_zonas_conceptos oefzc', 'z.zonas_id = oefzc.zonas_id', 'inner');
+        $this->db->where('oefzc.etapas_id', 0)->where('oefzc.fases_id', 0)->where('oefzc.conceptos_id', 0);
+        $this->db->join('obras o', 'o.obras_id = oefzc.obras_id', 'inner');
         $query = $this->db->where_in('z.zonas_id', $zonas_ids)->get();
         if ($query->num_rows() > 0) {
             $result = $query->result();
@@ -48,10 +66,12 @@ class Zonas_model extends CI_Model
     public function zonas_todos($order = 'zonas_id')
     {
         $result = array();
-        $this->db->select('z.*, o.nombre as obra_nombre');
+        $this->db->select('z.*, o.nombre as obra_nombre, o.obras_id');
         $this->db->from('zonas z');
-        $this->db->join('obras o', 'z.obras_id = o.obras_id', 'inner');
-        $query = $this->db->order_by($order)->get();
+        $this->db->join('obras_etapas_fases_zonas_conceptos oefzc', 'z.zonas_id = oefzc.zonas_id', 'inner');
+        $this->db->where('oefzc.etapas_id', 0)->where('oefzc.fases_id', 0)->where('oefzc.conceptos_id', 0);
+        $this->db->join('obras o', 'o.obras_id = oefzc.obras_id', 'inner');
+        $query = $this->db->order_by('z.' . $order)->get();
         if ($query->num_rows() > 0) {
             $result = $query->result();
         }
@@ -61,16 +81,6 @@ class Zonas_model extends CI_Model
     public function insertar_zona($zona)
     {
         return $this->db->insert('zonas', $zona);
-    }
-
-    public function zona_por_id($zonas_id = 0)
-    {
-        $result = new stdClass();
-        $query = $this->db->where('zonas_id', $zonas_id)->get('zonas');
-        if ($query->num_rows() > 0) {
-            $result = $query->row();
-        }
-        return $result;
     }
 
     public function editar_zona($zona = array())
