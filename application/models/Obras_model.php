@@ -54,35 +54,12 @@ class Obras_model extends CI_Model
         return $this->db->delete('obras', array('obras_id' => $obras_id));
     }
 
-    public function obras_todos_sel($order_id = 'obras_id')
-    {
-        $results = $this->obras_todos($order_id);
-        $my_array = array();
-        foreach ($results as $obra){
-            $my_array[$obra->obras_id] = $obra->nombre;
-        }
-        return $my_array;
-    }
-
     public function obras_por_empresas_id ($empresas_id = 0)
     {
         $result = array();
         $query = $this->db->where('empresas_id', $empresas_id)->get('obras');
         if ($query->num_rows() > 0) {
             $result = $query->result();
-        }
-        return $result;
-    }
-
-    public function obras_por_empresas_id_sel ($empresas_id = 0)
-    {
-        $result = array();
-        $query = $this->db->where('empresas_id', $empresas_id)->get('obras');
-        if ($query->num_rows() > 0) {
-            $obras = $query->result();
-            foreach ($obras as $obra){
-                $result[$obra->obras_id] = $obra->nombre;
-            }
         }
         return $result;
     }

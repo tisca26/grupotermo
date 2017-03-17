@@ -49,20 +49,22 @@ class Fase
         echo json_encode($fases);
     }
 
-    public function fases_todos_json_por_obra($obras_id = 0)
+    public function fases_todos_json_por_obra_id($obras_id = 0)
     {
         $fases = $this->CI->fases_model->fases_por_obras_id($obras_id);
         header('Content-Type: application/json');
         echo json_encode($fases);
     }
 
-    function insertar_fase($fase = array())
+    public function insertar_fase($fase = array())
     {
-        $result = false;
+        $result['status'] = false;
         $obras_id = $fase['obras_id'];
         unset($fase['obras_id']);
-        $result = $this->CI->fases_model->insertar_fase($fase);
+        $result['status'] = $this->CI->fases_model->insertar_fase($fase);
+        $result['error'] = ($result['status'] == false)? $this->error_consulta() : '';
         $fases_id = $this->ultimo_id();
+        $result['last_id'] = $fases_id;
         $oefzc['obras_id'] = $obras_id;
         $oefzc['fases_id'] = $fases_id;
         $this->CI->oefzc->insertar_oefzc($oefzc);

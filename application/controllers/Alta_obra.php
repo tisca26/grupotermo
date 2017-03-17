@@ -12,7 +12,7 @@ class Alta_obra extends Acl_controller
     {
         parent::__construct();
 
-        $this->set_read_list(array('index', 'empresas_json', 'clientes_json', 'zonas_json', 'fases_json', 'fases_json_por_obra', 'obra', 'etapa', 'estructura', 'conceptos_json',
+        $this->set_read_list(array('index', 'empresas_json', 'clientes_json', 'zonas_json_por_obra_id', 'fases_json_por_obra_id', 'obra', 'etapa', 'estructura', 'conceptos_json',
             'muestra_conceptos', 'resumen_alta_obra', 'muestra_zonas'));
         $this->set_insert_list(array('insertar_empresa_ajax', 'insertar_cliente_ajax', 'insertar_zona_ajax', 'insertar_fase_ajax', 'insertar_obra',
             'insertar_etapa', 'seleccionar_zona_concepto', 'insertar_conceptos', 'insertar_zonas_conceptos', 'relacionar_zonas_conceptos'));
@@ -106,14 +106,9 @@ class Alta_obra extends Acl_controller
         }
     }
 
-    public function fases_json()
+    public function fases_json_por_obra_id($obra_id = 0)
     {
-        return $this->fase->fases_todos_json();
-    }
-
-    public function fases_json_por_obra($obra_id = 0)
-    {
-        return $this->fase->fases_todos_json_por_obra($obra_id);
+        return $this->fase->fases_todos_json_por_obra_id($obra_id);
     }
 
     public function insertar_fase_ajax()
@@ -127,7 +122,8 @@ class Alta_obra extends Acl_controller
             echo json_encode($obj);
         } else {
             $fase = $this->input->post();
-            if ($this->fase->insertar_fase($fase) == TRUE) {
+            $res = $this->fase->insertar_fase($fase);
+            if ($res['status'] == TRUE) {
                 $obj = new stdClass();
                 $obj->estatus = 'OK';
                 header('Content-Type: application/json');
@@ -135,16 +131,16 @@ class Alta_obra extends Acl_controller
             } else {
                 $obj = new stdClass();
                 $obj->estatus = 'ERROR';
-                $obj->mensaje = $this->fase->error_consulta();
+                $obj->mensaje = $res['error'];
                 header('Content-Type: application/json');
                 echo json_encode($obj);
             }
         }
     }
 
-    public function zonas_json()
+    public function zonas_json_por_obra_id()
     {
-        return $this->zona->zonas_todos_json();
+        return $this->zona->zonas_json_por_obra_id();
     }
 
     public function insertar_zona_ajax()
@@ -159,10 +155,11 @@ class Alta_obra extends Acl_controller
         } else {
             $obj = new stdClass();
             $zona = $this->input->post();
-            if ($this->zona->insertar_zona($zona) == TRUE) {
+            $res = $this->zona->insertar_zona($zona);
+            if ($res['status'] == TRUE) {
                 $obj->estatus = 'OK';
             } else {
-                $obj->estatus = 'ERROR';
+                $obj->estatus = $res['error'];
                 $obj->mensaje = $this->zona->error_consulta();
             }
             header('Content-Type: application/json');
@@ -232,18 +229,18 @@ class Alta_obra extends Acl_controller
             $this->obra();
         } else {
             $obra = $this->input->post();
-            $accion = false;
+            $accion['status'] = false;
             if ($obra['obras_id'] <= 0) {
                 unset($obra['obras_id']);
                 $accion = $this->obra->insertar_obra($obra);
             } else {
                 $accion = $this->obra->editar_obra($obra);
             }
-            if ($accion == TRUE) {
-                return redirect('alta_obra/etapa/' . $this->obra->ultimo_id());
+            if ($accion['status'] == TRUE) {
+                return redirect('alta_obra/etapa/' . $accion['last_id']);
             } else {
                 $this->cargar_idioma->carga_lang('alta_obra/alta_obra_obra');
-                $error = $this->obra->error_consulta();
+                $error = $accion['error'];
                 $mensajes_error = array(trans_line('alerta_error'), trans_line('alerta_error_codigo') . base64_encode($error['message']));
                 set_bootstrap_alert($mensajes_error, BOOTSTRAP_ALERT_DANGER);
                 return $this->obra();
@@ -278,10 +275,11 @@ class Alta_obra extends Acl_controller
             $this->etapa($obras_id);
         } else {
             $etapa = $this->input->post();
-            if ($this->etapa->insertar_etapa($etapa) == TRUE) {
-                return redirect('alta_obra/estructura/' . $this->obra->ultimo_id());
+            $res = $this->etapa->insertar_etapa($etapa);
+            if ($res['status'] == TRUE) {
+                return redirect('alta_obra/estructura/' . $res['last_id']);
             } else {
-                $error = $this->obra->error_consulta();
+                $error = $res['error'];
                 $mensajes_error = array(trans_line('alerta_error'), trans_line('alerta_error_codigo') . base64_encode($error['message']));
                 set_bootstrap_alert($mensajes_error, BOOTSTRAP_ALERT_DANGER);
                 return $this->etapa($obras_id);
@@ -302,7 +300,7 @@ class Alta_obra extends Acl_controller
             $data = array();
             $data['categorias'] = $this->conceptos_categoria_model->conceptos_categoria_todos_sel();
             $data['unidades'] = $this->unidades_model->unidades_todos_sel();
-            $data['etapa'] = $this->obra->etapa_por_id($etapas_id);
+            $data['etapa'] = $this->etapa->etapa_por_id($etapas_id);
             $template['_B'] = 'alta_obra/alta_obra_estructura.php';
             return $this->load->template_view($this->template_base, $data, $template);
         }

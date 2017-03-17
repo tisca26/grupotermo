@@ -8,7 +8,6 @@ class Etapa
     {
         $this->CI = &get_instance();
         $this->CI->load->business('obra_etapa_fase_zona_concepto', 'oefzc');
-        $this->CI->load->model('obras_model');
         $this->CI->load->model('etapas_model');
     }
 
@@ -46,11 +45,13 @@ class Etapa
 
     public function insertar_etapa($etapa = array())
     {
-        $result = false;
+        $result['status'] = false;
         $obras_id = $etapa['obras_id'];
         unset($etapa['obras_id']);
-        $result = $this->CI->etapas_model->insertar_etapa($etapa);
+        $result['status'] = $this->CI->etapas_model->insertar_etapa($etapa);
+        $result['error'] = ($result['status'] == false)? $this->error_consulta() : '';
         $etapas_id = $this->ultimo_id();
+        $result['last_id'] = $etapas_id;
         $oefzc['obras_id'] = $obras_id;
         $oefzc['etapas_id'] = $etapas_id;
         $this->CI->oefzc->insertar_oefzc($oefzc);

@@ -49,13 +49,22 @@ class Zona
         echo json_encode($zonas);
     }
 
-    function insertar_zona($zona = array())
+    public function zonas_json_por_obra_id($obras_id = 0)
     {
-        $result = false;
+        $zonas = $this->CI->zonas_model->zonas_por_obras_id($obras_id);
+        header('Content-Type: application/json');
+        echo json_encode($zonas);
+    }
+
+    public function insertar_zona($zona = array())
+    {
+        $result['status'] = false;
         $obras_id = $zona['obras_id'];
         unset($zona['obras_id']);
-        $result = $this->CI->zonas_model->insertar_zona($zona);
+        $result['status'] = $this->CI->zonas_model->insertar_zona($zona);
+        $result['error'] = ($result['status'] == false)? $this->error_consulta() : '';
         $zonas_id = $this->ultimo_id();
+        $result['last_id'] = $zonas_id;
         $oefzc['obras_id'] = $obras_id;
         $oefzc['zonas_id'] = $zonas_id;
         $this->CI->oefzc->insertar_oefzc($oefzc);
