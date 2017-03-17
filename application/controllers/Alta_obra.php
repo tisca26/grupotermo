@@ -12,8 +12,8 @@ class Alta_obra extends Acl_controller
     {
         parent::__construct();
 
-        $this->set_read_list(array('index', 'empresas_json', 'clientes_json', 'zonas_json_por_obra_id', 'fases_json_por_obra_id', 'obra', 'etapa', 'estructura', 'conceptos_json',
-            'muestra_conceptos', 'resumen_alta_obra', 'muestra_zonas'));
+        $this->set_read_list(array('index', 'empresas_json', 'clientes_json', 'zonas_por_obra_id_json', 'fases_por_obra_id_json', 'obra', 'etapa',
+            'estructura', 'conceptos_por_categoria_json', 'conceptos_categoria_todos_json', 'muestra_conceptos', 'resumen_alta_obra', 'muestra_zonas'));
         $this->set_insert_list(array('insertar_empresa_ajax', 'insertar_cliente_ajax', 'insertar_zona_ajax', 'insertar_fase_ajax', 'insertar_obra',
             'insertar_etapa', 'seleccionar_zona_concepto', 'insertar_conceptos', 'insertar_zonas_conceptos', 'relacionar_zonas_conceptos'));
         $this->set_update_list(array(''));
@@ -106,9 +106,9 @@ class Alta_obra extends Acl_controller
         }
     }
 
-    public function fases_json_por_obra_id($obra_id = 0)
+    public function fases_por_obra_id_json($obras_id = 0)
     {
-        return $this->fase->fases_todos_json_por_obra_id($obra_id);
+        return $this->fase->fases_por_obra_id_json($obras_id);
     }
 
     public function insertar_fase_ajax()
@@ -138,9 +138,9 @@ class Alta_obra extends Acl_controller
         }
     }
 
-    public function zonas_json_por_obra_id()
+    public function zonas_por_obra_id_json($obras_id = 0)
     {
-        return $this->zona->zonas_json_por_obra_id();
+        return $this->zona->zonas_por_obra_id_json($obras_id);
     }
 
     public function insertar_zona_ajax()
@@ -167,9 +167,14 @@ class Alta_obra extends Acl_controller
         }
     }
 
-    public function conceptos_json()
+    public function conceptos_categoria_todos_json()
     {
-        return $this->concepto->conceptos_todos_json();
+        return $this->concepto->conceptos_categoria_todos_json();
+    }
+
+    public function conceptos_por_categoria_json($conceptos_por_categoria_json = 0)
+    {
+        return $this->concepto->conceptos_catalogo_por_categoria_id($conceptos_por_categoria_json);
     }
 
     public function insertar_concepto_ajax()
@@ -298,7 +303,7 @@ class Alta_obra extends Acl_controller
         if ($etapas_id > 0) {
             $this->cargar_idioma->carga_lang('alta_obra/alta_obra_estructura');
             $data = array();
-            $data['categorias'] = $this->conceptos_categoria_model->conceptos_categoria_todos_sel();
+            $data['categorias'] = $this->concepto->conceptos_categoria_todos_sel();
             $data['unidades'] = $this->unidades_model->unidades_todos_sel();
             $data['etapa'] = $this->etapa->etapa_por_id($etapas_id);
             $template['_B'] = 'alta_obra/alta_obra_estructura.php';

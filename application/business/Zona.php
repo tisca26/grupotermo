@@ -49,7 +49,7 @@ class Zona
         echo json_encode($zonas);
     }
 
-    public function zonas_json_por_obra_id($obras_id = 0)
+    public function zonas_por_obra_id_json($obras_id = 0)
     {
         $zonas = $this->CI->zonas_model->zonas_por_obras_id($obras_id);
         header('Content-Type: application/json');

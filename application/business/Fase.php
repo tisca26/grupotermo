@@ -49,7 +49,7 @@ class Fase
         echo json_encode($fases);
     }
 
-    public function fases_todos_json_por_obra_id($obras_id = 0)
+    public function fases_por_obra_id_json($obras_id = 0)
     {
         $fases = $this->CI->fases_model->fases_por_obras_id($obras_id);
         header('Content-Type: application/json');

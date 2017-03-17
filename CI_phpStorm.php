@@ -148,8 +148,11 @@ class CI_Model
  * @property catalogos_model                        $catalogos_model
  * @property clientes_model                         $clientes_model
  * @property conceptos_model                        $conceptos_model
+ * @property conceptos_model                        $con_model
  * @property conceptos_categoria_model              $conceptos_categoria_model
+ * @property conceptos_categoria_model              $con_cate_model
  * @property conceptos_catalogo_model               $conceptos_catalogo_model
+ * @property conceptos_catalogo_model               $con_cata_model
  * @property empresas_departamentos_model           $empresas_departamentos_model
  * @property empresas_model                         $empresas_model
  * @property etapas_model                           $etapas_model

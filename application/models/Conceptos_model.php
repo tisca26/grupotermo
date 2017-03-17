@@ -8,38 +8,22 @@ class Conceptos_model extends CI_Model
         parent::__construct();
     }
 
-    function ultimo_id()
+    public function ultimo_id()
     {
         return $this->db->insert_id();
     }
 
-    function error_consulta()
+    public  function error_consulta()
     {
         return $this->db->error();
     }
 
-    public function conceptos_nombres()
+    public function concepto_por_id($conceptos_id = 0)
     {
-        $result = array();
-        $this->db->select('DISTINCT nombre', false);
-        $this->db->from('conceptos');
-        $this->db->order_by('nombre');
-        $query = $this->db->get();
+        $result = null;
+        $query = $this->db->where('conceptos_id', $conceptos_id)->get('conceptos');
         if ($query->num_rows() > 0) {
-            $result = $query->result();
-        }
-        return $result;
-    }
-
-    public function conceptos_por_ids($conceptos_id = array())
-    {
-        $result = array();
-        $this->db->select('c.*, o.nombre as obra_nombre');
-        $this->db->from('conceptos c');
-        $this->db->join('obras o', 'c.obras_id = o.obras_id', 'inner');
-        $query = $this->db->where_in('c.conceptos_id', $conceptos_id)->get();
-        if ($query->num_rows() > 0) {
-            $result = $query->result();
+            $result = $query->row();
         }
         return $result;
     }
@@ -47,10 +31,12 @@ class Conceptos_model extends CI_Model
     public function conceptos_por_obras_id($obras_id = 0)
     {
         $result = array();
-        $this->db->select('c.*, o.nombre as obra_nombre');
+        $this->db->select('c.*, o.nombre as obra_nombre, o.obras_id');
         $this->db->from('conceptos c');
-        $this->db->join('obras o', 'c.obras_id = o.obras_id', 'inner');
-        $query = $this->db->where('c.obras_id', $obras_id)->get();
+        $this->db->join('obras_etapas_fases_zonas_conceptos oefzc', 'c.conceptos_id = oefzc.conceptos_id', 'inner');
+        $this->db->where('oefzc.etapas_id', 0)->where('oefzc.fases_id', 0)->where('oefzc.zonas_id', 0);
+        $this->db->join('obras o', 'o.obras_id = oefzc.obras_id', 'inner');
+        $query = $this->db->where('o.obras_id', $obras_id)->get();
         if ($query->num_rows() > 0) {
             $result = $query->result();
         }
@@ -74,16 +60,6 @@ class Conceptos_model extends CI_Model
     public function insertar_concepto($concepto)
     {
         return $this->db->insert('conceptos', $concepto);
-    }
-
-    public function concepto_por_id($conceptos_id = 0)
-    {
-        $result = null;
-        $query = $this->db->where('conceptos_id', $conceptos_id)->get('conceptos');
-        if ($query->num_rows() > 0) {
-            $result = $query->row();
-        }
-        return $result;
     }
 
     public function editar_concepto($concepto = array())

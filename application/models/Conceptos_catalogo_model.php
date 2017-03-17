@@ -8,12 +8,12 @@ class Conceptos_catalogo_model extends CI_Model
         parent::__construct();
     }
 
-    function ultimo_id()
+    public function ultimo_id()
     {
         return $this->db->insert_id();
     }
 
-    function error_consulta()
+    public function error_consulta()
     {
         return $this->db->error();
     }
@@ -43,7 +43,7 @@ class Conceptos_catalogo_model extends CI_Model
         return $this->db->insert('conceptos_catalogo', $concepto);
     }
 
-    public function conceptos_catalogo_por_categoria($conceptos_categoria_id = 0)
+    public function conceptos_catalogo_por_categoria_id($conceptos_categoria_id = 0)
     {
         $result = array();
         $query = $this->db->where('conceptos_categoria_id', $conceptos_categoria_id)->get('v_conceptos_catalogo');
