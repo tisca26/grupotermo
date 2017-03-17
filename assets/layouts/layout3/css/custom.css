@@ -21,3 +21,46 @@
     opacity:.5;
     filter: alpha(opacity=50);
 }
+
+.dd-item[data-tipo="etapa"] > .dd-handle {
+    border-color: #555555;
+    background-color: #E9EDEF;
+}
+
+.dd-item[data-tipo="fase"] > .dd-handle {
+    border-color: #E87E04;
+    background-color: #ffedd7;
+}
+
+.dd-item[data-tipo="zona"] > .dd-handle {
+    border-color: #f3c200;
+    background-color: #fff3c3;
+}
+
+.dd-item[data-tipo="concepto"] > .dd-handle {
+    border-color: #4c87b9;
+    background-color: #e5f3ff;
+}
+
+.dd-item[data-tipo="etapa"] > .dd-handle > span {
+    display: inline-block;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    max-width: 250px;
+    height: 20px;
+}
+
+.dd-item > .btn-group{
+    position:absolute;
+    top:0;
+    right:0;
+}
+
+.dd-item > .btn-group > .btn_add{
+    border: 1px solid rgba(0,0,0,0);
+}
+
+.dd-item > .btn-group > .btn_add:hover{
+    border: 1px solid #36D7B7;
+}

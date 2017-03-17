@@ -43,8 +43,8 @@
     font-weight: 400;
     border: 1px solid #ccc;
     background: #fafafa;
-    -webkit-border-radius: 3px;
-    border-radius: 3px;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
     box-sizing: border-box;
     -moz-box-sizing: border-box;
 }
@@ -123,9 +123,4 @@
 .dd-item .btn-group > .btn:first-child {
     border-top-left-radius: 0px;
     border-bottom-left-radius: 0px;
-}
-
-.dd-item[data-tipo="etapa"] > .dd-handle {
-    border-color: #36D7B7;
-    background-color:#ecfaf2;
 }

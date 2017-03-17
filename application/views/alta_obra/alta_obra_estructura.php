@@ -200,15 +200,13 @@
                                     <ol class="dd-list">
                                         <li class="dd-item" data-tipo="etapa" data-id="1">
                                             <div class="dd-handle">
-                                                <span class="bold" title="<?php echo $etapa->nombre; ?>" style="display: inline-block; text-overflow: ellipsis; overflow: hidden; white-space: nowrap; max-width: 250px; height: 20px;">ETAPA: <?php echo $etapa->nombre; ?></span>
+                                                <span class="bold" title="<?php echo $etapa->nombre; ?>">ETAPA: <?php echo $etapa->nombre; ?></span>
                                                 <div class="text-right pull-right">
                                                     <p style="margin:0;"><?php echo $etapa->fecha_inicio . ' A ' . $etapa->fecha_fin; ?></p>
-                                                    <div class="btn-group" style="position:absolute; top:0; right:0;">
-                                                        <a href="javascript:;"
-                                                           class="btn btn-icon-only green-turquoise btn-outline"><i
-                                                                    class="fa fa-plus"></i></a>
-                                                    </div>
                                                 </div>
+                                            </div>
+                                            <div class="btn-group">
+                                                <a href="javascript:;" class="btn btn-icon-only green-turquoise btn-outline btn_add"><i class="fa fa-plus"></i></a>
                                             </div>
                                         </li>
                                     </ol>
@@ -654,6 +652,42 @@
             errorClass: 'help-block help-block-error', // default input error message class
             focusInvalid: false, // do not focus the last invalid input
             ignore: "", // validate all fields including form hidden input
+            messages: {
+                nombre: {
+                    required: "<?php echo trans_line('required'); ?>",
+                    minlength: jQuery.validator.format("<?php echo trans_line('minlength'); ?>")
+                },
+                fecha_inicio: {
+                    minlength: jQuery.validator.format("<?php echo trans_line('minlength'); ?>"),
+                    maxlength: jQuery.validator.format("<?php echo trans_line('maxlength'); ?>"),
+                    required: "<?php echo trans_line('required'); ?>",
+                    mexicanDate: "<?php echo trans_line('mexicanDate'); ?>"
+                },
+                fecha_fin: {
+                    minlength: jQuery.validator.format("<?php echo trans_line('minlength'); ?>"),
+                    maxlength: jQuery.validator.format("<?php echo trans_line('maxlength'); ?>"),
+                    required: "<?php echo trans_line('required'); ?>",
+                    mexicanDate: "<?php echo trans_line('mexicanDate'); ?>"
+                }
+            },
+            rules: {
+                nombre: {
+                    minlength: 3,
+                    required: true
+                },
+                fecha_inicio: {
+                    minlength: 10,
+                    maxlength: 10,
+                    required: true,
+                    mexicanDate: true
+                },
+                fecha_fin: {
+                    minlength: 10,
+                    maxlength: 10,
+                    required: true,
+                    mexicanDate: true
+                }
+            },
             invalidHandler: function (event, validator) { //display error alert on form submit
                 //App.scrollTo(error1, -50);
             },
@@ -852,7 +886,7 @@
         var jh_parent = $("[data-id=" + parent_id + "]");
         var jh_list = jh_parent.find("ol");
         var jh_types = ['etapa', 'fase', 'zona', 'concepto'];
-        var jh_btn_menu = "<div class='btn-group' style='position:absolute; top:0; right:0;'>";
+        var jh_btn_menu = "<div class='btn-group'>";
         jh_btn_menu += "<a class='btn btn-icon-only font-red delete_confirmation' data-toggle='confirmation' data-placement='top'"
                     + "data-title='También eliminará los sub-elementos' data-container='body' data-singleton='true' data-popout='true'"
                     + "data-btn-ok-label='Eliminar'"
@@ -860,8 +894,8 @@
                     + "data-btn-cancel-label='Cancelar'"
                     + "data-btn-cancel-icon='icon-close' data-btn-cancel-class='btn-danger'"
                     + "data-id-confirm='"+item_id+"'><i class='fa fa-times'></i></a>";
-        jh_btn_menu += "<a href='javascript:;' class='btn btn-icon-only green-turquoise btn-outline'><i class='fa fa-plus'></i></a></div></li>";
-        var jh_append = "<li class='dd-item' data-id='" + item_id + "' data-type='" + jh_types[item_type] + "'><div class='dd-handle'>" + item_text + "</div>";
+        jh_btn_menu += "<a href='javascript:;' class='btn btn-icon-only green-turquoise btn-outline btn_add'><i class='fa fa-plus'></i></a></div></li>";
+        var jh_append = "<li class='dd-item' data-id='" + item_id + "' data-tipo='" + jh_types[item_type] + "'><div class='dd-handle'>" + item_text + "</div>";
         if (jh_types[item_type] == "concepto") {
             jh_append += "</li>";
         } else {
