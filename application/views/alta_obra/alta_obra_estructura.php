@@ -737,6 +737,7 @@
                             alert('se genera la fase en vista');
                             //-- método que genera fase en la vista
                             toastr.success('<?php echo trans_line('guardar_modal_success'); ?>');
+                            get_fases();
                         } else {
                             toastr.error('<?php echo trans_line('guardar_modal_error'); ?>' + '\n' + data.mensaje);
                             btn_submit.html('<?php echo trans_line('guardar_modal'); ?>');
@@ -810,9 +811,6 @@
                             btn_submit.prop("disabled", false);
                             form.trigger("reset");
                             $('#agregar_nueva_zona_modal').modal('toggle');
-                            //-- método que genera fase en la vista
-                            alert('se genera la zona en vista');
-                            //-- método que genera fase en la vista
                             toastr.success('<?php echo trans_line('guardar_modal_success'); ?>');
                         } else {
                             toastr.error('<?php echo trans_line('guardar_modal_error'); ?>' + '\n' + data.mensaje);
@@ -948,7 +946,7 @@
 
     function get_fases(){
         $.get(
-            "<?php echo base_url_lang() . 'alta_obra/fases_json' ?>",
+            "<?php echo base_url_lang() . 'alta_obra/fases_json_por_obra/'.$etapa->obras_id ?>",
             "json"
         ).done(function (data) {
             var fases_list = $('#nestable_list_fases');

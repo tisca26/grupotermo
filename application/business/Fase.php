@@ -49,6 +49,13 @@ class Fase
         echo json_encode($fases);
     }
 
+    public function fases_todos_json_por_obra($obras_id = 0)
+    {
+        $fases = $this->CI->fases_model->fases_por_obras_id($obras_id);
+        header('Content-Type: application/json');
+        echo json_encode($fases);
+    }
+
     function insertar_fase($fase = array())
     {
         $result = false;

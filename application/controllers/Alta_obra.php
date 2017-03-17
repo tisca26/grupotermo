@@ -12,7 +12,7 @@ class Alta_obra extends Acl_controller
     {
         parent::__construct();
 
-        $this->set_read_list(array('index', 'empresas_json', 'clientes_json', 'zonas_json', 'fases_json', 'obra', 'etapa', 'estructura', 'conceptos_json',
+        $this->set_read_list(array('index', 'empresas_json', 'clientes_json', 'zonas_json', 'fases_json', 'fases_json_por_obra', 'obra', 'etapa', 'estructura', 'conceptos_json',
             'muestra_conceptos', 'resumen_alta_obra', 'muestra_zonas'));
         $this->set_insert_list(array('insertar_empresa_ajax', 'insertar_cliente_ajax', 'insertar_zona_ajax', 'insertar_fase_ajax', 'insertar_obra',
             'insertar_etapa', 'seleccionar_zona_concepto', 'insertar_conceptos', 'insertar_zonas_conceptos', 'relacionar_zonas_conceptos'));
@@ -109,6 +109,11 @@ class Alta_obra extends Acl_controller
     public function fases_json()
     {
         return $this->fase->fases_todos_json();
+    }
+
+    public function fases_json_por_obra($obra_id = 0)
+    {
+        return $this->fase->fases_todos_json_por_obra($obra_id);
     }
 
     public function insertar_fase_ajax()
