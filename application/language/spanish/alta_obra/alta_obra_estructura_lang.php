@@ -58,6 +58,7 @@ $lang['fechas_a'] = 'a';
 $lang['agregar_zona'] = 'Agregar nueva zona';
 $lang['zona_nombre'] = 'Nombre de la zona';
 $lang['zona_nombre_placeholder'] = 'Escriba el nombre de la zona';
+$lang['zona_nombre_ayuda'] = 'Nombre de la zona';
 
 $lang['agregar_nuevo_concepto'] = 'Agregar nuevo concepto';
 $lang['nombre_nuevo'] = 'Nombre';

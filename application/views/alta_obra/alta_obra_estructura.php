@@ -645,6 +645,42 @@
             errorClass: 'help-block help-block-error', // default input error message class
             focusInvalid: false, // do not focus the last invalid input
             ignore: "", // validate all fields including form hidden input
+            messages: {
+                nombre: {
+                    required: "<?php echo trans_line('required'); ?>",
+                    minlength: jQuery.validator.format("<?php echo trans_line('minlength'); ?>")
+                },
+                fecha_inicio: {
+                    minlength: jQuery.validator.format("<?php echo trans_line('minlength'); ?>"),
+                    maxlength: jQuery.validator.format("<?php echo trans_line('maxlength'); ?>"),
+                    required: "<?php echo trans_line('required'); ?>",
+                    mexicanDate: "<?php echo trans_line('mexicanDate'); ?>"
+                },
+                fecha_fin: {
+                    minlength: jQuery.validator.format("<?php echo trans_line('minlength'); ?>"),
+                    maxlength: jQuery.validator.format("<?php echo trans_line('maxlength'); ?>"),
+                    required: "<?php echo trans_line('required'); ?>",
+                    mexicanDate: "<?php echo trans_line('mexicanDate'); ?>"
+                }
+            },
+            rules: {
+                nombre: {
+                    minlength: 3,
+                    required: true
+                },
+                fecha_inicio: {
+                    minlength: 10,
+                    maxlength: 10,
+                    required: true,
+                    mexicanDate: true
+                },
+                fecha_fin: {
+                    minlength: 10,
+                    maxlength: 10,
+                    required: true,
+                    mexicanDate: true
+                }
+            },
             invalidHandler: function (event, validator) { //display error alert on form submit
                 //App.scrollTo(error1, -50);
             },
@@ -719,6 +755,42 @@
             errorClass: 'help-block help-block-error', // default input error message class
             focusInvalid: false, // do not focus the last invalid input
             ignore: "", // validate all fields including form hidden input
+            messages: {
+                nombre: {
+                    required: "<?php echo trans_line('required'); ?>",
+                    minlength: jQuery.validator.format("<?php echo trans_line('minlength'); ?>")
+                },
+                fecha_inicio: {
+                    minlength: jQuery.validator.format("<?php echo trans_line('minlength'); ?>"),
+                    maxlength: jQuery.validator.format("<?php echo trans_line('maxlength'); ?>"),
+                    required: "<?php echo trans_line('required'); ?>",
+                    mexicanDate: "<?php echo trans_line('mexicanDate'); ?>"
+                },
+                fecha_fin: {
+                    minlength: jQuery.validator.format("<?php echo trans_line('minlength'); ?>"),
+                    maxlength: jQuery.validator.format("<?php echo trans_line('maxlength'); ?>"),
+                    required: "<?php echo trans_line('required'); ?>",
+                    mexicanDate: "<?php echo trans_line('mexicanDate'); ?>"
+                }
+            },
+            rules: {
+                nombre: {
+                    minlength: 3,
+                    required: true
+                },
+                fecha_inicio: {
+                    minlength: 10,
+                    maxlength: 10,
+                    required: true,
+                    mexicanDate: true
+                },
+                fecha_fin: {
+                    minlength: 10,
+                    maxlength: 10,
+                    required: true,
+                    mexicanDate: true
+                }
+            },
             invalidHandler: function (event, validator) { //display error alert on form submit
                 //App.scrollTo(error1, -50);
             },
