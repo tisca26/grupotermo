@@ -74,6 +74,7 @@ $lang['unidades_nuevo'] = 'Unidad';
 $lang['unidades_nuevo_placeholder'] = 'Unidad del concepto';
 $lang['categoria_nuevo'] = 'Categoría';
 $lang['categoria_nuevo_placeholder'] = 'Categoría del concepto';
+$lang['categoria_nestable_placeholder'] = 'Seleccione una categoria';
 
 
 //modals

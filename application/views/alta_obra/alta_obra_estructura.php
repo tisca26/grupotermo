@@ -115,7 +115,7 @@
                     </div>
                     <div class="col-md-4">
                         <div class="portlet light" id="portlet_conceptos">
-                            <div class="portlet-title">
+                            <div class="portlet-title" style="margin:0;">
                                 <div class="caption">
                                     <i class="icon-bubble font-blue-soft"></i>
                                     <span class="caption-subject font-blue-soft sbold uppercase">CONCEPTOS AGREGADOS</span>
@@ -125,30 +125,22 @@
                                 </div>
                             </div>
                             <div class="portlet-body">
-                                <div class="scroller" style="height:250px" data-always-visible="1"
+                                <div class="form-group form-md-line-input" style="padding-top:0px; margin-bottom: 5px;">
+                                    <?php $nestable_categoria = [
+                                        'id'=> 'conceptos_categoria_nestable_id',
+                                        'placeholder' => trans_line('categoria_nestable_placeholder'),
+                                        'class' => 'form-control bs-select',
+                                        'title' => trans_line('categoria_nestable_placeholder'),
+                                        'data-live-search' => 'true',
+                                        'data-size' => '5'
+                                    ]; ?>
+                                    <?php echo form_dropdown('conceptos_categoria_nestable_id', $categorias, '', $nestable_categoria); ?>
+                                </div>
+                                <div class="scroller" style="height:221px" data-always-visible="1"
                                      data-rail-visible="0">
                                     <div class="dd" id="nestable_list_conceptos">
                                         <ol class="dd-list">
-                                            <li class="dd-item" data-id="13">
-                                                <div class="dd-handle"> Item 13</div>
-                                            </li>
-                                            <li class="dd-item" data-id="14">
-                                                <div class="dd-handle"> Item 14</div>
-                                            </li>
-                                            <li class="dd-item" data-id="15">
-                                                <div class="dd-handle"> Item 15</div>
-                                                <ol class="dd-list">
-                                                    <li class="dd-item" data-id="16">
-                                                        <div class="dd-handle"> Item 16</div>
-                                                    </li>
-                                                    <li class="dd-item" data-id="17">
-                                                        <div class="dd-handle"> Item 17</div>
-                                                    </li>
-                                                    <li class="dd-item" data-id="18">
-                                                        <div class="dd-handle"> Item 18</div>
-                                                    </li>
-                                                </ol>
-                                            </li>
+
                                         </ol>
                                     </div>
                                 </div>
@@ -481,6 +473,7 @@
                         <div class="col-md-4">
                             <div class="form-group form-md-line-input">
                                 <?php $data_categoria = [
+                                    'id'=>'conceptos_categoria_id',
                                     'multiple' => '',
                                     'placeholder' => trans_line('categoria_nuevo_placeholder'),
                                     'class' => 'form-control bs-select',
@@ -490,7 +483,7 @@
                                     'data-rule-required' => 'true',
                                     'data-msg-required' => trans_line('required')
                                 ]; ?>
-                                <?php echo form_dropdown('conceptos_categoria_id[]', $categorias, '', $data_categoria); ?>
+                                <?php echo form_dropdown('conceptos_categoria_id', $categorias, '', $data_categoria); ?>
                                 <label for=""><?php echo trans_line('categoria_nuevo'); ?>
                                     <span class="required">*</span>
                                 </label>
@@ -971,12 +964,12 @@
     }
 
     function genera_fases_vista() {
+        var fases_list = $('#nestable_list_fases');
+        fases_list.append('<p class="text-center">Cargando...</p>');
         $.get(
             "<?php echo base_url_lang() . 'alta_obra/fases_por_obra_id_json/' . $etapa->obras_id ?>",
             "json"
         ).done(function (data) {
-            var fases_list = $('#nestable_list_fases');
-            var fases_append = '';
             fases_list.empty();
             fases_list.append('<ol class="dd-list"></ol>');
             for (var idx in data) {
@@ -985,17 +978,19 @@
             if (!fases_list.find('.dd-item').length) {
                 fases_list.append('<p class="text-center">NO HAY DATOS PARA MOSTRAR</p>');
             }
+            toastr.success("Fases actualizadas correctamente", "Actualizado", {"closeButton": true});
         }).fail(function () {
             toastr.error("Error al obtener las fases agregadas", "Error", {"closeButton": true});
         });
     }
 
     function genera_zonas_vista() {
+        var zonas_list = $('#nestable_list_zonas');
+        zonas_list.append('<p class="text-center">Cargando...</p>');
         $.get(
             "<?php echo base_url_lang() . 'alta_obra/zonas_por_obra_id_json/' . $etapa->obras_id ?>",
             "json"
         ).done(function (data) {
-            var zonas_list = $('#nestable_list_zonas');
             var zonas_append = '';
             zonas_list.empty();
             zonas_list.append('<ol class="dd-list"></ol>');
@@ -1005,47 +1000,53 @@
             if (!zonas_list.find('.dd-item').length) {
                 zonas_list.append('<p class="text-center">NO HAY DATOS PARA MOSTRAR</p>');
             }
+            toastr.success("Zonas actualizadas correctamente", "Actualizado", {"closeButton": true});
         }).fail(function () {
             toastr.error("Error al obtener las zonas agregadas", "Error", {"closeButton": true});
         });
     }
 
-    function get_conceptos() {
+    function genera_conceptos_vista(concepto_categoria_id=0) {
+        var conceptos_list = $('#nestable_list_conceptos');
+        conceptos_list.append('<p class="text-center" style="padding-top:10px;">Cargando...</p>');
+        $.get(
+            "<?php echo base_url_lang() . 'alta_obra/conceptos_por_categoria_json/'?>"+concepto_categoria_id,
+            "json"
+        ).done(function (data) {
+            conceptos_list.empty();
+            conceptos_list.append('<ol class="dd-list"></ol>');
+            if(concepto_categoria_id==0) {
+                conceptos_list.append('<p class="text-center" style="padding-top:10px;">SELECCIONE UNA CATEGORIA</p>');
+            } else {
+                for (var idx in data) {
+                    conceptos_list.children('ol.dd-list').append('<li class="dd-item" data-id="' + data[idx].zona_id + '"><div class="dd-handle">' + data[idx].nombre + '</div></li>');
+                }
+                if (!conceptos_list.find('.dd-item').length) {
+                    conceptos_list.append('<p class="text-center" style="padding-top:10px;">NO HAY DATOS PARA MOSTRAR EN ESTA CATEGORIA</p>');
+                }
+            }
+            toastr.success("Conceptos actualizados correctamente", "Actualizado", {"closeButton": true});
+        }).fail(function () {
+            toastr.error("Error al obtener los conceptos de la categoria seleccionada", "Error", {"closeButton": true});
+        });
+    }
+
+    function genera_categorias_sel() {
         $.get(
             "<?php echo base_url_lang() . 'alta_obra/conceptos_categoria_todos_json' ?>",
             "json"
         ).done(function (data) {
-            var con_list = $('#nestable_list_conceptos');
-            var con_append = '';
-            var con_cat_list = con_list;
-            con_list.empty();
-            con_list.append('<ol class="dd-list"></ol>');
+            var $select = $('#conceptos_categoria_nestable_id');
+            var $select2 = $('#conceptos_categoria_id')
+            $select.empty();
+            $select2.empty();
             for (var idx in data) {
-                con_cat_list = con_list.find('[data-cat="' + data[idx].categorias + '"]');
-                con_append = '<li class="dd-item" data-id="' + data[idx].conceptos_catalogo_id + '"><div class="dd-handle">' + data[idx].nombre + '</div></li>';
-                if (con_cat_list.length) {
-                    if (!con_cat_list.children('ol.dd-list').length) {
-                        con_cat_list.prepend("<button data-action='collapse' type='button'>Collapse</button><button data-action='expand' type='button'>Expand</button>");
-                        con_cat_list.children("[data-action='expand']").hide();
-                        con_cat_list.append("<ol class='dd-list'>" + con_append + "</ol>");
-                    } else {
-                        con_cat_list.children('ol.dd-list').append(con_append);
-                    }
-                } else {
-                    con_list.children('ol.dd-list').append('<li class="dd-item" data-cat="' + data[idx].categorias + '"><div class="dd-handle">' + data[idx].categorias + '</div></li>');
-                    con_cat_list = con_list.find('[data-cat="' + data[idx].categorias + '"]');
-                    if (!con_cat_list.children('ol.dd-list').length) {
-                        con_cat_list.prepend("<button data-action='collapse' type='button'>Collapse</button><button data-action='expand' type='button'>Expand</button>");
-                        con_cat_list.children("[data-action='expand']").hide();
-                        con_cat_list.append("<ol class='dd-list'>" + con_append + "</ol>");
-                    } else {
-                        con_cat_list.children('ol.dd-list').append(con_append);
-                    }
-                }
+                $select.append('<option value=' + data[idx].conceptos_categoria_id + '>' + data[idx].nombre + '</option>');
+                $select2.append('<option value=' + data[idx].conceptos_categoria_id + '>' + data[idx].nombre + '</option>');
             }
-            if (!con_list.find('.dd-item').length) {
-                con_list.append('<p class="text-center">NO HAY DATOS PARA MOSTRAR</p>');
-            }
+            $select.selectpicker('refresh');
+            $select2.selectpicker('refresh');
+            toastr.success("Categorias actualizadas correctamente", "Actualizado", {"closeButton": true});
         }).fail(function () {
             toastr.error("Error al obtener el catalogo de conceptos", "Error", {"closeButton": true});
         });
@@ -1054,7 +1055,7 @@
     jQuery(document).ready(function () {
         UINestable.init();
 
-        get_conceptos();
+        genera_categorias_sel();
         genera_zonas_vista();
         genera_fases_vista();
         trigger_zonas()
@@ -1066,7 +1067,10 @@
             genera_zonas_vista();
         });
         $("#portlet_conceptos").find(".reload").click(function () {
-            get_conceptos();
+            genera_conceptos_vista($('#conceptos_categoria_nestable_id').val());
+        });
+        $('#conceptos_categoria_nestable_id').on('change',function(){
+            genera_conceptos_vista($(this).val());
         });
 
         $("#check_zonas").on('init.bootstrapSwitch switchChange.bootstrapSwitch', function (event, state) {

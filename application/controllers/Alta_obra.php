@@ -174,7 +174,7 @@ class Alta_obra extends Acl_controller
 
     public function conceptos_por_categoria_json($conceptos_por_categoria_json = 0)
     {
-        return $this->concepto->conceptos_catalogo_por_categoria_id($conceptos_por_categoria_json);
+        return $this->concepto->conceptos_catalogo_por_categoria_id_json($conceptos_por_categoria_json);
     }
 
     public function insertar_concepto_ajax()

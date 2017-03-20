@@ -19,9 +19,7 @@ class Conceptos extends Acl_controller
         $this->check_access();
 
         $this->load->business('obra');
-        $this->load->model('conceptos_model');
-        $this->load->model('conceptos_categoria_model');
-        $this->load->model('conceptos_catalogo_model');
+        $this->load->business('concepto');
         $this->load->model('unidades_model');
         $this->load->model('obras_model');
         $this->load->library('form_validation');
@@ -31,7 +29,7 @@ class Conceptos extends Acl_controller
     {
         $this->cargar_idioma->carga_lang('conceptos/conceptos_index');
         $data = array();
-        $data['rows'] = $this->conceptos_model->conceptos_todos();
+        $data['rows'] = $this->concepto->conceptos_todos();
         $template['_B'] = 'conceptos/conceptos_index.php';
         $this->load->template_view($this->template_base, $data, $template);
     }
@@ -40,7 +38,7 @@ class Conceptos extends Acl_controller
     {
         $this->cargar_idioma->carga_lang('conceptos/conceptos_insertar');
         $data = array();
-        $data['categorias'] = $this->conceptos_categoria_model->conceptos_categoria_todos_sel();
+        $data['categorias'] = $this->concepto->conceptos_categoria_todos_sel();
         $data['obras'] = $this->obra->obras_todos_sel();
         $data['unidades'] = $this->unidades_model->unidades_todos_sel();
         $template['_B'] = 'conceptos/conceptos_insertar.php';
@@ -56,11 +54,11 @@ class Conceptos extends Acl_controller
             $this->form_insert();
         } else {
             $concepto = $this->input->post();
-            if ($this->conceptos_model->insertar_concepto($concepto) == TRUE) {
+            if ($this->concepto->insertar_concepto($concepto) == TRUE) {
                 set_bootstrap_alert(trans_line('alerta_exito'), BOOTSTRAP_ALERT_SUCCESS);
                 return redirect('conceptos/form_insert');
             } else {
-                $error = $this->conceptos_model->error_consulta();
+                $error = $this->concepto->error_consulta();
                 $mensajes_error = array(trans_line('alerta_error'), trans_line('alerta_error_codigo') . base64_encode($error['message']));
                 set_bootstrap_alert($mensajes_error, BOOTSTRAP_ALERT_DANGER);
                 return $this->form_insert();
@@ -109,7 +107,7 @@ class Conceptos extends Acl_controller
                 set_bootstrap_alert(trans_line('alerta_exito'), BOOTSTRAP_ALERT_SUCCESS);
                 return redirect('conceptos/form_insert');
             } else {
-                $error = $this->conceptos_model->error_consulta();
+                $error = $this->concepto->error_consulta();
                 $mensajes_error = array(trans_line('alerta_error'), trans_line('alerta_error_codigo') . base64_encode($error['message']));
                 set_bootstrap_alert($mensajes_error, BOOTSTRAP_ALERT_DANGER);
                 return $this->form_insert();
@@ -122,7 +120,7 @@ class Conceptos extends Acl_controller
         $this->cargar_idioma->carga_lang('conceptos/conceptos_editar');
         $data = array();
         $data['obras'] = $this->obras_model->obras_todos_sel();
-        $data['concepto'] = $this->conceptos_model->concepto_por_id($conceptos_id);
+        $data['concepto'] = $this->concepto->concepto_por_id($conceptos_id);
         $template['_B'] = 'conceptos/conceptos_editar.php';
         $this->load->template_view($this->template_base, $data, $template);
     }
@@ -137,11 +135,11 @@ class Conceptos extends Acl_controller
             $this->form_edit($id);
         } else {
             $concepto = $this->input->post();
-            if ($this->conceptos_model->editar_concepto($concepto) == TRUE) {
+            if ($this->concepto->editar_concepto($concepto) == TRUE) {
                 set_bootstrap_alert(trans_line('alerta_exito'), BOOTSTRAP_ALERT_SUCCESS);
                 return redirect('conceptos');
             } else {
-                $error = $this->conceptos_model->error_consulta();
+                $error = $this->concepto->error_consulta();
                 $mensajes_error = array(trans_line('alerta_error'), trans_line('alerta_error_codigo') . base64_encode($error['message']));
                 set_bootstrap_alert($mensajes_error, BOOTSTRAP_ALERT_DANGER);
                 return $this->form_edit($id);
@@ -152,11 +150,11 @@ class Conceptos extends Acl_controller
     public function borrar_concepto($id = 0)
     {
         $this->cargar_idioma->carga_lang('conceptos/conceptos_index');
-        if ($this->conceptos_model->borrar_concepto($id) != FALSE) {
+        if ($this->concepto->borrar_concepto($id) != FALSE) {
             set_bootstrap_alert(trans_line('alerta_borrado'), BOOTSTRAP_ALERT_SUCCESS);
             return redirect('conceptos');
         } else {
-            $error = $this->conceptos_model->error_consulta();
+            $error = $this->concepto->error_consulta();
             $mensajes_error = array(trans_line('alerta_borrado_fail'), trans_line('alerta_error_codigo') . base64_encode($error['message']));
             set_bootstrap_alert($mensajes_error, BOOTSTRAP_ALERT_DANGER);
         }
