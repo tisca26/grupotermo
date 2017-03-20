@@ -391,8 +391,7 @@
     </div>
     <!-- /.modal-dialog -->
 </div>
-<div class="modal fade" id="agregar_nuevo_concepto_modal" tabindex="-1" role="agregar_nuevo_concepto_modal"
-     aria-hidden="true">
+<div class="modal fade" id="agregar_nuevo_concepto_modal" tabindex="-1" role="agregar_nuevo_concepto_modal" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -483,7 +482,7 @@
                                     'data-rule-required' => 'true',
                                     'data-msg-required' => trans_line('required')
                                 ]; ?>
-                                <?php echo form_dropdown('conceptos_categoria_id', $categorias, '', $data_categoria); ?>
+                                <?php echo form_dropdown('conceptos_categoria_id[]', $categorias, '', $data_categoria); ?>
                                 <label for=""><?php echo trans_line('categoria_nuevo'); ?>
                                     <span class="required">*</span>
                                 </label>
@@ -497,7 +496,7 @@
                 <button type="button" class="btn dark btn-outline"
                         data-dismiss="modal"><?php echo trans_line('cerrar_modal'); ?>
                 </button>
-                <button type="button" id="btn_guarda_nuevo_concepto"
+                <button type="button" id="guarda_nuevo_concepto_btn"
                         class="btn blue"><?php echo trans_line('guardar_modal'); ?></button>
             </div>
         </div>
@@ -701,7 +700,7 @@
         });
 
         $(document).on('click', '#guarda_nueva_fase_btn', function () {
-            var btn_submit = $('#guarda_nueva_fase_btn');
+            var btn_submit = $(this);
             var form = $('#frm_nueva_fase');
             if (form.valid()) {
                 btn_submit.html('<?php echo trans_line('btn_submit_loading'); ?>');
@@ -811,7 +810,7 @@
         });
 
         $(document).on('click', '#guarda_nueva_zona_btn', function () {
-            var btn_submit = $('#guarda_nueva_zona_btn');
+            var btn_submit = $(this);
             var form = $('#frm_nueva_zona');
             if (form.valid()) {
                 btn_submit.html('<?php echo trans_line('btn_submit_loading'); ?>');
@@ -848,6 +847,89 @@
         });
         /*
          FIN FUNCIONES DEL MODAL ZONA
+         */
+
+        /*
+         FUNCIONES DEL MODAL CONCEPTO
+         */
+        $('#frm_nuevo_concepto').validate({
+            errorElement: 'span', //default input error message container
+            errorClass: 'help-block help-block-error', // default input error message class
+            focusInvalid: false, // do not focus the last invalid input
+            ignore: "", // validate all fields including form hidden input
+            messages: {},
+            rules: {},
+
+            invalidHandler: function (event, validator) { //display error alert on form submit
+                App.scrollTo(error1, -200);
+            },
+
+            errorPlacement: function (error, element) {
+                if (element.is(':checkbox')) {
+                    error.insertAfter(element.closest(".md-checkbox-list, .md-checkbox-inline, .checkbox-list, .checkbox-inline"));
+                } else if (element.is(':radio')) {
+                    error.insertAfter(element.closest(".md-radio-list, .md-radio-inline, .radio-list,.radio-inline"));
+                } else {
+                    error.insertAfter(element); // for other inputs, just perform default behavior
+                }
+            },
+
+            highlight: function (element) { // hightlight error inputs
+                $(element)
+                    .closest('.form-group').addClass('has-error'); // set error class to the control group
+            },
+
+            unhighlight: function (element) { // revert the change done by hightlight
+                $(element)
+                    .closest('.form-group').removeClass('has-error'); // set error class to the control group
+            },
+
+            success: function (label) {
+                label
+                    .closest('.form-group').removeClass('has-error'); // set success class to the control group
+            },
+
+            submitHandler: function (form) {
+                return false;
+            }
+        });
+
+        $(document).on('click', '#guarda_nuevo_concepto_btn', function () {
+            var btn_submit = $(this);
+            var form = $('#frm_nuevo_concepto');
+            if (form.valid()) {
+                btn_submit.html('<?php echo trans_line('btn_submit_loading'); ?>');
+                btn_submit.prop("disabled", true);
+                var $form_srlze = form.serialize();
+                //alert($form_srlze);
+                $.ajax({
+                    url: "<?php echo base_url_lang(); ?>conceptos_catalogo/insertar_concepto_ajax",
+                    type: 'POST',
+                    dataType: 'json',
+                    data: $form_srlze,
+                    success: function (data) {
+                        if (data.estatus == 'OK'){
+                            btn_submit.html('<?php echo trans_line('guardar_modal'); ?>');
+                            btn_submit.prop("disabled", false);
+                            form.trigger("reset");
+                            genera_conceptos_vista($('#conceptos_categoria_nestable_id').val());
+                            $('#agregar_nuevo_concepto_modal').modal('toggle');
+                            toastr.success('<?php echo trans_line('guardar_modal_success'); ?>');
+                        }else {
+                            toastr.error('<?php echo trans_line('guardar_modal_error'); ?>');
+                        }
+                    },
+                    error: function (data) {
+                        btn_submit.html('<?php echo trans_line('guardar_modal'); ?>');
+                        btn_submit.prop("disabled", false);
+                        toastr.error('<?php echo trans_line('guardar_modal_error'); ?>');
+                    }
+
+                });
+            }
+        });
+        /*
+        FIN FUNCIONES DEL MODAL CONCEPTO
          */
 
     });// FIN DOCUMENT READY
@@ -1008,6 +1090,7 @@
 
     function genera_conceptos_vista(concepto_categoria_id=0) {
         var conceptos_list = $('#nestable_list_conceptos');
+        conceptos_list.empty();
         conceptos_list.append('<p class="text-center" style="padding-top:10px;">Cargando...</p>');
         $.get(
             "<?php echo base_url_lang() . 'alta_obra/conceptos_por_categoria_json/'?>"+concepto_categoria_id,
@@ -1055,7 +1138,6 @@
     jQuery(document).ready(function () {
         UINestable.init();
 
-        genera_categorias_sel();
         genera_zonas_vista();
         genera_fases_vista();
         trigger_zonas()
