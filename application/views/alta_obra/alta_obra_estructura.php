@@ -156,7 +156,7 @@
                 </div>
                 <br/>
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-7">
                         <div class="portlet light ">
                             <div class="portlet-title">
                                 <div class="caption">
@@ -180,7 +180,7 @@
                             <div class="portlet-body">
                                 <div class="dd" id="nestable_list_1">
                                     <ol class="dd-list">
-                                        <li class="dd-item" data-tipo="etapa" data-id="1">
+                                        <li class="dd-item" data-tipo="etapa" data-id="<?php echo $etapa->etapas_id;?>">
                                             <div class="dd-handle">
                                                 <span class="bold"
                                                       title="<?php echo $etapa->nombre; ?>">ETAPA: <?php echo $etapa->nombre; ?></span>
@@ -189,7 +189,7 @@
                                                 </div>
                                             </div>
                                             <div class="btn-group">
-                                                <a href="javascript:;"
+                                                <a href="javascript:;" title="AGREGAR FASE"
                                                    class="btn btn-icon-only green-turquoise btn-outline btn_add"><i
                                                             class="fa fa-plus"></i></a>
                                             </div>
@@ -205,7 +205,23 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-5">
+                        <div class="portlet light" id="portlet_agregar" style="display:none;">
+                            <div class="portlet-title">
+                                <div class="caption">
+                                    <i class="icon-bubble font-green"></i>
+                                    <span class="caption-subject font-green sbold uppercase">AGREGAR</span>
+                                </div>
+                                <div class="actions">
+                                    <button id="btn_listo" type="button" style="font-size:12px;" class="btn green btn-outline sbold">
+                                        LISTO
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="portlet-body">
+
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="portlet light ">
@@ -981,10 +997,9 @@
 
     }();
 
-    function insert_item(parent_id, item_id, item_type, item_text) {
-        var jh_parent = $("[data-id=" + parent_id + "]");
+    function insert_item(parent_id, parent_type, item_id, item_type, item_text) {
+        var jh_parent = $("[data-id=" + parent_id + "][data-tipo="+ parent_type +"]");
         var jh_list = jh_parent.find("ol");
-        var jh_types = ['etapa', 'fase', 'zona', 'concepto'];
         var jh_btn_menu = "<div class='btn-group'>";
         jh_btn_menu += "<a class='btn btn-icon-only font-red delete_confirmation' data-toggle='confirmation' data-placement='top'"
             + "data-title='También eliminará los sub-elementos' data-container='body' data-singleton='true' data-popout='true'"
@@ -992,10 +1007,10 @@
             + "data-btn-ok-icon='icon-like' data-btn-ok-class='btn-success'"
             + "data-btn-cancel-label='Cancelar'"
             + "data-btn-cancel-icon='icon-close' data-btn-cancel-class='btn-danger'"
-            + "data-id-confirm='" + item_id + "'><i class='fa fa-times'></i></a>";
+            + "data-id-confirm='" + item_id + "' data-tipo-confirm='" + item_type + "'><i class='fa fa-times'></i></a>";
         jh_btn_menu += "<a href='javascript:;' class='btn btn-icon-only green-turquoise btn-outline btn_add'><i class='fa fa-plus'></i></a></div></li>";
-        var jh_append = "<li class='dd-item' data-id='" + item_id + "' data-tipo='" + jh_types[item_type] + "'><div class='dd-handle'>" + item_text + "</div>";
-        if (jh_types[item_type] == "concepto") {
+        var jh_append = "<li class='dd-item' data-id='" + item_id + "' data-tipo='" + item_type + "'><div class='dd-handle'>" + item_text + "</div>";
+        if (item_type == "concepto") {
             jh_append += "</li>";
         } else {
             jh_append += jh_btn_menu;
@@ -1013,8 +1028,8 @@
         });
     }
 
-    function delete_item(item_id) {
-        var jh_item = $("[data-id=" + item_id + "]");
+    function delete_item(item_id,item_type) {
+        var jh_item = $('#nestable_list_1').find("[data-id=" + item_id + "][data-tipo="+item_type+"]");
         var jh_parent_ol = jh_item.parent();
         var jh_parent_li = jh_parent_ol.parent();
 
@@ -1055,7 +1070,7 @@
             fases_list.empty();
             fases_list.append('<ol class="dd-list"></ol>');
             for (var idx in data) {
-                fases_list.children('ol.dd-list').append('<li class="dd-item" data-id="' + data[idx].fase_id + '"><div class="dd-handle">' + data[idx].nombre + '</div></li>');
+                fases_list.children('ol.dd-list').append('<li class="dd-item" data-id="' + data[idx].fases_id + '" data-tipo="fase"><div class="dd-handle">' + data[idx].nombre + '</div></li>');
             }
             if (!fases_list.find('.dd-item').length) {
                 fases_list.append('<p class="text-center">NO HAY DATOS PARA MOSTRAR</p>');
@@ -1077,7 +1092,7 @@
             zonas_list.empty();
             zonas_list.append('<ol class="dd-list"></ol>');
             for (var idx in data) {
-                zonas_list.children('ol.dd-list').append('<li class="dd-item" data-id="' + data[idx].zona_id + '"><div class="dd-handle">' + data[idx].nombre + '</div></li>');
+                zonas_list.children('ol.dd-list').append('<li class="dd-item" data-id="' + data[idx].zona_id + '" data-tipo="zona"><div class="dd-handle">' + data[idx].nombre + '</div></li>');
             }
             if (!zonas_list.find('.dd-item').length) {
                 zonas_list.append('<p class="text-center">NO HAY DATOS PARA MOSTRAR</p>');
@@ -1102,7 +1117,7 @@
                 conceptos_list.append('<p class="text-center" style="padding-top:10px;">SELECCIONE UNA CATEGORIA</p>');
             } else {
                 for (var idx in data) {
-                    conceptos_list.children('ol.dd-list').append('<li class="dd-item" data-id="' + data[idx].zona_id + '"><div class="dd-handle">' + data[idx].nombre + '</div></li>');
+                    conceptos_list.children('ol.dd-list').append('<li class="dd-item" data-id="' + data[idx].concepto_catalogo_id + '" data-tipo="concepto"><div class="dd-handle">' + data[idx].nombre + '</div></li>');
                 }
                 if (!conceptos_list.find('.dd-item').length) {
                     conceptos_list.append('<p class="text-center" style="padding-top:10px;">NO HAY DATOS PARA MOSTRAR EN ESTA CATEGORIA</p>');
@@ -1161,17 +1176,51 @@
 
         $('#nestable_list_1').on('confirmed.bs.confirmation', '.delete_confirmation', function () {
             var id = $(this).attr('data-id-confirm');
+            var tipo = $(this).attr('data-tipo-confirm');
             $(this).confirmation('destroy');
-            delete_item(id);
+            delete_item(id,tipo);
         });
 
-        insert_item(1, 2, 1, "Agregado 2");
-        insert_item(2, 3, 2, "Agregado 2.1");
-        insert_item(3, 4, 3, "Agregado 2.1.1");
-        insert_item(2, 5, 2, "Agregado 2.2");
-        insert_item(2, 6, 2, "Agregado 2.3");
-        insert_item(2, 7, 2, "Agregado 2.4");
-        insert_item(3, 8, 3, "Agregado 2.1.2");
-        insert_item(3, 9, 3, "Agregado 2.1.3");
+        $('#nestable_list_1').on('click','.btn_add',function(){
+            $('#dd-insertar').remove();
+            var parent_item = $(this).parent().parent();
+            var id_insert = parent_item.attr('data-id');
+            var type_insert = parent_item.attr('data-tipo');
+            var portlet_target = $('#portlet_fases');
+            var portlet_agregar = $('#portlet_agregar');
+            var parent_list = parent_item.find('ol');
+            var parent_append = "<li class='dd-item' id='dd-insertar'><div class='dd-handle dd-placeholder'>Click a un elemento para agregarlo</div></li>";
+
+            if (!parent_list.length) {
+                parent_item.prepend("<button data-action='collapse' type='button'>Collapse</button><button data-action='expand' type='button'>Expand</button>");
+                parent_item.find("[data-action='expand']").hide();
+                parent_item.append("<ol class='dd-list'>" + parent_append + "</ol>");
+            } else {
+                parent_list.eq(0).append(parent_append);
+            }
+
+            if(parent_item.is($("[data-tipo='etapa']"))){
+                portlet_target = $('#portlet_fases');
+            }
+            portlet_agregar.find('.portlet-body').html(portlet_target.find('.portlet-body').html()).find('.portlet-footer').remove();
+            portlet_agregar.find('.dd-item').css('cursor','pointer').attr('data-id-insert',id_insert).attr('data-tipo-insert',type_insert);
+            portlet_agregar.show();
+        });
+
+        $('#portlet_agregar').on('click','.dd-item',function(){
+            var clon = $('#dd-insertar').clone();
+            if($('#nestable_list_1').find('[data-id='+$(this).attr('data-id')+'][data-tipo='+$(this).attr('data-tipo')+']').length){
+                alert('Ya existe');
+            }else {
+                $('#dd-insertar').remove();
+                insert_item($(this).attr('data-id-insert'), $(this).attr('data-tipo-insert'), $(this).attr('data-id'), $(this).attr('data-tipo'), $(this).find('.dd-handle').text());
+                clon.appendTo('[data-id=' + $(this).attr('data-id-insert') + '][data-tipo=' + $(this).attr('data-tipo-insert') + '] .dd-list');
+            }
+        });
+
+        $('#btn_listo').click(function(){
+            $('#portlet_agregar').find(".portlet-body").empty().parent().hide();
+            $('#dd-insertar').remove();
+        });
     });
 </script>
