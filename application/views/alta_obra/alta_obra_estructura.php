@@ -520,6 +520,68 @@
     </div>
     <!-- /.modal-dialog -->
 </div>
+<div class="modal fade" id="fecha_inicio_fin_modal" tabindex="-1" role="fecha_inicio_fin_modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"
+                        aria-hidden="true"></button>
+                <h4 class="modal-title"><?php echo trans_line('fecha_inicio_fin'); ?></h4>
+            </div>
+            <div class="modal-body">
+                <?php echo form_open('', array('id' => 'frm_fecha_inicio_fin')); ?>
+                <input type="hidden" name="id_insert"/>
+                <input type="hidden" name="tipo_insert"/>
+                <input type="hidden" name="id"/>
+                <input type="hidden" name="tipo"/>
+                <input type="hidden" name="text"/>
+                <div class="form-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group form-md-line-input">
+                                <label for=""><?php echo trans_line('periodo_fechas'); ?>
+                                    <span class="required">*</span>
+                                </label>
+                                <div class="input-group date-picker input-daterange"
+                                     data-date="<?php echo date('Y-m-d') ?>" data-date-format="yyyy-mm-dd">
+                                    <?php $data_fecha_inicio = [
+                                        'placeholder' => trans_line('fecha_inicio_placeholder'),
+                                        'class' => 'form-control',
+                                        'data-rule-required' => 'true',
+                                        'data-msg-required' => trans_line('required'),
+                                        'data-rule-mexicanDate' => 'true',
+                                        'data-msg-mexicanDate' => trans_line('required')
+                                    ]; ?>
+                                    <?php echo form_input('fecha_inicio', '', $data_fecha_inicio); ?>
+                                    <span class="input-group-addon"> <?php echo trans_line('fechas_a'); ?> </span>
+                                    <?php $data_fecha_fin = [
+                                        'placeholder' => trans_line('fecha_fin_placeholder'),
+                                        'class' => 'form-control',
+                                        'data-rule-required' => 'true',
+                                        'data-msg-required' => trans_line('required'),
+                                        'data-rule-mexicanDate' => 'true',
+                                        'data-msg-mexicanDate' => trans_line('required')
+                                    ]; ?>
+                                    <?php echo form_input('fecha_fin', '', $data_fecha_fin); ?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <?php echo form_close(); ?>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn dark btn-outline"
+                        data-dismiss="modal"><?php echo trans_line('cerrar_modal'); ?>
+                </button>
+                <button type="button" id="guarda_fecha_inicio_fin_btn"
+                        class="btn blue"><?php echo trans_line('guardar_modal'); ?></button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
 <!-- /.modal-dialog -->
 </div>
 
@@ -948,6 +1010,90 @@
         FIN FUNCIONES DEL MODAL CONCEPTO
          */
 
+        /*
+         FUNCIONES DEL MODAL FECHA INICIO FIN
+         */
+        $('#frm_fecha_inicio_fin').validate({
+            errorElement: 'span', //default input error message container
+            errorClass: 'help-block help-block-error', // default input error message class
+            focusInvalid: false, // do not focus the last invalid input
+            ignore: "", // validate all fields including form hidden input
+            messages: {
+                fecha_inicio: {
+                    minlength: jQuery.validator.format("<?php echo trans_line('minlength'); ?>"),
+                    maxlength: jQuery.validator.format("<?php echo trans_line('maxlength'); ?>"),
+                    required: "<?php echo trans_line('required'); ?>",
+                    mexicanDate: "<?php echo trans_line('mexicanDate'); ?>"
+                },
+                fecha_fin: {
+                    minlength: jQuery.validator.format("<?php echo trans_line('minlength'); ?>"),
+                    maxlength: jQuery.validator.format("<?php echo trans_line('maxlength'); ?>"),
+                    required: "<?php echo trans_line('required'); ?>",
+                    mexicanDate: "<?php echo trans_line('mexicanDate'); ?>"
+                }
+            },
+            rules: {
+                fecha_inicio: {
+                    minlength: 10,
+                    maxlength: 10,
+                    required: true,
+                    mexicanDate: true
+                },
+                fecha_fin: {
+                    minlength: 10,
+                    maxlength: 10,
+                    required: true,
+                    mexicanDate: true
+                }
+            },
+            invalidHandler: function (event, validator) { //display error alert on form submit
+                //App.scrollTo(error1, -50);
+            },
+            errorPlacement: function (error, element) {
+                if (element.is(':checkbox')) {
+                    error.insertAfter(element.closest(".md-checkbox-list, .md-checkbox-inline, .checkbox-list, .checkbox-inline"));
+                } else if (element.is(':radio')) {
+                    error.insertAfter(element.closest(".md-radio-list, .md-radio-inline, .radio-list,.radio-inline"));
+                } else {
+                    //error.insertAfter(element); // for other inputs, just perform default behavior
+                }
+            },
+            highlight: function (element) { // hightlight error inputs
+                $(element).closest('.form-group').addClass('has-error'); // set error class to the control group
+            },
+            unhighlight: function (element) { // revert the change done by hightlight
+                $(element).closest('.form-group').removeClass('has-error'); // set error class to the control group
+            },
+            success: function (label) {
+                label.closest('.form-group').removeClass('has-error'); // set success class to the control group
+            },
+            submitHandler: function (form) {
+                return false;
+            }
+        });
+
+        $(document).on('click', '#guarda_fecha_inicio_fin_btn', function () {
+            var btn_submit = $(this);
+            var form = $('#frm_fecha_inicio_fin');
+            if (form.valid()) {
+                    var clon = $('#dd-insertar').clone();
+                    $('#dd-insertar').remove();
+                    insert_item(form.find('[name="id_insert"]').val(), form.find('[name="tipo_insert"]').val(),form.find('[name="id"]').val(),form.find('[name="tipo"]').val(),form.find('[name="text"]').val(),"data-fecha-inicio='"+form.find('[name="fecha_inicio"]').val()+"' data-fecha-fin='"+form.find('[name="fecha_fin"]').val()+"'");
+                    clon.appendTo('[data-id=' + form.find('[name="id_insert"]').val() + '][data-tipo=' + form.find('[name="tipo_insert"]').val() + '] .dd-list');
+                    $('#fecha_inicio_fin_modal').modal('hide');
+                    form.trigger("reset");
+                    toastr.success('CORRECTO');
+            }
+        });
+
+        $(document).on('click','[data-dismiss="modal"]',function(){
+            var form = $('#frm_fecha_inicio_fin');
+            form.trigger("reset");
+        });
+        /*
+         FIN FUNCIONES DEL MODAL FECHA INICIO FIN
+         */
+
     });// FIN DOCUMENT READY
 </script>
 
@@ -997,7 +1143,7 @@
 
     }();
 
-    function insert_item(parent_id, parent_type, item_id, item_type, item_text) {
+    function insert_item(parent_id, parent_type, item_id, item_type, item_text, item_extras="") {
         var jh_parent = $("[data-id=" + parent_id + "][data-tipo="+ parent_type +"]");
         var jh_list = jh_parent.find("ol");
         var jh_btn_menu = "<div class='btn-group'>";
@@ -1009,7 +1155,7 @@
             + "data-btn-cancel-icon='icon-close' data-btn-cancel-class='btn-danger'"
             + "data-id-confirm='" + item_id + "' data-tipo-confirm='" + item_type + "'><i class='fa fa-times'></i></a>";
         jh_btn_menu += "<a href='javascript:;' class='btn btn-icon-only green-turquoise btn-outline btn_add'><i class='fa fa-plus'></i></a></div></li>";
-        var jh_append = "<li class='dd-item' data-id='" + item_id + "' data-tipo='" + item_type + "'><div class='dd-handle'>" + item_text + "</div>";
+        var jh_append = "<li class='dd-item' data-id='" + item_id + "' data-tipo='" + item_type + "' "+ item_extras +"><div class='dd-handle'>" + item_text + "</div>";
         if (item_type == "concepto") {
             jh_append += "</li>";
         } else {
@@ -1155,7 +1301,7 @@
 
         genera_zonas_vista();
         genera_fases_vista();
-        trigger_zonas()
+        trigger_zonas();
 
         $("#portlet_fases").find(".reload").click(function () {
             genera_fases_vista();
@@ -1208,13 +1354,16 @@
         });
 
         $('#portlet_agregar').on('click','.dd-item',function(){
-            var clon = $('#dd-insertar').clone();
             if($('#nestable_list_1').find('[data-id='+$(this).attr('data-id')+'][data-tipo='+$(this).attr('data-tipo')+']').length){
                 alert('Ya existe');
             }else {
-                $('#dd-insertar').remove();
-                insert_item($(this).attr('data-id-insert'), $(this).attr('data-tipo-insert'), $(this).attr('data-id'), $(this).attr('data-tipo'), $(this).find('.dd-handle').text());
-                clon.appendTo('[data-id=' + $(this).attr('data-id-insert') + '][data-tipo=' + $(this).attr('data-tipo-insert') + '] .dd-list');
+                var frm = $('#frm_fecha_inicio_fin');
+                frm.find('[name="id_insert"]').val($(this).attr('data-id-insert'));
+                frm.find('[name="tipo_insert"]').val($(this).attr('data-tipo-insert'));
+                frm.find('[name="id"]').val($(this).attr('data-id'));
+                frm.find('[name="tipo"]').val($(this).attr('data-tipo'));
+                frm.find('[name="text"]').val($(this).find('.dd-handle').text());
+                $('#fecha_inicio_fin_modal').modal('show');
             }
         });
 
