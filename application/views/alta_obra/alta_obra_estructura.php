@@ -125,16 +125,28 @@
                                 </div>
                             </div>
                             <div class="portlet-body">
-                                <div class="form-group form-md-line-input" style="padding-top:0px; margin-bottom: 5px;">
-                                    <?php $nestable_categoria = [
-                                        'id'=> 'conceptos_categoria_nestable_id',
-                                        'placeholder' => trans_line('categoria_nestable_placeholder'),
-                                        'class' => 'form-control bs-select',
-                                        'title' => trans_line('categoria_nestable_placeholder'),
-                                        'data-live-search' => 'true',
-                                        'data-size' => '5'
-                                    ]; ?>
-                                    <?php echo form_dropdown('conceptos_categoria_nestable_id', $categorias, '', $nestable_categoria); ?>
+                                <div class="row">
+                                    <div class="col-xs-10">
+                                        <div class="form-group form-md-line-input">
+                                            <?php $nestable_categoria = [
+                                                'id' => 'conceptos_categoria_nestable_id',
+                                                'placeholder' => trans_line('categoria_nestable_placeholder'),
+                                                'class' => 'form-control bs-select',
+                                                'title' => trans_line('categoria_nestable_placeholder'),
+                                                'data-live-search' => 'true',
+                                                'data-size' => '5'
+                                            ]; ?>
+                                            <?php echo form_dropdown('conceptos_categoria_nestable_id', $categorias, '', $nestable_categoria); ?>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-1">
+                                        <div class="form-group form-md-line-input">
+                                            <button type="button" class="btn btn-icon-only green"
+                                                    id="muestra_categoria_concepto_modal_btn" data-toggle="modal"
+                                                    href="#agregar_nuevo_catalogo_concepto_modal"><i
+                                                        class="fa fa-plus"></i></button>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="scroller" style="height:221px" data-always-visible="1"
                                      data-rail-visible="0">
@@ -180,7 +192,8 @@
                             <div class="portlet-body">
                                 <div class="dd" id="nestable_list_1">
                                     <ol class="dd-list">
-                                        <li class="dd-item" data-tipo="etapa" data-id="<?php echo $etapa->etapas_id;?>">
+                                        <li class="dd-item" data-tipo="etapa"
+                                            data-id="<?php echo $etapa->etapas_id; ?>">
                                             <div class="dd-handle">
                                                 <span class="bold"
                                                       title="<?php echo $etapa->nombre; ?>">ETAPA: <?php echo $etapa->nombre; ?></span>
@@ -213,7 +226,8 @@
                                     <span class="caption-subject font-green sbold uppercase">AGREGAR</span>
                                 </div>
                                 <div class="actions">
-                                    <button id="btn_listo" type="button" style="font-size:12px;" class="btn green btn-outline sbold">
+                                    <button id="btn_listo" type="button" style="font-size:12px;"
+                                            class="btn green btn-outline sbold">
                                         LISTO
                                     </button>
                                 </div>
@@ -407,7 +421,52 @@
     </div>
     <!-- /.modal-dialog -->
 </div>
-<div class="modal fade" id="agregar_nuevo_concepto_modal" tabindex="-1" role="agregar_nuevo_concepto_modal" aria-hidden="true">
+<div class="modal fade" id="agregar_nuevo_catalogo_concepto_modal" tabindex="-1"
+     role="agregar_nuevo_catalogo_concepto_modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"
+                        aria-hidden="true"></button>
+                <h4 class="modal-title"><?php echo trans_line('categoria_concepto_titulo'); ?></h4>
+            </div>
+            <div class="modal-body">
+                <?php echo form_open('', array('id' => 'frm_categoria_concepto')); ?>
+                <div class="form-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group form-md-line-input">
+                                <?php $data_categoria_nombre = [
+                                    'placeholder' => trans_line('categoria_nombre_placeholder'),
+                                    'class' => 'form-control',
+                                    'data-rule-required' => 'true',
+                                    'data-msg-required' => trans_line('required')
+                                ]; ?>
+                                <?php echo form_input('nombre', '', $data_categoria_nombre); ?>
+                                <label for=""><?php echo trans_line('categoria_nombre'); ?>
+                                    <span class="required">*</span>
+                                </label>
+                                <span class="help-block"><?php echo trans_line('categoria_nombre_ayuda'); ?></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <?php echo form_close(); ?>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn dark btn-outline"
+                        data-dismiss="modal"><?php echo trans_line('cerrar_modal'); ?>
+                </button>
+                <button type="button" id="agregar_nueva_categoria_concepto_btn"
+                        class="btn blue"><?php echo trans_line('guardar_modal'); ?></button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<div class="modal fade" id="agregar_nuevo_concepto_modal" tabindex="-1" role="agregar_nuevo_concepto_modal"
+     aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -416,7 +475,7 @@
                 <h4 class="modal-title"><?php echo trans_line('agregar_nuevo_concepto'); ?></h4>
             </div>
             <div class="modal-body">
-                <?php echo form_open('conceptos/insertar_concepto_obra', array('id' => 'frm_nuevo_concepto')); ?>
+                <?php echo form_open('', array('id' => 'frm_nuevo_concepto')); ?>
                 <div class="form-body">
                     <div class="row">
                         <div class="col-md-12">
@@ -471,6 +530,7 @@
                         <div class="col-md-4">
                             <div class="form-group form-md-line-input">
                                 <?php $data_unidades = [
+                                    'id' => 'unidades_id_concepto_modal',
                                     'placeholder' => trans_line('unidades_nuevo_placeholder'),
                                     'class' => 'form-control bs-select',
                                     'title' => trans_line('unidades_nuevo_placeholder'),
@@ -488,7 +548,7 @@
                         <div class="col-md-4">
                             <div class="form-group form-md-line-input">
                                 <?php $data_categoria = [
-                                    'id'=>'conceptos_categoria_id',
+                                    'id' => 'conceptos_categoria_id',
                                     'multiple' => '',
                                     'placeholder' => trans_line('categoria_nuevo_placeholder'),
                                     'class' => 'form-control bs-select',
@@ -937,11 +997,9 @@
             ignore: "", // validate all fields including form hidden input
             messages: {},
             rules: {},
-
             invalidHandler: function (event, validator) { //display error alert on form submit
                 App.scrollTo(error1, -200);
             },
-
             errorPlacement: function (error, element) {
                 if (element.is(':checkbox')) {
                     error.insertAfter(element.closest(".md-checkbox-list, .md-checkbox-inline, .checkbox-list, .checkbox-inline"));
@@ -951,22 +1009,18 @@
                     error.insertAfter(element); // for other inputs, just perform default behavior
                 }
             },
-
             highlight: function (element) { // hightlight error inputs
                 $(element)
                     .closest('.form-group').addClass('has-error'); // set error class to the control group
             },
-
             unhighlight: function (element) { // revert the change done by hightlight
                 $(element)
                     .closest('.form-group').removeClass('has-error'); // set error class to the control group
             },
-
             success: function (label) {
                 label
                     .closest('.form-group').removeClass('has-error'); // set success class to the control group
             },
-
             submitHandler: function (form) {
                 return false;
             }
@@ -981,19 +1035,21 @@
                 var $form_srlze = form.serialize();
                 //alert($form_srlze);
                 $.ajax({
-                    url: "<?php echo base_url_lang(); ?>conceptos_catalogo/insertar_concepto_ajax",
+                    url: "<?php echo base_url_lang(); ?>alta_obra/insertar_concepto_catalogo_ajax",
                     type: 'POST',
                     dataType: 'json',
                     data: $form_srlze,
                     success: function (data) {
-                        if (data.estatus == 'OK'){
+                        if (data.estatus == 'OK') {
                             btn_submit.html('<?php echo trans_line('guardar_modal'); ?>');
                             btn_submit.prop("disabled", false);
                             form.trigger("reset");
+                            reset_bs('unidades_id_concepto_modal');
+                            reset_bs('conceptos_categoria_id');
                             genera_conceptos_vista($('#conceptos_categoria_nestable_id').val());
                             $('#agregar_nuevo_concepto_modal').modal('toggle');
                             toastr.success('<?php echo trans_line('guardar_modal_success'); ?>');
-                        }else {
+                        } else {
                             toastr.error('<?php echo trans_line('guardar_modal_error'); ?>');
                         }
                     },
@@ -1007,7 +1063,81 @@
             }
         });
         /*
-        FIN FUNCIONES DEL MODAL CONCEPTO
+         FIN FUNCIONES DEL MODAL CONCEPTO
+         */
+
+        /*
+         FUNCIONES DEL MODAL CATEGORIA
+         */
+        $('#frm_categoria_concepto').validate({
+            errorElement: 'span', //default input error message container
+            errorClass: 'help-block help-block-error', // default input error message class
+            focusInvalid: false, // do not focus the last invalid input
+            //ignore: "", // validate all fields including form hidden input
+            invalidHandler: function (event, validator) { //display error alert on form submit
+                //App.scrollTo(error1, -50);
+            },
+            errorPlacement: function (error, element) {
+                if (element.is(':checkbox')) {
+                    error.insertAfter(element.closest(".md-checkbox-list, .md-checkbox-inline, .checkbox-list, .checkbox-inline"));
+                } else if (element.is(':radio')) {
+                    error.insertAfter(element.closest(".md-radio-list, .md-radio-inline, .radio-list,.radio-inline"));
+                } else {
+                    error.insertAfter(element); // for other inputs, just perform default behavior
+                }
+            },
+            highlight: function (element) { // hightlight error inputs
+                $(element).closest('.form-group').addClass('has-error'); // set error class to the control group
+            },
+            unhighlight: function (element) { // revert the change done by hightlight
+                $(element).closest('.form-group').removeClass('has-error'); // set error class to the control group
+            },
+            success: function (label) {
+                label.closest('.form-group').removeClass('has-error'); // set success class to the control group
+            },
+            submitHandler: function (form) {
+                return false;
+            }
+        });
+
+        $(document).on('click', '#agregar_nueva_categoria_concepto_btn', function () {
+            var btn_submit = $(this);
+            var form = $('#frm_categoria_concepto');
+            if (form.valid()) {
+                btn_submit.html('<?php echo trans_line('btn_submit_loading'); ?>');
+                btn_submit.prop("disabled", true);
+                var $form_srlze = form.serialize();
+                //alert($form_srlze);
+                $.ajax({
+                    url: "<?php echo base_url_lang(); ?>alta_obra/insertar_concepto_categoria_ajax",
+                    type: 'POST',
+                    dataType: 'json',
+                    data: $form_srlze,
+                    success: function (data) {
+                        if (data.estatus == 'OK') {
+                            btn_submit.html('<?php echo trans_line('guardar_modal'); ?>');
+                            btn_submit.prop("disabled", false);
+                            form.trigger("reset");
+                            $('#agregar_nuevo_catalogo_concepto_modal').modal('toggle');
+                            genera_categorias_sel();
+                            toastr.success('<?php echo trans_line('guardar_modal_success'); ?>');
+                        } else {
+                            toastr.error('<?php echo trans_line('guardar_modal_error'); ?>' + '\n' + data.mensaje);
+                            btn_submit.html('<?php echo trans_line('guardar_modal'); ?>');
+                            btn_submit.prop("disabled", false);
+                        }
+                    },
+                    error: function (data) {
+                        btn_submit.html('<?php echo trans_line('guardar_modal'); ?>');
+                        btn_submit.prop("disabled", false);
+                        toastr.error('<?php echo trans_line('guardar_modal_error'); ?>');
+                    }
+
+                });
+            }
+        });
+        /*
+         FIN FUNCIONES DEL MODAL CATEGORIA
          */
 
         /*
@@ -1076,17 +1206,17 @@
             var btn_submit = $(this);
             var form = $('#frm_fecha_inicio_fin');
             if (form.valid()) {
-                    var clon = $('#dd-insertar').clone();
-                    $('#dd-insertar').remove();
-                    insert_item(form.find('[name="id_insert"]').val(), form.find('[name="tipo_insert"]').val(),form.find('[name="id"]').val(),form.find('[name="tipo"]').val(),form.find('[name="text"]').val(),"data-fecha-inicio='"+form.find('[name="fecha_inicio"]').val()+"' data-fecha-fin='"+form.find('[name="fecha_fin"]').val()+"'");
-                    clon.appendTo('[data-id=' + form.find('[name="id_insert"]').val() + '][data-tipo=' + form.find('[name="tipo_insert"]').val() + '] .dd-list');
-                    $('#fecha_inicio_fin_modal').modal('hide');
-                    form.trigger("reset");
-                    toastr.success('CORRECTO');
+                var clon = $('#dd-insertar').clone();
+                $('#dd-insertar').remove();
+                insert_item(form.find('[name="id_insert"]').val(), form.find('[name="tipo_insert"]').val(), form.find('[name="id"]').val(), form.find('[name="tipo"]').val(), form.find('[name="text"]').val(), "data-fecha-inicio='" + form.find('[name="fecha_inicio"]').val() + "' data-fecha-fin='" + form.find('[name="fecha_fin"]').val() + "'");
+                clon.appendTo('[data-id=' + form.find('[name="id_insert"]').val() + '][data-tipo=' + form.find('[name="tipo_insert"]').val() + '] .dd-list');
+                $('#fecha_inicio_fin_modal').modal('hide');
+                form.trigger("reset");
+                toastr.success('CORRECTO');
             }
         });
 
-        $(document).on('click','[data-dismiss="modal"]',function(){
+        $(document).on('click', '[data-dismiss="modal"]', function () {
             var form = $('#frm_fecha_inicio_fin');
             form.trigger("reset");
         });
@@ -1144,7 +1274,7 @@
     }();
 
     function insert_item(parent_id, parent_type, item_id, item_type, item_text, item_extras="") {
-        var jh_parent = $("[data-id=" + parent_id + "][data-tipo="+ parent_type +"]");
+        var jh_parent = $("[data-id=" + parent_id + "][data-tipo=" + parent_type + "]");
         var jh_list = jh_parent.find("ol");
         var jh_btn_menu = "<div class='btn-group'>";
         jh_btn_menu += "<a class='btn btn-icon-only font-red delete_confirmation' data-toggle='confirmation' data-placement='top'"
@@ -1155,7 +1285,7 @@
             + "data-btn-cancel-icon='icon-close' data-btn-cancel-class='btn-danger'"
             + "data-id-confirm='" + item_id + "' data-tipo-confirm='" + item_type + "'><i class='fa fa-times'></i></a>";
         jh_btn_menu += "<a href='javascript:;' class='btn btn-icon-only green-turquoise btn-outline btn_add'><i class='fa fa-plus'></i></a></div></li>";
-        var jh_append = "<li class='dd-item' data-id='" + item_id + "' data-tipo='" + item_type + "' "+ item_extras +"><div class='dd-handle'>" + item_text + "</div>";
+        var jh_append = "<li class='dd-item' data-id='" + item_id + "' data-tipo='" + item_type + "' " + item_extras + "><div class='dd-handle'>" + item_text + "</div>";
         if (item_type == "concepto") {
             jh_append += "</li>";
         } else {
@@ -1174,8 +1304,8 @@
         });
     }
 
-    function delete_item(item_id,item_type) {
-        var jh_item = $('#nestable_list_1').find("[data-id=" + item_id + "][data-tipo="+item_type+"]");
+    function delete_item(item_id, item_type) {
+        var jh_item = $('#nestable_list_1').find("[data-id=" + item_id + "][data-tipo=" + item_type + "]");
         var jh_parent_ol = jh_item.parent();
         var jh_parent_li = jh_parent_ol.parent();
 
@@ -1254,12 +1384,12 @@
         conceptos_list.empty();
         conceptos_list.append('<p class="text-center" style="padding-top:10px;">Cargando...</p>');
         $.get(
-            "<?php echo base_url_lang() . 'alta_obra/conceptos_por_categoria_json/'?>"+concepto_categoria_id,
+            "<?php echo base_url_lang() . 'alta_obra/conceptos_por_categoria_json/'?>" + concepto_categoria_id,
             "json"
         ).done(function (data) {
             conceptos_list.empty();
             conceptos_list.append('<ol class="dd-list"></ol>');
-            if(concepto_categoria_id==0) {
+            if (concepto_categoria_id == 0) {
                 conceptos_list.append('<p class="text-center" style="padding-top:10px;">SELECCIONE UNA CATEGORIA</p>');
             } else {
                 for (var idx in data) {
@@ -1296,6 +1426,10 @@
         });
     }
 
+    function reset_bs(id_elem) {
+        $("#" + id_elem).selectpicker("refresh");
+    }
+
     jQuery(document).ready(function () {
         UINestable.init();
 
@@ -1312,7 +1446,7 @@
         $("#portlet_conceptos").find(".reload").click(function () {
             genera_conceptos_vista($('#conceptos_categoria_nestable_id').val());
         });
-        $('#conceptos_categoria_nestable_id').on('change',function(){
+        $('#conceptos_categoria_nestable_id').on('change', function () {
             genera_conceptos_vista($(this).val());
         });
 
@@ -1324,10 +1458,10 @@
             var id = $(this).attr('data-id-confirm');
             var tipo = $(this).attr('data-tipo-confirm');
             $(this).confirmation('destroy');
-            delete_item(id,tipo);
+            delete_item(id, tipo);
         });
 
-        $('#nestable_list_1').on('click','.btn_add',function(){
+        $('#nestable_list_1').on('click', '.btn_add', function () {
             $('#dd-insertar').remove();
             var parent_item = $(this).parent().parent();
             var id_insert = parent_item.attr('data-id');
@@ -1345,18 +1479,18 @@
                 parent_list.eq(0).append(parent_append);
             }
 
-            if(parent_item.is($("[data-tipo='etapa']"))){
+            if (parent_item.is($("[data-tipo='etapa']"))) {
                 portlet_target = $('#portlet_fases');
             }
             portlet_agregar.find('.portlet-body').html(portlet_target.find('.portlet-body').html()).find('.portlet-footer').remove();
-            portlet_agregar.find('.dd-item').css('cursor','pointer').attr('data-id-insert',id_insert).attr('data-tipo-insert',type_insert);
+            portlet_agregar.find('.dd-item').css('cursor', 'pointer').attr('data-id-insert', id_insert).attr('data-tipo-insert', type_insert);
             portlet_agregar.show();
         });
 
-        $('#portlet_agregar').on('click','.dd-item',function(){
-            if($('#nestable_list_1').find('[data-id='+$(this).attr('data-id')+'][data-tipo='+$(this).attr('data-tipo')+']').length){
+        $('#portlet_agregar').on('click', '.dd-item', function () {
+            if ($('#nestable_list_1').find('[data-id=' + $(this).attr('data-id') + '][data-tipo=' + $(this).attr('data-tipo') + ']').length) {
                 alert('Ya existe');
-            }else {
+            } else {
                 var frm = $('#frm_fecha_inicio_fin');
                 frm.find('[name="id_insert"]').val($(this).attr('data-id-insert'));
                 frm.find('[name="tipo_insert"]').val($(this).attr('data-tipo-insert'));
@@ -1367,7 +1501,7 @@
             }
         });
 
-        $('#btn_listo').click(function(){
+        $('#btn_listo').click(function () {
             $('#portlet_agregar').find(".portlet-body").empty().parent().hide();
             $('#dd-insertar').remove();
         });

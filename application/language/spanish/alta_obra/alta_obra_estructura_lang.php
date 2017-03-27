@@ -46,6 +46,14 @@ $lang['alerta_exito'] = 'Se guardó la obra con éxito, inserta otro o <a class=
 $lang['alerta_error'] = 'Hubo un error al guardar la obra, intente más tarde.';
 $lang['alerta_error_codigo'] = 'Código:';
 
+//modals general
+$lang['guardar_modal'] = 'Guardar';
+$lang['cerrar_modal'] = 'Cerrar';
+$lang['btn_submit_loading'] = 'Cargando...';
+$lang['guardar_modal_success'] = 'Los datos se guardaron con éxito';
+$lang['guardar_modal_error'] = 'Error al guardar los datos, vuelva a intentarlo';
+
+//modal fase
 $lang['agregar_fase'] = 'Agregar nueva fase';
 $lang['fase_nombre'] = 'Nombre de la fase';
 $lang['fase_nombre_placeholder'] = 'Escriba el nombre de la fase';
@@ -55,11 +63,19 @@ $lang['fecha_inicio_placeholder'] = 'Fecha inicial';
 $lang['fecha_fin_placeholder'] = 'Fecha final';
 $lang['fechas_a'] = 'a';
 
+//modal zona
 $lang['agregar_zona'] = 'Agregar nueva zona';
 $lang['zona_nombre'] = 'Nombre de la zona';
 $lang['zona_nombre_placeholder'] = 'Escriba el nombre de la zona';
 $lang['zona_nombre_ayuda'] = 'Nombre de la zona';
 
+//modal categoria conceptos
+$lang['categoria_concepto_titulo'] = 'Categoría de conceptos';
+$lang['categoria_nombre'] = 'Nombre';
+$lang['categoria_nombre_placeholder'] = 'Nombre de la categoría';
+$lang['categoria_nombre_ayuda'] = 'Nombre de la categoría a insertar';
+
+//modal concepto
 $lang['agregar_nuevo_concepto'] = 'Agregar nuevo concepto';
 $lang['nombre_nuevo'] = 'Nombre';
 $lang['nombre_nuevo_placeholder'] = 'Nombre del concepto';
@@ -75,11 +91,3 @@ $lang['unidades_nuevo_placeholder'] = 'Unidad del concepto';
 $lang['categoria_nuevo'] = 'Categoría';
 $lang['categoria_nuevo_placeholder'] = 'Categoría del concepto';
 $lang['categoria_nestable_placeholder'] = 'Seleccione una categoria';
-
-
-//modals
-$lang['guardar_modal'] = 'Guardar';
-$lang['cerrar_modal'] = 'Cerrar';
-$lang['btn_submit_loading'] = 'Cargando...';
-$lang['guardar_modal_success'] = 'Los datos se guardaron con éxito';
-$lang['guardar_modal_error'] = 'Error al guardar los datos, vuelva a intentarlo';

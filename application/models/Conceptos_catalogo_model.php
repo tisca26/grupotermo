@@ -52,9 +52,4 @@ class Conceptos_catalogo_model extends CI_Model
         }
         return $result;
     }
-
-    public function insertar_rel_concepto_categoria($rel_concepto_cat = array())
-    {
-        return $this->db->insert('conceptos_cat', $rel_concepto_cat);
-    }
 }

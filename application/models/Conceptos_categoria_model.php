@@ -17,11 +17,6 @@ class Conceptos_categoria_model extends CI_Model
         return $this->db->error();
     }
 
-    public function insertar_rel_concepto_categoria($rel_concepto_cat = array())
-    {
-        return $this->db->insert('conceptos_cat', $rel_concepto_cat);
-    }
-
     public function conceptos_categoria_todos($order = 'conceptos_categoria_id')
     {
         $result = array();
@@ -30,5 +25,10 @@ class Conceptos_categoria_model extends CI_Model
             $result = $query->result();
         }
         return $result;
+    }
+
+    public function insetar_conceptos_categoria($categoria = array())
+    {
+        return $this->db->insert('conceptos_categoria', $categoria);
     }
 }

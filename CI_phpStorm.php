@@ -149,6 +149,8 @@ class CI_Model
  * @property clientes_model                         $clientes_model
  * @property conceptos_model                        $conceptos_model
  * @property conceptos_model                        $con_model
+ * @property conceptos_cat_model                    $conceptos_cat_model
+ * @property conceptos_cat_model                    $con_cat_model
  * @property conceptos_categoria_model              $conceptos_categoria_model
  * @property conceptos_categoria_model              $con_cate_model
  * @property conceptos_catalogo_model               $conceptos_catalogo_model
@@ -196,9 +198,11 @@ class my_models extends my_business
  * ---------------------- Business to Load ----------------------
  * <examples>
  *
- * @property empresa                                $empresa
  * @property cliente                                $cliente
  * @property concepto                               $concepto
+ * @property conceptos_catalogo                     $conceptos_catalogo
+ * @property conceptos_categoria                    $conceptos_categoria
+ * @property empresa                                $empresa
  * @property etapa                                  $etapa
  * @property fase                                   $fase
  * @property lugares                                $lugares
