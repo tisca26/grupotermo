@@ -1,5 +1,10 @@
 <link href="<?php echo base_url(); ?>assets/global/plugins/jquery-nestable/jquery.nestable.css" rel="stylesheet"
       type="text/css"/>
+<style>
+    #portlet_agregar .dd-item{
+        cursor:pointer;
+    }
+</style>
 <div class="page-content-wrapper">
     <!-- BEGIN CONTENT BODY -->
     <!-- BEGIN PAGE HEAD-->
@@ -126,26 +131,22 @@
                             </div>
                             <div class="portlet-body">
                                 <div class="row">
-                                    <div class="col-xs-10">
-                                        <div class="form-group form-md-line-input">
-                                            <?php $nestable_categoria = [
-                                                'id' => 'conceptos_categoria_nestable_id',
-                                                'placeholder' => trans_line('categoria_nestable_placeholder'),
-                                                'class' => 'form-control bs-select',
-                                                'title' => trans_line('categoria_nestable_placeholder'),
-                                                'data-live-search' => 'true',
-                                                'data-size' => '5'
-                                            ]; ?>
-                                            <?php echo form_dropdown('conceptos_categoria_nestable_id', $categorias, '', $nestable_categoria); ?>
-                                        </div>
+                                    <div class="col-xs-10" style="padding-right:3px;">
+                                        <?php $nestable_categoria = [
+                                            'id' => 'conceptos_categoria_nestable_id',
+                                            'placeholder' => trans_line('categoria_nestable_placeholder'),
+                                            'class' => 'form-control bs-select',
+                                            'title' => trans_line('categoria_nestable_placeholder'),
+                                            'data-live-search' => 'true',
+                                            'data-size' => '5'
+                                        ]; ?>
+                                        <?php echo form_dropdown('conceptos_categoria_nestable_id', $categorias, '', $nestable_categoria); ?>
                                     </div>
-                                    <div class="col-xs-1">
-                                        <div class="form-group form-md-line-input">
-                                            <button type="button" class="btn btn-icon-only green"
-                                                    id="muestra_categoria_concepto_modal_btn" data-toggle="modal"
-                                                    href="#agregar_nuevo_catalogo_concepto_modal"><i
-                                                        class="fa fa-plus"></i></button>
-                                        </div>
+                                    <div class="col-xs-1" style="padding:0;">
+                                        <button type="button" class="btn btn-icon-only green"
+                                                id="muestra_categoria_concepto_modal_btn" data-toggle="modal"
+                                                href="#agregar_nuevo_catalogo_concepto_modal"><i
+                                                    class="fa fa-plus"></i></button>
                                     </div>
                                 </div>
                                 <div class="scroller" style="height:221px" data-always-visible="1"
@@ -196,7 +197,7 @@
                                             data-id="<?php echo $etapa->etapas_id; ?>">
                                             <div class="dd-handle">
                                                 <span class="bold"
-                                                      title="<?php echo $etapa->nombre; ?>">ETAPA: <?php echo $etapa->nombre; ?></span>
+                                                      title="<?php echo $etapa->nombre; ?>"><?php echo $etapa->nombre; ?></span>
                                                 <div class="text-right pull-right">
                                                     <p style="margin:0;"><?php echo $etapa->fecha_inicio . ' A ' . $etapa->fecha_fin; ?></p>
                                                 </div>
@@ -421,8 +422,7 @@
     </div>
     <!-- /.modal-dialog -->
 </div>
-<div class="modal fade" id="agregar_nuevo_catalogo_concepto_modal" tabindex="-1"
-     role="agregar_nuevo_catalogo_concepto_modal" aria-hidden="true">
+<div class="modal fade" id="agregar_nuevo_catalogo_concepto_modal" tabindex="-1" role="agregar_nuevo_catalogo_concepto_modal" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -435,7 +435,7 @@
                 <div class="form-body">
                     <div class="row">
                         <div class="col-md-12">
-                            <div class="form-group form-md-line-input">
+                            <div class="form-group form-md-line-input" style="margin:0; ">
                                 <?php $data_categoria_nombre = [
                                     'placeholder' => trans_line('categoria_nombre_placeholder'),
                                     'class' => 'form-control',
@@ -1207,8 +1207,8 @@
             var form = $('#frm_fecha_inicio_fin');
             if (form.valid()) {
                 var clon = $('#dd-insertar').clone();
-                $('#dd-insertar').remove();
-                insert_item(form.find('[name="id_insert"]').val(), form.find('[name="tipo_insert"]').val(), form.find('[name="id"]').val(), form.find('[name="tipo"]').val(), form.find('[name="text"]').val(), "data-fecha-inicio='" + form.find('[name="fecha_inicio"]').val() + "' data-fecha-fin='" + form.find('[name="fecha_fin"]').val() + "'");
+                delete_item(99,"insertar");
+                insert_item(form.find('[name="id_insert"]').val(), form.find('[name="tipo_insert"]').val(), form.find('[name="id"]').val(), form.find('[name="tipo"]').val(), form.find('[name="text"]').val(),form.find('[name="fecha_inicio"]').val(),form.find('[name="fecha_fin"]').val());
                 clon.appendTo('[data-id=' + form.find('[name="id_insert"]').val() + '][data-tipo=' + form.find('[name="tipo_insert"]').val() + '] .dd-list');
                 $('#fecha_inicio_fin_modal').modal('hide');
                 form.trigger("reset");
@@ -1273,7 +1273,7 @@
 
     }();
 
-    function insert_item(parent_id, parent_type, item_id, item_type, item_text, item_extras="") {
+    function insert_item(parent_id, parent_type, item_id, item_type, item_text, item_fecha_inicio="", item_fecha_fin="", item_tipo_concepto="") {
         var jh_parent = $("[data-id=" + parent_id + "][data-tipo=" + parent_type + "]");
         var jh_list = jh_parent.find("ol");
         var jh_btn_menu = "<div class='btn-group'>";
@@ -1284,12 +1284,13 @@
             + "data-btn-cancel-label='Cancelar'"
             + "data-btn-cancel-icon='icon-close' data-btn-cancel-class='btn-danger'"
             + "data-id-confirm='" + item_id + "' data-tipo-confirm='" + item_type + "'><i class='fa fa-times'></i></a>";
-        jh_btn_menu += "<a href='javascript:;' class='btn btn-icon-only green-turquoise btn-outline btn_add'><i class='fa fa-plus'></i></a></div></li>";
-        var jh_append = "<li class='dd-item' data-id='" + item_id + "' data-tipo='" + item_type + "' " + item_extras + "><div class='dd-handle'>" + item_text + "</div>";
+        var jh_btn_menu_add = "<a href='javascript:;' class='btn btn-icon-only green-turquoise btn-outline btn_add'><i class='fa fa-plus'></i></a></div></li>";
+        var jh_append = "<li class='dd-item' data-id='" + item_id + "' data-tipo='" + item_type + "' data-fecha-inicio='" + item_fecha_inicio + "' data-fecha-fin='"+item_fecha_fin+"' data-hola='"+item_tipo_concepto+"'>";
+        jh_append += "<div class='dd-handle'><span><div class='text-right pull-right'><p style='margin:0;'>"+item_fecha_inicio+" A "+item_fecha_fin+" </p></div>" + item_text + "</div>";
         if (item_type == "concepto") {
-            jh_append += "</li>";
+            jh_append += jh_btn_menu+"<div></li>";
         } else {
-            jh_append += jh_btn_menu;
+            jh_append += jh_btn_menu+jh_btn_menu_add;
         }
         if (!jh_list.length) {
             jh_parent.prepend("<button data-action='collapse' type='button'>Collapse</button><button data-action='expand' type='button'>Expand</button>");
@@ -1379,8 +1380,8 @@
         });
     }
 
-    function genera_conceptos_vista(concepto_categoria_id=0) {
-        var conceptos_list = $('#nestable_list_conceptos');
+    function genera_conceptos_vista(concepto_categoria_id=0,type=1,id="",tipo="") {
+        var conceptos_list = (type==1)?$('#nestable_list_conceptos'):$('#nestable_list_conceptos_agregar');
         conceptos_list.empty();
         conceptos_list.append('<p class="text-center" style="padding-top:10px;">Cargando...</p>');
         $.get(
@@ -1393,7 +1394,7 @@
                 conceptos_list.append('<p class="text-center" style="padding-top:10px;">SELECCIONE UNA CATEGORIA</p>');
             } else {
                 for (var idx in data) {
-                    conceptos_list.children('ol.dd-list').append('<li class="dd-item" data-id="' + data[idx].concepto_catalogo_id + '" data-tipo="concepto"><div class="dd-handle">' + data[idx].nombre + '</div></li>');
+                    conceptos_list.children('ol.dd-list').append('<li class="dd-item" data-id="' + data[idx].concepto_catalogo_id + '" data-tipo="concepto" data-id-insert="'+id+'" data-tipo-insert="'+tipo+'"><div class="dd-handle">' + data[idx].nombre + '</div></li>');
                 }
                 if (!conceptos_list.find('.dd-item').length) {
                     conceptos_list.append('<p class="text-center" style="padding-top:10px;">NO HAY DATOS PARA MOSTRAR EN ESTA CATEGORIA</p>');
@@ -1411,15 +1412,19 @@
             "json"
         ).done(function (data) {
             var $select = $('#conceptos_categoria_nestable_id');
-            var $select2 = $('#conceptos_categoria_id')
+            var $select2 = $('#conceptos_categoria_id');
+            var $select_agregar = $('#conceptos_categoria_nestable_id_agregar');
             $select.empty();
             $select2.empty();
+            $select_agregar.empty();
             for (var idx in data) {
                 $select.append('<option value=' + data[idx].conceptos_categoria_id + '>' + data[idx].nombre + '</option>');
                 $select2.append('<option value=' + data[idx].conceptos_categoria_id + '>' + data[idx].nombre + '</option>');
+                $select_agregar.append('<option value=' + data[idx].conceptos_categoria_id + '>' + data[idx].nombre + '</option>');
             }
             $select.selectpicker('refresh');
             $select2.selectpicker('refresh');
+            $select_agregar.selectpicker('refresh');
             toastr.success("Categorias actualizadas correctamente", "Actualizado", {"closeButton": true});
         }).fail(function () {
             toastr.error("Error al obtener el catalogo de conceptos", "Error", {"closeButton": true});
@@ -1449,6 +1454,9 @@
         $('#conceptos_categoria_nestable_id').on('change', function () {
             genera_conceptos_vista($(this).val());
         });
+        $('#portlet_agregar').on('change','#conceptos_categoria_nestable_id_agregar', function () {
+            genera_conceptos_vista($(this).val(),0,$(this).attr('data-id-insert'),$(this).attr('data-tipo-insert'));
+        });
 
         $("#check_zonas").on('init.bootstrapSwitch switchChange.bootstrapSwitch', function (event, state) {
             trigger_zonas(state);
@@ -1462,33 +1470,59 @@
         });
 
         $('#nestable_list_1').on('click', '.btn_add', function () {
-            $('#dd-insertar').remove();
+            delete_item(99,"insertar");
             var parent_item = $(this).parent().parent();
             var id_insert = parent_item.attr('data-id');
             var type_insert = parent_item.attr('data-tipo');
             var portlet_target = $('#portlet_fases');
             var portlet_agregar = $('#portlet_agregar');
             var parent_list = parent_item.find('ol');
-            var parent_append = "<li class='dd-item' id='dd-insertar'><div class='dd-handle dd-placeholder'>Click a un elemento para agregarlo</div></li>";
-
-            if (!parent_list.length) {
-                parent_item.prepend("<button data-action='collapse' type='button'>Collapse</button><button data-action='expand' type='button'>Expand</button>");
-                parent_item.find("[data-action='expand']").hide();
-                parent_item.append("<ol class='dd-list'>" + parent_append + "</ol>");
-            } else {
-                parent_list.eq(0).append(parent_append);
-            }
 
             if (parent_item.is($("[data-tipo='etapa']"))) {
                 portlet_target = $('#portlet_fases');
+            } else if(parent_item.is($("[data-tipo='fase']"))){
+                if($("#check_zonas").bootstrapSwitch("state")){
+                    portlet_target = $('#portlet_zonas');
+                } else{
+                    portlet_target = $('#portlet_conceptos');
+                }
+            } else if(parent_item.is($("[data-tipo='zona']"))) {
+                portlet_target = $('#portlet_conceptos');
             }
-            portlet_agregar.find('.portlet-body').html(portlet_target.find('.portlet-body').html()).find('.portlet-footer').remove();
-            portlet_agregar.find('.dd-item').css('cursor', 'pointer').attr('data-id-insert', id_insert).attr('data-tipo-insert', type_insert);
-            portlet_agregar.show();
+
+            if(portlet_target.find('p').text()=="Cargando..."){
+                alert("Espere a que los elementos se recarguen e intentelo de nuevo");
+            } else {
+                var parent_append = "<li class='dd-item' id='dd-insertar' data-id='99' data-tipo='insertar'><div class='dd-handle dd-placeholder'>Click a un elemento para agregarlo</div></li>";
+
+                if (!parent_list.length) {
+                    parent_item.prepend("<button data-action='collapse' type='button'>Collapse</button><button data-action='expand' type='button'>Expand</button>");
+                    parent_item.find("[data-action='expand']").hide();
+                    parent_item.append("<ol class='dd-list'>" + parent_append + "</ol>");
+                } else {
+                    parent_list.eq(0).append(parent_append);
+                }
+
+                if (!portlet_target.is($("#portlet_conceptos"))) {
+                    portlet_agregar.find('.portlet-body').html(portlet_target.find('.portlet-body').html()).find('.portlet-footer').remove();
+                } else {
+                    portlet_agregar.find('.portlet-body').html("" +
+                        "<select name='conceptos_categoria_nestable_id_agregar' id='conceptos_categoria_nestable_id_agregar' " +
+                        "placeholder='SELECCIONE UNA CATEGORIA' class='form-control bs-select' title='Seleccione una categoria' " +
+                        "data-live-search='true' data-size='5' data-id-insert='" + id_insert + "' data-tipo-insert='" + type_insert + "'>" +
+                        $("#conceptos_categoria_nestable_id").html()+"</select>" +
+                        "<div class='scroller' style='height:221px' data-always-visible='1' data-rail-visible='0'>" +
+                        "<div class='dd' id='nestable_list_conceptos_agregar'>" +
+                        "<ol class='dd-list'></ol></div></div>");
+                    $("#conceptos_categoria_nestable_id_agregar").selectpicker('refresh');
+                }
+                portlet_agregar.find('.dd-item').attr('data-id-insert', id_insert).attr('data-tipo-insert', type_insert);
+                portlet_agregar.show();
+            }
         });
 
         $('#portlet_agregar').on('click', '.dd-item', function () {
-            if ($('#nestable_list_1').find('[data-id=' + $(this).attr('data-id') + '][data-tipo=' + $(this).attr('data-tipo') + ']').length) {
+            if ($('#nestable_list_1').find('[data-id=' + $(this).attr('data-id') + '][data-tipo="fase"]').length) {
                 alert('Ya existe');
             } else {
                 var frm = $('#frm_fecha_inicio_fin');
@@ -1503,7 +1537,8 @@
 
         $('#btn_listo').click(function () {
             $('#portlet_agregar').find(".portlet-body").empty().parent().hide();
-            $('#dd-insertar').remove();
+            delete_item(99,"insertar");
+            $("#nestable_list_1").trigger("change");
         });
     });
 </script>
