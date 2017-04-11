@@ -1212,7 +1212,6 @@
                 clon.appendTo('[data-id=' + form.find('[name="id_insert"]').val() + '][data-tipo=' + form.find('[name="tipo_insert"]').val() + '] .dd-list');
                 $('#fecha_inicio_fin_modal').modal('hide');
                 form.trigger("reset");
-                toastr.success('CORRECTO');
             }
         });
 
@@ -1274,7 +1273,7 @@
     }();
 
     function insert_item(parent_id, parent_type, item_id, item_type, item_text, item_fecha_inicio="", item_fecha_fin="", item_tipo_concepto="") {
-        var jh_parent = $("[data-id=" + parent_id + "][data-tipo=" + parent_type + "]");
+        var jh_parent = $("#nestable_list_1").find("[data-id=" + parent_id + "][data-tipo=" + parent_type + "]");
         var jh_list = jh_parent.find("ol");
         var jh_btn_menu = "<div class='btn-group'>";
         jh_btn_menu += "<a class='btn btn-icon-only font-red delete_confirmation' data-toggle='confirmation' data-placement='top'"
@@ -1440,7 +1439,7 @@
 
         genera_zonas_vista();
         genera_fases_vista();
-        trigger_zonas();
+        trigger_zonas(false);
 
         $("#portlet_fases").find(".reload").click(function () {
             genera_fases_vista();
@@ -1490,7 +1489,7 @@
                 portlet_target = $('#portlet_conceptos');
             }
 
-            if(portlet_target.find('p').text()=="Cargando..."){
+            if(portlet_target.find('p').length){
                 alert("Espere a que los elementos se recarguen e intentelo de nuevo");
             } else {
                 var parent_append = "<li class='dd-item' id='dd-insertar' data-id='99' data-tipo='insertar'><div class='dd-handle dd-placeholder'>Click a un elemento para agregarlo</div></li>";
