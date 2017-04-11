@@ -194,6 +194,21 @@
                                 </div>
                             </div>
                             <div class="portlet-body">
+                                <?php echo validation_errors('<div class="alert alert-danger alert-dismissable">', '</div>'); ?>
+                                <?php echo form_open('alta_obra/', array('id' => 'current_form')); ?>
+                                <input type="hidden" name="etapas_id" value="<?php echo $etapa->etapas_id; ?>">
+                                <input type="hidden" name="obras_id" value="<?php echo $etapa->obras_id; ?>">
+                                <div class="form-body">
+                                    <div class="alert alert-danger display-hide">
+                                        <button class="close" data-close="alert"></button>
+                                        <?php echo trans_line('jquery_invalid'); ?>
+                                    </div>
+                                    <div class="alert alert-success display-hide">
+                                        <button class="close" data-close="alert"></button>
+                                        <?php echo trans_line('jquery_valid'); ?>
+                                    </div>
+                                </div>
+                                <input type="hidden" id="nestable_list_1_output" name="arbol_output"/>
                                 <div class="dd" id="nestable_list_1">
                                     <ol class="dd-list">
                                         <li class="dd-item" data-tipo="etapa"
@@ -217,10 +232,11 @@
                             </div>
                             <br/>
                             <div class="portlet-footer text-right">
-                                <button type="submit" class="btn green"
+                                <button type="button" class="btn green"
                                         id="btn_submit"><?php echo trans_line('btn_submit'); ?> <i
                                             class="fa fa-forward"></i></button>
                             </div>
+                            <?php echo form_close(); ?>
                         </div>
                     </div>
                     <div class="col-md-5">
@@ -241,31 +257,6 @@
 
                             </div>
                         </div>
-                    </div>
-                </div>
-                <div class="portlet light ">
-                    <div class="portlet-title">
-                        <div class="caption">
-                            <span>OUTPUT</span>
-                        </div>
-                    </div>
-                    <div class="portlet-body">
-                        <?php echo validation_errors('<div class="alert alert-danger alert-dismissable">', '</div>'); ?>
-                        <?php echo form_open('alta_obra/seleccionar_zona_concepto', array('id' => 'current_form')); ?>
-                        <input type="hidden" name="etapas_id" value="<?php echo $etapa->etapas_id; ?>">
-                        <input type="hidden" name="obras_id" value="<?php echo $etapa->obras_id; ?>">
-                        <div class="form-body">
-                            <div class="alert alert-danger display-hide">
-                                <button class="close" data-close="alert"></button>
-                                <?php echo trans_line('jquery_invalid'); ?>
-                            </div>
-                            <div class="alert alert-success display-hide">
-                                <button class="close" data-close="alert"></button>
-                                <?php echo trans_line('jquery_valid'); ?>
-                            </div>
-                        </div>
-                        <textarea id="nestable_list_1_output" class="form-control margin-bottom-10"></textarea>
-                        <?php echo form_close(); ?>
                     </div>
                 </div>
             </div>
@@ -988,96 +979,6 @@
         var error1 = $('.alert-danger', form1);
         var success1 = $('.alert-success', form1);
 
-        form1.validate({
-            errorElement: 'span', //default input error message container
-            errorClass: 'help-block help-block-error', // default input error message class
-            focusInvalid: false, // do not focus the last invalid input
-            ignore: "", // validate all fields including form hidden input
-            messages: {
-                nombre: {
-                    required: "<?php echo trans_line('required'); ?>",
-                    minlength: jQuery.validator.format("<?php echo trans_line('minlength'); ?>")
-                },
-                fecha_inicio: {
-                    minlength: jQuery.validator.format("<?php echo trans_line('minlength'); ?>"),
-                    maxlength: jQuery.validator.format("<?php echo trans_line('maxlength'); ?>"),
-                    required: "<?php echo trans_line('required'); ?>",
-                    mexicanDate: "<?php echo trans_line('mexicanDate'); ?>"
-                },
-                fecha_fin: {
-                    minlength: jQuery.validator.format("<?php echo trans_line('minlength'); ?>"),
-                    maxlength: jQuery.validator.format("<?php echo trans_line('maxlength'); ?>"),
-                    required: "<?php echo trans_line('required'); ?>",
-                    mexicanDate: "<?php echo trans_line('mexicanDate'); ?>"
-                },
-                total_autorizado: {
-                    number: "<?php echo trans_line('number'); ?>"
-                }
-            },
-            rules: {
-                nombre: {
-                    minlength: 3,
-                    required: true
-                },
-                fecha_inicio: {
-                    minlength: 10,
-                    maxlength: 10,
-                    required: true,
-                    mexicanDate: true
-                },
-                fecha_fin: {
-                    minlength: 10,
-                    maxlength: 10,
-                    required: true,
-                    mexicanDate: true
-                },
-                total_autorizado: {
-                    number: true
-                }
-            },
-
-            invalidHandler: function (event, validator) { //display error alert on form submit
-                success1.hide();
-                error1.show();
-                App.scrollTo(error1, -200);
-            },
-
-            errorPlacement: function (error, element) {
-                if (element.is(':checkbox')) {
-                    error.insertAfter(element.closest(".md-checkbox-list, .md-checkbox-inline, .checkbox-list, .checkbox-inline"));
-                } else if (element.is(':radio')) {
-                    error.insertAfter(element.closest(".md-radio-list, .md-radio-inline, .radio-list,.radio-inline"));
-                } else {
-                    error.insertAfter(element); // for other inputs, just perform default behavior
-                }
-            },
-
-            highlight: function (element) { // hightlight error inputs
-                $(element)
-                    .closest('.form-group').addClass('has-error'); // set error class to the control group
-            },
-
-            unhighlight: function (element) { // revert the change done by hightlight
-                $(element)
-                    .closest('.form-group').removeClass('has-error'); // set error class to the control group
-            },
-
-            success: function (label) {
-                label
-                    .closest('.form-group').removeClass('has-error'); // set success class to the control group
-            },
-
-            submitHandler: function (form) {
-                $('#disablingPage').css("display", "block");
-                $('#spinner_gt').show(300);
-                $('#btn_submit').html("<?php echo trans_line('btn_submit_loading'); ?>");
-                $('#btn_submit').prop('disabled', true);
-                success1.show();
-                error1.hide();
-                form.submit();
-            }
-        });
-
 
         $('#frm_nueva_fase').validate({
             errorElement: 'span', //default input error message container
@@ -1525,6 +1426,12 @@
                 $(this).datepicker("clearDates");
             });
             form.trigger("reset");
+        });
+
+
+        $("#btn_submit").click(function(){
+            $("#btn_listo").click();
+            form1.submit();
         });
 
 
