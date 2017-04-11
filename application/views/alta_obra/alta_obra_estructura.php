@@ -229,14 +229,14 @@
                                         </li>
                                     </ol>
                                 </div>
+                                <br/>
+                                <div class="portlet-footer text-right">
+                                    <button type="button" class="btn green"
+                                            id="btn_submit"><?php echo trans_line('btn_submit'); ?> <i
+                                                class="fa fa-forward"></i></button>
+                                </div>
+                                <?php echo form_close(); ?>
                             </div>
-                            <br/>
-                            <div class="portlet-footer text-right">
-                                <button type="button" class="btn green"
-                                        id="btn_submit"><?php echo trans_line('btn_submit'); ?> <i
-                                            class="fa fa-forward"></i></button>
-                            </div>
-                            <?php echo form_close(); ?>
                         </div>
                     </div>
                     <div class="col-md-5">
