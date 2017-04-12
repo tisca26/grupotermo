@@ -198,6 +198,7 @@
                                 <?php echo form_open('alta_obra/', array('id' => 'current_form')); ?>
                                 <input type="hidden" name="etapas_id" value="<?php echo $etapa->etapas_id; ?>">
                                 <input type="hidden" name="obras_id" value="<?php echo $etapa->obras_id; ?>">
+                                <input type="hidden" name="zonas" value="0">
                                 <div class="form-body">
                                     <div class="alert alert-danger display-hide">
                                         <button class="close" data-close="alert"></button>
@@ -430,7 +431,7 @@
                 <div class="form-body">
                     <div class="row">
                         <div class="col-md-12">
-                            <div class="form-group form-md-line-input" style="margin:0; ">
+                            <div class="form-group form-md-line-input">
                                 <?php $data_categoria_nombre = [
                                     'placeholder' => trans_line('categoria_nombre_placeholder'),
                                     'class' => 'form-control',
@@ -801,6 +802,7 @@
                         } else{
                             $("#check_zonas").bootstrapSwitch('state',false,true);
                         }
+                        $("[name='zonas']").val(($("#check_zonas").bootstrapSwitch('state'))?"1":"0");
                     });
             } else{
                 if($("#conceptos_categoria_nestable_id_agregar").length){
@@ -833,6 +835,7 @@
                         } else{
                             $("#check_zonas").bootstrapSwitch('state',true,true);
                         }
+                        $("[name='zonas']").val(($("#check_zonas").bootstrapSwitch('state'))?"1":"0");
                     });
             }
             if($("#portlet_agregar #nestable_list_zonas").length){
@@ -842,6 +845,7 @@
             jh_zonas_btn.prop("disabled", true);
             jh_zonas_port.find('.reload').hide();
         }
+        $("[name='zonas']").val(($("#check_zonas").bootstrapSwitch('state'))?"1":"0");
     }
 
     function genera_fases_vista() {
