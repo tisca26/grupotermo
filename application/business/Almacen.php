@@ -25,6 +25,21 @@ class Almacen
         return $this->CI->almacenes_model->almacen_por_id($almacenes_id);
     }
 
+    public function almacen_materiales_por_id($almacenes_id = 0)
+    {
+        return $this->CI->almacenes_model->almacen_materiales_por_id($almacenes_id);
+    }
+
+    public function almacen_activos_por_id($almacenes_id = 0)
+    {
+        return $this->CI->almacenes_model->almacen_activos_por_id($almacenes_id);
+    }
+
+    public function almacen_bitacora_completa_por_id($almacenes_id = 0)
+    {
+        return $this->CI->almacenes_model->almacen_bitacora_completa_por_id($almacenes_id);
+    }
+
     public function almacenes_todos($order = 'almacenes_id')
     {
         return $this->CI->almacenes_model->almacenes_todos($order);
@@ -44,13 +59,11 @@ class Almacen
 
     public function insertar_almacen($almacen = array())
     {
-        $this->limpia_datos($almacen);
         return $this->CI->almacenes_model->insertar_almacen($almacen);
     }
 
     public function editar_almacen($almacen = array())
     {
-        $this->limpia_datos($almacen);
         return $this->CI->almacenes_model->editar_almacen($almacen);
     }
 

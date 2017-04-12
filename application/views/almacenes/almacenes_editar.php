@@ -21,11 +21,11 @@
                     <i class="fa fa-circle"></i>
                 </li>
                 <li>
-                    <a href="<?php echo base_url_lang() . 'empresas'; ?>"><?php echo trans_line('breadcrumb_empresas'); ?></a>
+                    <a href="<?php echo base_url_lang() . 'almacenes'; ?>"><?php echo trans_line('breadcrumb_almacenes'); ?></a>
                     <i class="fa fa-circle"></i>
                 </li>
                 <li>
-                    <span><?php echo trans_line('breadcrumb_empresas_editar'); ?></span>
+                    <span><?php echo trans_line('breadcrumb_almacenes_editar'); ?></span>
                 </li>
             </ul>
             <!-- END PAGE BREADCRUMBS -->
@@ -40,8 +40,8 @@
                     </div>
                     <div class="portlet-body">
                         <?php echo validation_errors('<div class="alert alert-danger alert-dismissable">', '</div>'); ?>
-                        <?php echo form_open('empresas/editar_empresa', array('id' => 'current_form')); ?>
-                        <input type="hidden" name="empresas_id" value="<?php echo $empr->empresas_id; ?>">
+                        <?php echo form_open('almacenes/editar_almacen', array('id' => 'current_form')); ?>
+                        <input type="hidden" name="almacenes_id" value="<?php echo $alm->almacenes_id; ?>">
                         <div class="form-body">
                             <div class="alert alert-danger display-hide">
                                 <button class="close" data-close="alert"></button>
@@ -52,62 +52,15 @@
                                 <?php echo trans_line('jquery_valid'); ?>
                             </div>
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-12">
                                     <div class="form-group form-md-line-input">
-                                        <?php echo form_input('razon_social', set_value('razon_social', $empr->razon_social), 'id="razon_social" placeholder="' . trans_line('razon_social_placeholder') . '" class="form-control"'); ?>
-                                        <label for="razon_social"><?php echo trans_line('razon_social'); ?>
+                                        <?php echo form_input('nombre', set_value('nombre', $alm->nombre), 'id="nombre" placeholder="' . trans_line('nombre_placeholder') . '" class="form-control"'); ?>
+                                        <label for="nombre"><?php echo trans_line('nombre'); ?>
                                             <span class="required">*</span>
                                         </label>
                                         <span
-                                            class="help-block"><?php echo trans_line('razon_social_ayuda'); ?></span>
+                                                class="help-block"><?php echo trans_line('nombre_ayuda'); ?></span>
                                     </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group form-md-line-input">
-                                        <?php echo form_input('rfc', set_value('rfc', $empr->rfc), 'id="rfc" placeholder="' . trans_line('rfc_placeholder') . '" class="form-control"'); ?>
-                                        <label for="rfc"><?php echo trans_line('rfc'); ?>
-                                            <span class="required">*</span>
-                                        </label>
-                                        <span
-                                            class="help-block"><?php echo trans_line('rfc_ayuda'); ?></span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group form-md-line-input">
-                                        <?php echo form_input('tel_fijo', set_value('tel_fijo', $empr->tel_fijo), 'id="tel_fijo" placeholder="' . trans_line('tel_fijo_placeholder') . '" class="form-control"'); ?>
-                                        <label for="tel_fijo"><?php echo trans_line('tel_fijo'); ?>
-                                            <span class="required">*</span>
-                                        </label>
-                                        <span
-                                            class="help-block"><?php echo trans_line('tel_fijo_ayuda'); ?></span>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group form-md-line-input">
-                                        <?php echo form_input('email', set_value('email', $empr->email), 'id="email" placeholder="' . trans_line('email_placeholder') . '" class="form-control"'); ?>
-                                        <label for="email"><?php echo trans_line('email'); ?>
-                                            <span class="required">*</span>
-                                        </label>
-                                        <span
-                                            class="help-block"><?php echo trans_line('email_ayuda'); ?></span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group form-md-line-input">
-                                        <?php echo form_input('direccion', set_value('direccion', $empr->direccion), 'id="direccion" placeholder="' . trans_line('direccion_placeholder') . '" class="form-control"'); ?>
-                                        <label for="direccion"><?php echo trans_line('direccion'); ?>
-                                            <span class="required">*</span>
-                                        </label>
-                                        <span
-                                            class="help-block"><?php echo trans_line('direccion_ayuda'); ?></span>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-
                                 </div>
                             </div>
                         </div>
@@ -116,7 +69,7 @@
                                 <div class="col-md-12">
                                     <button type="submit" class="btn green" id="btn_submit">Guardar</button>
                                     <a class="btn default"
-                                       href="<?php echo base_url_lang() . 'empresas' ?>">Regresar</a>
+                                       href="<?php echo base_url_lang() . 'almacenes' ?>">Regresar</a>
                                 </div>
                             </div>
                         </div>
@@ -143,57 +96,15 @@
             focusInvalid: false, // do not focus the last invalid input
             ignore: "", // validate all fields including form hidden input
             messages: {
-                razon_social: {
+                nombre: {
                     required: "<?php echo trans_line('required'); ?>",
                     minlength: jQuery.validator.format("<?php echo trans_line('minlength'); ?>")
-                },
-                rfc: {
-                    minlength: jQuery.validator.format("<?php echo trans_line('minlength'); ?>"),
-                    required: "<?php echo trans_line('required'); ?>",
-                    maxlength: jQuery.validator.format("<?php echo trans_line('maxlength'); ?>")
-                },
-                tel_fijo: {
-                    minlength: jQuery.validator.format("<?php echo trans_line('minlength'); ?>"),
-                    required: "<?php echo trans_line('required'); ?>",
-                    maxlength: jQuery.validator.format("<?php echo trans_line('maxlength'); ?>"),
-                    digits: "<?php echo trans_line('digits'); ?>"
-                },
-                email: {
-                    minlength: jQuery.validator.format("<?php echo trans_line('minlength'); ?>"),
-                    required: "<?php echo trans_line('required'); ?>",
-                    email: "<?php echo trans_line('correo'); ?>"
-                },
-                direccion: {
-                    minlength: jQuery.validator.format("<?php echo trans_line('minlength'); ?>"),
-                    required: "<?php echo trans_line('required'); ?>",
-                    maxlength: jQuery.validator.format("<?php echo trans_line('maxlength'); ?>")
                 }
             },
             rules: {
-                razon_social: {
+                nombre: {
                     minlength: 3,
                     required: true
-                },
-                rfc: {
-                    minlength: 12,
-                    required: true,
-                    maxlength: 14
-                },
-                tel_fijo: {
-                    minlength: 10,
-                    required: true,
-                    maxlength: 14,
-                    digits: true
-                },
-                email: {
-                    minlength: 4,
-                    required: true,
-                    email: true
-                },
-                direccion: {
-                    minlength: 3,
-                    required: true,
-                    maxlength: 490
                 }
             },
 

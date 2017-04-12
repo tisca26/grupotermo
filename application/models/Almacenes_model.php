@@ -56,6 +56,36 @@ class Almacenes_model extends CI_Model
         return $result;
     }
 
+    public function almacen_materiales_por_id($almacen_id = 0)
+    {
+        $result = new stdClass();
+        $query = $this->db->where('almacenes_id', $almacen_id)->get('almacenes');
+        if ($query->num_rows() > 0) {
+            $result = $query->row();
+        }
+        return $result;
+    }
+
+    public function almacen_activos_por_id($almacen_id = 0)
+    {
+        $result = new stdClass();
+        $query = $this->db->where('almacenes_id', $almacen_id)->get('almacenes');
+        if ($query->num_rows() > 0) {
+            $result = $query->row();
+        }
+        return $result;
+    }
+
+    public function almacen_bitacora_completa_por_id($almacen_id = 0)
+    {
+        $result = new stdClass();
+        $query = $this->db->where('almacenes_ingreso', $almacen_id)->or_where('almacen_egreso',$almacen_id)->get('almacenes_bitacora');
+        if ($query->num_rows() > 0) {
+            $result = $query->row();
+        }
+        return $result;
+    }
+
     public function editar_almacen($almacen = array())
     {
         return $this->db->update('almacenes', $almacen, array('almacenes_id' => $almacen['almacenes_id']));

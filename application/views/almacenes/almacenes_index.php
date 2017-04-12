@@ -59,7 +59,7 @@
                                            data-id="<?php echo $almacen->almacenes_id ?>">
                                             <?php echo trans_line('borrar_tabla'); ?>
                                         </a>
-                                        <a href="<?php echo base_url_lang() . 'almacenes/' . $almacen->almacenes_id ?>"
+                                        <a href="<?php echo base_url_lang() . 'almacenes/ver_almacen/' . $almacen->almacenes_id ?>"
                                            class="badge badge-info badge-roundless"> <?php echo trans_line('ver_tabla'); ?> </a>
                                     </td>
                                 </tr>
