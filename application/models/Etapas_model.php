@@ -51,7 +51,7 @@ class Etapas_model extends CI_Model
     public function etapas_por_obras_id($obras_id = 0)
     {
         $result = array();
-        $this->db->select('e.*, o.nombre as obra_nombre, o.obras_id');
+        $this->db->select('e.*, o.nombre as obra_nombre, o.obras_id, oefzc.obras_etapas_fases_zonas_conceptos_id,');
         $this->db->from('etapas e');
         $this->db->join('obras_etapas_fases_zonas_conceptos oefzc', 'e.etapas_id = oefzc.etapas_id', 'inner');
         $this->db->where('oefzc.fases_id', 0)->where('oefzc.zonas_id', 0)->where('oefzc.conceptos_id', 0);
