@@ -195,7 +195,7 @@
                             </div>
                             <div class="portlet-body">
                                 <?php echo validation_errors('<div class="alert alert-danger alert-dismissable">', '</div>'); ?>
-                                <?php echo form_open('alta_obra/', array('id' => 'current_form')); ?>
+                                <?php echo form_open('alta_obra/procesa_estructura', array('id' => 'current_form')); ?>
                                 <input type="hidden" name="etapas_id" value="<?php echo $etapa->etapas_id; ?>">
                                 <input type="hidden" name="obras_id" value="<?php echo $etapa->obras_id; ?>">
                                 <input type="hidden" name="zonas" value="0">

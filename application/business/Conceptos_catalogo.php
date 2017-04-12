@@ -22,6 +22,10 @@ class Conceptos_catalogo
         return $this->CI->con_cata_model->ultimo_id();
     }
 
+    public function conceptos_catalogo_por_id($conceptos_catalogo_id = 0)
+    {
+        return $this->CI->con_cata_model->conceptos_catalogo_por_id($conceptos_catalogo_id);
+    }
     public function conceptos_catalogo_por_categoria_id($conceptos_categoria_id = 0)
     {
         return $this->CI->con_cata_model->conceptos_catalogo_por_categoria_id($conceptos_categoria_id);

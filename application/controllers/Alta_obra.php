@@ -15,7 +15,8 @@ class Alta_obra extends Acl_controller
         $this->set_read_list(array('index', 'empresas_json', 'clientes_json', 'zonas_por_obra_id_json', 'fases_por_obra_id_json', 'obra', 'etapa',
             'estructura', 'conceptos_por_categoria_json', 'conceptos_categoria_todos_json', 'muestra_conceptos', 'resumen_alta_obra', 'muestra_zonas'));
         $this->set_insert_list(array('insertar_empresa_ajax', 'insertar_cliente_ajax', 'insertar_zona_ajax', 'insertar_fase_ajax', 'insertar_concepto_categoria_ajax',
-            'insertar_obra', 'insertar_etapa', 'seleccionar_zona_concepto', 'insertar_concepto_catalogo_ajax', 'insertar_zonas_conceptos', 'relacionar_zonas_conceptos'));
+            'insertar_obra', 'insertar_etapa', 'seleccionar_zona_concepto', 'insertar_concepto_catalogo_ajax', 'insertar_zonas_conceptos', 'relacionar_zonas_conceptos',
+            'procesa_estructura'));
         $this->set_update_list(array(''));
         $this->set_delete_list(array(''));
 
@@ -334,6 +335,25 @@ class Alta_obra extends Acl_controller
             return $this->load->template_view($this->template_base, $data, $template);
         }
         return redirect('alta_obra');
+    }
+
+    public function procesa_estructura()
+    {
+        $this->form_validation->set_rules('arbol_output', trans_line('arbol_output'), 'required|trim');
+        $obras_id = $this->input->post('obras_id');
+        $etapas_id = $this->input->post('etapas_id');
+        $es_por_zonas = $this->input->post('zonas');
+        if ($this->form_validation->run() == FALSE) {
+            $this->estructura($etapas_id);
+        } else {
+            $arbol_json = $this->input->post('arbol_output');
+            $arbol_arr = json_decode($arbol_json); // es un arreglo
+            $result = $this->oefzc->inserta_arbol($arbol_arr);
+            $data['arbol_arr'] = $arbol_arr;
+            $data['result'] = $result;
+            $template['_B'] = 'alta_obra/test.php';
+            return $this->load->template_view($this->template_base, $data, $template);
+        }
     }
     /*
      * FIN generar estructura
