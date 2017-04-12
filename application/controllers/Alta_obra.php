@@ -348,7 +348,7 @@ class Alta_obra extends Acl_controller
         } else {
             $arbol_json = $this->input->post('arbol_output');
             $arbol_arr = json_decode($arbol_json); // es un arreglo
-            $result = $this->oefzc->inserta_arbol($arbol_arr);
+            $result = $this->oefzc->inserta_arbol($arbol_arr, $es_por_zonas, $obras_id);
             $data['arbol_arr'] = $arbol_arr;
             $data['result'] = $result;
             $template['_B'] = 'alta_obra/test.php';
