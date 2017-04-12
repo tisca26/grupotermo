@@ -48,6 +48,16 @@ class Concepto
         echo json_encode($conceptos);
     }
 
+    public function conceptos_por_obra_etapa_fases_zonas_id($obras_id = 0, $etapas_id = 0, $fases_id = 0, $zonas_id = 0)
+    {
+        return $this->CI->con_model->conceptos_por_obra_etapa_fases_zonas_id($obras_id, $etapas_id, $fases_id, $zonas_id);
+    }
+
+    public function conceptos_por_obra_etapa_fases_id ($obras_id = 0, $etapas_id = 0, $fases_id = 0)
+    {
+        return $this->CI->con_model->conceptos_por_obra_etapa_fases_zonas_id($obras_id, $etapas_id, $fases_id);
+    }
+
     public function insertar_concepto($concepto = array())
     {
         return $this->CI->con_model->insertar_concepto($concepto);

@@ -1,4 +1,3 @@
-<pre><?php  print_r($arbol_arr); ?></pre>
+<pre><?php  print_r($obra); ?></pre>
 <br>
-<pre><?php  print_r($result); ?></pre>
 

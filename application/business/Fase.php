@@ -56,6 +56,11 @@ class Fase
         echo json_encode($fases);
     }
 
+    public function fases_por_obra_etapa_id ($obras_id = 0, $etapas_id = 0)
+    {
+        return $this->CI->fases_model->fases_por_obra_etapa_id($obras_id, $etapas_id);
+    }
+
     public function insertar_fase($fase = array())
     {
         $result['status'] = false;

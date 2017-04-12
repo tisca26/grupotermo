@@ -13,7 +13,8 @@ class Alta_obra extends Acl_controller
         parent::__construct();
 
         $this->set_read_list(array('index', 'empresas_json', 'clientes_json', 'zonas_por_obra_id_json', 'fases_por_obra_id_json', 'obra', 'etapa',
-            'estructura', 'conceptos_por_categoria_json', 'conceptos_categoria_todos_json', 'muestra_conceptos', 'resumen_alta_obra', 'muestra_zonas'));
+            'estructura', 'conceptos_por_categoria_json', 'conceptos_categoria_todos_json', 'muestra_conceptos', 'resumen_alta_obra', 'muestra_zonas',
+            'regresa_estructura_obra'));
         $this->set_insert_list(array('insertar_empresa_ajax', 'insertar_cliente_ajax', 'insertar_zona_ajax', 'insertar_fase_ajax', 'insertar_concepto_categoria_ajax',
             'insertar_obra', 'insertar_etapa', 'seleccionar_zona_concepto', 'insertar_concepto_catalogo_ajax', 'insertar_zonas_conceptos', 'relacionar_zonas_conceptos',
             'procesa_estructura'));
@@ -354,6 +355,14 @@ class Alta_obra extends Acl_controller
             $template['_B'] = 'alta_obra/test.php';
             return $this->load->template_view($this->template_base, $data, $template);
         }
+    }
+
+    public function regresa_estructura_obra ($obras_id = 0)
+    {
+        $obra = $this->oefzc->genera_arbol_de_obras_id($obras_id, true);
+        $data['obra'] = $obra;
+        $template['_B'] = 'alta_obra/test.php';
+        return $this->load->template_view($this->template_base, $data, $template);
     }
     /*
      * FIN generar estructura

@@ -13,7 +13,7 @@ class Conceptos_model extends CI_Model
         return $this->db->insert_id();
     }
 
-    public  function error_consulta()
+    public function error_consulta()
     {
         return $this->db->error();
     }
@@ -51,6 +51,33 @@ class Conceptos_model extends CI_Model
         $this->db->join('v_conceptos_catalogo v_cc', 'v_cc.conceptos_catalogo_id = c.conceptos_catalogo_id', 'inner');
         $this->db->group_by('c.conceptos_catalogo_id');
         $query = $this->db->order_by($order)->get();
+        if ($query->num_rows() > 0) {
+            $result = $query->result();
+        }
+        return $result;
+    }
+
+    public function conceptos_por_obra_etapa_fases_zonas_id($obras_id = 0, $etapas_id = 0, $fases_id = 0, $zonas_id = 0)
+    {
+        $result = array();
+        $this->db->select('c.*, oefzc.obras_id, oefzc.etapas_id, oefzc.fases_id, oefzc.zonas_id, oefzc.fecha_inicio, oefzc.fecha_fin');
+        $this->db->from('conceptos c');
+        $this->db->join('obras_etapas_fases_zonas_conceptos oefzc', 'c.conceptos_id = oefzc.conceptos_id', 'inner');
+        $this->db->where('oefzc.obras_id', $obras_id)->where('oefzc.etapas_id', $etapas_id)->where('oefzc.fases_id', $fases_id)->where('oefzc.zonas_id', $zonas_id)->where('oefzc.conceptos_id !=', 0);
+        $query = $this->db->group_by('oefzc.conceptos_id')->get();
+        if ($query->num_rows() > 0) {
+            $result = $query->result();
+        }
+        return $result;
+    }
+
+    public function conceptos_por_obra_etapa_fases_id ($obras_id = 0, $etapas_id = 0, $fases_id = 0){
+        $result = array();
+        $this->db->select('c.*, oefzc.obras_id, oefzc.etapas_id, oefzc.fases_id, oefzc.zonas_id, oefzc.fecha_inicio, oefzc.fecha_fin');
+        $this->db->from('conceptos c');
+        $this->db->join('obras_etapas_fases_zonas_conceptos oefzc', 'c.conceptos_id = oefzc.conceptos_id', 'inner');
+        $this->db->where('oefzc.obras_id', $obras_id)->where('oefzc.etapas_id', $etapas_id)->where('oefzc.fases_id', $fases_id)->where('oefzc.conceptos_id !=', 0);
+        $query = $this->db->group_by('oefzc.conceptos_id')->get();
         if ($query->num_rows() > 0) {
             $result = $query->result();
         }

@@ -6,7 +6,7 @@ class Zona
 
     public function __construct()
     {
-        $this->CI = & get_instance();
+        $this->CI = &get_instance();
 
         $this->CI->load->business('obra_etapa_fase_zona_concepto', 'oefzc');
         $this->CI->load->model('zonas_model');
@@ -36,7 +36,7 @@ class Zona
     {
         $zonas = $this->zonas_todos($order);
         $select = array();
-        foreach ($zonas as $zona){
+        foreach ($zonas as $zona) {
             $select[$zona->zonas_id] = $zona->nombre;
         }
         return $select;
@@ -49,11 +49,21 @@ class Zona
         echo json_encode($zonas);
     }
 
+    public function zonas_por_obra_id($obras_id = 0)
+    {
+        return $this->CI->zonas_model->zonas_por_obras_id($obras_id);
+    }
+
     public function zonas_por_obra_id_json($obras_id = 0)
     {
         $zonas = $this->CI->zonas_model->zonas_por_obras_id($obras_id);
         header('Content-Type: application/json');
         echo json_encode($zonas);
+    }
+
+    public function zonas_por_obra_etapa_fases_id ($obras_id = 0, $etapas_id = 0, $fases_id = 0)
+    {
+        return $this->CI->zonas_model->zonas_por_obra_etapa_fases_id($obras_id, $etapas_id, $fases_id);
     }
 
     public function insertar_zona($zona = array())
@@ -62,7 +72,7 @@ class Zona
         $obras_id = $zona['obras_id'];
         unset($zona['obras_id']);
         $result['status'] = $this->CI->zonas_model->insertar_zona($zona);
-        $result['error'] = ($result['status'] == false)? $this->error_consulta() : '';
+        $result['error'] = ($result['status'] == false) ? $this->error_consulta() : '';
         $zonas_id = $this->ultimo_id();
         $result['last_id'] = $zonas_id;
         $oefzc['obras_id'] = $obras_id;

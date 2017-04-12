@@ -26,6 +26,11 @@ class Etapa
         return $this->CI->etapas_model->etapa_por_id($etapas_id);
     }
 
+    public function etapas_por_obras_id($obras_id = 0)
+    {
+        return $this->CI->etapas_model->etapas_por_obras_id($obras_id);
+    }
+
     public function etapas_por_obras_id_json($obras_id = 0)
     {
         $etapas = $this->CI->etapas_model->etapas_por_obras_id($obras_id);
