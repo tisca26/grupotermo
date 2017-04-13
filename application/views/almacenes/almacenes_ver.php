@@ -35,17 +35,27 @@
                             <i class="fa fa-plus"></i> <?php echo trans_line('agregar_bitacora'); ?></a>
                         <hr>
                         <table class="table table-striped table-bordered table-hover table-checkable order-column"
-                               id="users_table">
+                               id="bitacora_table">
                             <thead>
                             <tr>
-                                <th> <?php echo trans_line('almacen_tabla_'); ?></th>
-                                <th> <?php echo trans_line('almacen_tabla'); ?></th>
+                                <th> <?php echo trans_line('almacen_tabla_tipo_movimiento'); ?></th>
+                                <th> <?php echo trans_line('almacen_tabla_almacen_destino'); ?></th>
+                                <th> <?php echo trans_line('almacen_tabla_persona_registra'); ?></th>
+                                <th> <?php echo trans_line('almacen_tabla_persona_autoriza'); ?></th>
+                                <th> <?php echo trans_line('almacen_tabla_activo_destino'); ?></th>
+                                <th> <?php echo trans_line('almacen_tabla_acciones'); ?></th>
                             </tr>
                             </thead>
                             <tbody>
-                            <?php foreach ($rows as $almacen): ?>
+                            <?php foreach ($bitacora as $bit): ?>
                                 <tr class="odd gradeX">
                                     <td> <?php echo $almacen->nombre; ?></td>
+                                    <td> <?php echo $almacen->tipo; ?></td>
+                                    <td> <?php echo $almacen->almacen_destino; ?></td>
+                                    <td> <?php echo $almacen->almacen_destino; ?></td>
+                                    <td> <?php echo $almacen->usuario_regitra; ?></td>
+                                    <td> <?php echo $almacen->usuario_autoriza; ?></td>
+                                    <td> <?php echo $almacen->activo_destino; ?></td>
                                     <td>
                                         <a href="<?php echo base_url_lang() . 'almacenes/form_edit/' . $almacen->almacenes_id ?>"
                                            class="badge badge-primary badge-roundless"> <?php echo trans_line('editar_tabla'); ?> </a>
@@ -78,19 +88,21 @@
                                     <i class="fa fa-plus"></i> <?php echo trans_line('agregar_pagina'); ?></a>
                                 <hr>
                                 <table class="table table-striped table-bordered table-hover table-checkable order-column"
-                                       id="users_table">
+                                       id="materiales_table">
                                     <thead>
                                     <tr>
-                                        <th> <?php echo trans_line('almacen_tabla'); ?></th>
-                                        <th> <?php echo trans_line('acciones_tabla'); ?></th>
+                                        <th> <?php echo trans_line('almacen_tabla_material'); ?></th>
+                                        <th> <?php echo trans_line('almacen_tabla_cantidad'); ?></th>
+                                        <th> <?php echo trans_line('almacen_tabla_acciones'); ?></th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <?php foreach ($rows as $almacen): ?>
+                                    <?php foreach ($materiales as $material): ?>
                                         <tr class="odd gradeX">
-                                            <td> <?php echo $almacen->nombre; ?></td>
+                                            <td> <?php echo $material->nombre; ?></td>
+                                            <td> <?php echo $material->cantidad; ?></td>
                                             <td>
-                                                <a href="<?php echo base_url_lang() . 'almacenes/form_edit/' . $almacen->almacenes_id ?>"
+                                                <a href="<?php echo base_url_lang() . 'almacenes/form_edit/' . $material->almacen_materiales_id; ?>"
                                                    class="badge badge-primary badge-roundless"> <?php echo trans_line('editar_tabla'); ?> </a>
                                                 <a class="badge badge-danger badge-roundless delete_confirmation"
                                                    data-toggle="confirmation" data-placement="top"
@@ -99,11 +111,9 @@
                                                    data-btn-ok-icon="icon-like" data-btn-ok-class="btn-success"
                                                    data-btn-cancel-label="<?php echo trans_line('confirmacion_borrado_cancel'); ?>"
                                                    data-btn-cancel-icon="icon-close" data-btn-cancel-class="btn-danger"
-                                                   data-id="<?php echo $almacen->almacenes_id ?>">
+                                                   data-id="<?php echo $material->almacen_materiales_id; ?>">
                                                     <?php echo trans_line('borrar_tabla'); ?>
                                                 </a>
-                                                <a href="<?php echo base_url_lang() . 'almacenes/ver_almacen/' . $almacen->almacenes_id ?>"
-                                                   class="badge badge-info badge-roundless"> <?php echo trans_line('ver_tabla'); ?> </a>
                                             </td>
                                         </tr>
                                     <?php endforeach; ?>
@@ -166,9 +176,10 @@
 <script type="application/javascript">
     $(document).ready(function () {
         $('#spinner_gt').hide(600);
-        var table = $('#users_table');
-        table.dataTable({
 
+        //TABLA BITACORA
+        var bitacora_table = $('#bitacora_table');
+        bitacora_table.dataTable({
             // Internationalisation. For more info refer to http://datatables.net/manual/i18n
             "language": {
                 "aria": {
@@ -201,11 +212,58 @@
             "columnDefs": [
                 {
                     "sortable": false,
-                    "targets": [1]
+                    "targets": [5]
                 },
                 {
                     "className": "text-center",
-                    "targets": [1]
+                    "targets": ["_all"]
+                }
+            ],
+            "order": [
+                [0, "asc"]
+            ] // set first column as a default sort by asc
+        });
+
+        //TABLA BITACORA
+        var materiales_table = $('#materiales_table');
+        materiales_table.dataTable({
+            // Internationalisation. For more info refer to http://datatables.net/manual/i18n
+            "language": {
+                "aria": {
+                    "sortAscending": "<?php echo trans_line('sortAscending'); ?>",
+                    "sortDescending": "<?php echo trans_line('sortDescending'); ?>"
+                },
+                "emptyTable": "<?php echo trans_line('emptyTable'); ?>",
+                "info": "<?php echo trans_line('info'); ?>",
+                "infoEmpty": "<?php echo trans_line('infoEmpty'); ?>",
+                "infoFiltered": "<?php echo trans_line('infoFiltered'); ?>",
+                "lengthMenu": "<?php echo trans_line('lengthMenu'); ?>",
+                "search": "<?php echo trans_line('search'); ?>",
+                "zeroRecords": "<?php echo trans_line('zeroRecords'); ?>",
+                "paginate": {
+                    "previous": "<?php echo trans_line('previous'); ?>",
+                    "next": "<?php echo trans_line('next'); ?>",
+                    "last": "<?php echo trans_line('last'); ?>",
+                    "first": "<?php echo trans_line('first'); ?>"
+                }
+            },
+
+            "bStateSave": true, // save datatable state(pagination, sort, etc) in cookie.
+            "lengthMenu": [
+                [5, 15, 20, -1],
+                [5, 15, 20, "All"] // change per page values here
+            ],
+            // set the initial value
+            "pageLength": 9,
+            "pagingType": "bootstrap_full_number",
+            "columnDefs": [
+                {
+                    "sortable": false,
+                    "targets": [2]
+                },
+                {
+                    "className": "text-center",
+                    "targets": ["_all"]
                 }
             ],
             "order": [

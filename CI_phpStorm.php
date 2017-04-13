@@ -141,6 +141,10 @@ class CI_Model
  * @property activos_categoria_model                $activos_categoria_model
  * @property activos_model                          $activos_model
  * @property bancos_model                           $bancos_model
+ * @property almacenes_model                        $almacenes_model
+ * @property almacenes_bitacora_model               $almacenes_bitacora_model
+ * @property almacen_activos_model                  $almacen_activos_model
+ * @property almacen_materiales_model               $almacen_materiales_model
  * @property cambiocontrasena_model                 $cambiocontrasena_model
  * @property cat_estados_model                      $cat_estados_model
  * @property cat_municipios_model                   $cat_municipios_model
@@ -198,6 +202,7 @@ class my_models extends my_business
  * ---------------------- Business to Load ----------------------
  * <examples>
  *
+ * @property almacen                                $almacen
  * @property cliente                                $cliente
  * @property concepto                               $concepto
  * @property conceptos_catalogo                     $conceptos_catalogo

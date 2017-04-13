@@ -18,13 +18,25 @@ $lang['titulo_pagina'] = 'Almacen: ';
 $lang['breadcrumb_home'] = 'Inicio';
 $lang['breadcrumb_pagina'] = 'Lista de almacenes';
 $lang['agregar_pagina'] = 'Almacen: ';
-//TABLA
-$lang['almacen_tabla'] = 'Almacen';
-$lang['contacto_tabla'] = 'Contacto';
-$lang['acciones_tabla'] = 'Acciones';
+
+//TABLAS GENERAL
+$lang['almacen_tabla_acciones'] = 'Acciones';
 $lang['editar_tabla'] = 'Editar';
 $lang['borrar_tabla'] = 'Borrar';
 $lang['ver_tabla'] = 'Ingresar';
+
+//TABLA BITACORA
+$lang['almacen_tabla_tipo_movimiento'] = 'Tipo Movimiento';
+$lang['almacen_tabla_almacen_destino'] = 'Destino';
+$lang['almacen_tabla_persona_registra'] = 'Registró';
+$lang['almacen_tabla_persona_autoriza'] = 'Autorizó';
+$lang['almacen_tabla_activo_destino'] = 'Activo';
+
+
+//TABLA MATERIALES
+$lang['almacen_tabla_material'] = 'Material';
+$lang['almacen_tabla_cantidad'] = 'Cantidad';
+
 //FIN TABLA
 $lang['confirmacion_borrado_titulo'] = '¿Desea borrarlo?';
 $lang['confirmacion_borrado_ok'] = 'Si';

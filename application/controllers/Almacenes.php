@@ -109,9 +109,9 @@ class Almacenes extends Acl_controller
         $this->cargar_idioma->carga_lang('almacenes/almacenes_ver');
         $data = array();
         $data['almacen_id'] = $id;
-        $data['activos'] = $this->almacen->almacen_activos_por_id($id);
-        $data['materiales'] = $this->almacen->almacen_materiales_por_id($id);
-        $data['bitacora'] = $this->almacen->almacen_bitacora_completa_por_id($id);
+        $data['activos'] = '';
+        $data['materiales'] = $this->almacen->materiales_por_almacen_id($id);
+        $data['bitacora'] = $this->almacen->bitacora_completa_por_almacen_id($id, 30);
         $template['_B'] = 'almacenes/almacenes_ver.php';
         $this->load->template_view($this->template_base, $data, $template);
     }

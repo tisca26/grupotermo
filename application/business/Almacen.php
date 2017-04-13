@@ -8,6 +8,8 @@ class Almacen
     {
         $this->CI = & get_instance();
         $this->CI->load->model('almacenes_model');
+        $this->CI->load->model('almacenes_bitacora_model');
+        $this->CI->load->model('almacen_materiales_model');
     }
 
     public function error_consulta()
@@ -25,21 +27,6 @@ class Almacen
         return $this->CI->almacenes_model->almacen_por_id($almacenes_id);
     }
 
-    public function almacen_materiales_por_id($almacenes_id = 0)
-    {
-        return $this->CI->almacenes_model->almacen_materiales_por_id($almacenes_id);
-    }
-
-    public function almacen_activos_por_id($almacenes_id = 0)
-    {
-        return $this->CI->almacenes_model->almacen_activos_por_id($almacenes_id);
-    }
-
-    public function almacen_bitacora_completa_por_id($almacenes_id = 0)
-    {
-        return $this->CI->almacenes_model->almacen_bitacora_completa_por_id($almacenes_id);
-    }
-
     public function almacenes_todos($order = 'almacenes_id')
     {
         return $this->CI->almacenes_model->almacenes_todos($order);
@@ -47,7 +34,12 @@ class Almacen
 
     public function almacenes_todos_sel($order = 'almacenes_id')
     {
-        return $this->CI->almacenes_model->almacenes_todos_sel($order);
+        $res = array();
+        $almacenes = $this->almacenes_todos($order);
+        foreach ($almacenes as $almacen){
+            $res[$almacen->almacenes_id] = $almacen->nombre;
+        }
+        return $res;
     }
 
     public function almacenes_todos_json($order = 'almacenes_id')
@@ -77,5 +69,25 @@ class Almacen
     public function borrar_almacen($almacenes_id = 0)
     {
         return $this->CI->almacenes_model->borrar_almacen($almacenes_id);
+    }
+
+    public function materiales_por_almacen_id($almacenes_id = 0, $limit = 0, $offset = 0)
+    {
+        return $this->CI->almacen_materiales_model->almcacen_materiales_por_almacen_id($almacenes_id, $limit, $offset);
+    }
+
+    public function bitacora_completa_por_almacen_id($almacenes_id = 0, $limit = 0, $offset = 0)
+    {
+        $movimientos = $this->CI->almacenes_bitacora_model->bitacora_completa_por_almacen_id($almacenes_id, $limit, $offset);
+        foreach ($movimientos as $movimiento){
+            $movimiento->tipo = ($movimiento->almacen_egreso == 0) ? 'EGRESO' : (($movimiento->almacen_egreso == 0) ? 'INGRESO' : 'TRANSFERENCIA');
+            $movimiento->almacen_destino = ($movimiento->almacen_destino == '')? 'N/A' : $movimiento->almacen_destino;
+            $movimiento->usuario_autoriza = ($movimiento->usuario_autoriza == '') ? 'N/D' : $movimiento->usuario_autoriza;
+            $movimiento->usuario_destino = ($movimiento->usuario_destino == '') ? 'N/D' : $movimiento->usuario_destino;
+            $movimiento->activo_destino = ($movimiento->activo_destino == '') ? 'N/D' : $movimiento->activo_destino;
+            $movimiento->cantidad = ($movimiento->cantidad == '') ? 'N/D' : $movimiento->cantidad;
+        }
+
+        return $movimientos;
     }
 }

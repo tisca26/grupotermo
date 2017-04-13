@@ -4,31 +4,19 @@ if (!defined('BASEPATH'))
 
 class Almacenes_model extends CI_Model
 {
-    function __construct()
+    public function __construct()
     {
         parent::__construct();
     }
 
-    function ultimo_id()
+    public function ultimo_id()
     {
         return $this->db->insert_id();
     }
 
-    function error_consulta()
+    public function error_consulta()
     {
         return $this->db->error();
-    }
-
-    public function almacenes_todos_sel($order = 'almacenes_id')
-    {
-        $result = array();
-        $query = $this->db->order_by($order)->get('almacenes');
-        if ($query->num_rows() > 0) {
-            foreach ($query->result() as $q){
-                $result[$q->almacenes_id] = $q->razon_social;
-            }
-        }
-        return $result;
     }
 
     public function almacenes_todos($order = 'almacenes_id')
@@ -50,36 +38,6 @@ class Almacenes_model extends CI_Model
     {
         $result = new stdClass();
         $query = $this->db->where('almacenes_id', $almacen_id)->get('almacenes');
-        if ($query->num_rows() > 0) {
-            $result = $query->row();
-        }
-        return $result;
-    }
-
-    public function almacen_materiales_por_id($almacen_id = 0)
-    {
-        $result = new stdClass();
-        $query = $this->db->where('almacenes_id', $almacen_id)->get('almacenes');
-        if ($query->num_rows() > 0) {
-            $result = $query->row();
-        }
-        return $result;
-    }
-
-    public function almacen_activos_por_id($almacen_id = 0)
-    {
-        $result = new stdClass();
-        $query = $this->db->where('almacenes_id', $almacen_id)->get('almacenes');
-        if ($query->num_rows() > 0) {
-            $result = $query->row();
-        }
-        return $result;
-    }
-
-    public function almacen_bitacora_completa_por_id($almacen_id = 0)
-    {
-        $result = new stdClass();
-        $query = $this->db->where('almacenes_ingreso', $almacen_id)->or_where('almacen_egreso',$almacen_id)->get('almacenes_bitacora');
         if ($query->num_rows() > 0) {
             $result = $query->row();
         }
