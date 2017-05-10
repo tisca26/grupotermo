@@ -207,6 +207,7 @@ class my_models extends my_business
  * @property concepto                               $concepto
  * @property conceptos_catalogo                     $conceptos_catalogo
  * @property conceptos_categoria                    $conceptos_categoria
+ * @property datatable                              $datatable
  * @property empresa                                $empresa
  * @property etapa                                  $etapa
  * @property fase                                   $fase
